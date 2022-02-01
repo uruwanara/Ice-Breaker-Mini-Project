@@ -55,6 +55,9 @@
     <ItemGroup>
         <Compile Include="Examples.cs" />
         <Compile Include="IBWarehouse.cs" />
+<Compile Include="IBWarehouse1.cs" />
+<Compile Include="IBWarehouseLocation.cs" />
+<Compile Include="IBCustomer.cs" />
 <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <ItemGroup>
