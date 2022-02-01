@@ -58,6 +58,7 @@
 <Compile Include="IBWarehouse1.cs" />
 <Compile Include="IBWarehouseLocation.cs" />
 <Compile Include="IBCustomer.cs" />
+<Compile Include="IBWarehouseMaint.cs" />
 <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <ItemGroup>
