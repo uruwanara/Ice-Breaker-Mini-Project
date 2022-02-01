@@ -4,48 +4,42 @@ using PX.Data;
 namespace IceBreakerMiniProject
 {
   [Serializable]
-  [PXCacheName("IBWarehouseLocation")]
-  public class IBWarehouseLocation : IBqlTable
+  [PXCacheName("Customer")]
+  public class IBCustomer : IBqlTable
   {
-    #region LocationID
-    [PXDBIdentity]
-    public virtual int? LocationID { get; set; }
-    public abstract class locationID : PX.Data.BQL.BqlInt.Field<locationID> { }
-    #endregion
-
-    #region WarehouseID
+    #region CustomerID
     [PXDBInt(IsKey = true)]
-    [PXUIField(DisplayName = "Warehouse ID")]
-    public virtual int? WarehouseID { get; set; }
-    public abstract class warehouseID : PX.Data.BQL.BqlInt.Field<warehouseID> { }
+    [PXUIField(DisplayName = "Customer ID")]
+    public virtual int? CustomerID { get; set; }
+    public abstract class customerID : PX.Data.BQL.BqlInt.Field<customerID> { }
     #endregion
 
-    #region LocationCD
+    #region CustomerCD
     [PXDBString(15, IsUnicode = true, InputMask = "")]
-    [PXUIField(DisplayName = "Location CD")]
-    public virtual string LocationCD { get; set; }
-    public abstract class locationCD : PX.Data.BQL.BqlString.Field<locationCD> { }
+    [PXUIField(DisplayName = "Customer CD")]
+    public virtual string CustomerCD { get; set; }
+    public abstract class customerCD : PX.Data.BQL.BqlString.Field<customerCD> { }
     #endregion
 
-    #region Description
-    [PXDBString(15, IsUnicode = true, InputMask = "")]
-    [PXUIField(DisplayName = "Description")]
-    public virtual string Description { get; set; }
-    public abstract class description : PX.Data.BQL.BqlString.Field<description> { }
-    #endregion
-
-    #region LineNbr
-    [PXDBInt(IsKey = true)]
-    [PXUIField(DisplayName = "Line Nbr")]
-    public virtual int? LineNbr { get; set; }
-    public abstract class lineNbr : PX.Data.BQL.BqlInt.Field<lineNbr> { }
+    #region Name
+    [PXDBString(20, IsUnicode = true, InputMask = "")]
+    [PXUIField(DisplayName = "Name")]
+    public virtual string Name { get; set; }
+    public abstract class name : PX.Data.BQL.BqlString.Field<name> { }
     #endregion
 
     #region Address
-    [PXDBString(50, IsUnicode = true, InputMask = "")]
+    [PXDBString(255, IsUnicode = true, InputMask = "")]
     [PXUIField(DisplayName = "Address")]
     public virtual string Address { get; set; }
     public abstract class address : PX.Data.BQL.BqlString.Field<address> { }
+    #endregion
+
+    #region Contact
+    [PXDBString(10, IsUnicode = true, InputMask = "")]
+    [PXUIField(DisplayName = "Contact")]
+    public virtual string Contact { get; set; }
+    public abstract class contact : PX.Data.BQL.BqlString.Field<contact> { }
     #endregion
 
     #region CreatedDateTime

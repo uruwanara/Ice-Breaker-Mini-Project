@@ -4,34 +4,48 @@ using PX.Data;
 namespace IceBreakerMiniProject
 {
   [Serializable]
-  [PXCacheName("IBWarehouse")]
-  public class IBWarehouse : IBqlTable
+  [PXCacheName("Warehouse Location")]
+  public class IBWarehouseLocation : IBqlTable
   {
+    #region LocationID
+    [PXDBIdentity]
+    public virtual int? LocationID { get; set; }
+    public abstract class locationID : PX.Data.BQL.BqlInt.Field<locationID> { }
+    #endregion
+
     #region WarehouseID
-    [PXDBIdentity(IsKey = true)]
+    [PXDBInt(IsKey = true)]
+    [PXUIField(DisplayName = "Warehouse ID")]
     public virtual int? WarehouseID { get; set; }
     public abstract class warehouseID : PX.Data.BQL.BqlInt.Field<warehouseID> { }
     #endregion
 
-    #region WarehouseCD
+    #region LocationCD
     [PXDBString(15, IsUnicode = true, InputMask = "")]
-    [PXUIField(DisplayName = "Warehouse CD")]
-    public virtual string WarehouseCD { get; set; }
-    public abstract class warehouseCD : PX.Data.BQL.BqlString.Field<warehouseCD> { }
+    [PXUIField(DisplayName = "Location CD")]
+    public virtual string LocationCD { get; set; }
+    public abstract class locationCD : PX.Data.BQL.BqlString.Field<locationCD> { }
     #endregion
 
     #region Description
-    [PXDBString(50, IsUnicode = true, InputMask = "")]
+    [PXDBString(15, IsUnicode = true, InputMask = "")]
     [PXUIField(DisplayName = "Description")]
     public virtual string Description { get; set; }
     public abstract class description : PX.Data.BQL.BqlString.Field<description> { }
     #endregion
 
-    #region LocationLineCntr
-    [PXDBInt()]
-    [PXUIField(DisplayName = "Location Line Cntr")]
-    public virtual int? LocationLineCntr { get; set; }
-    public abstract class locationLineCntr : PX.Data.BQL.BqlInt.Field<locationLineCntr> { }
+    #region LineNbr
+    [PXDBInt(IsKey = true)]
+    [PXUIField(DisplayName = "Line Nbr")]
+    public virtual int? LineNbr { get; set; }
+    public abstract class lineNbr : PX.Data.BQL.BqlInt.Field<lineNbr> { }
+    #endregion
+
+    #region Address
+    [PXDBString(50, IsUnicode = true, InputMask = "")]
+    [PXUIField(DisplayName = "Address")]
+    public virtual string Address { get; set; }
+    public abstract class address : PX.Data.BQL.BqlString.Field<address> { }
     #endregion
 
     #region CreatedDateTime
