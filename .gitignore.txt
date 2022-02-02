@@ -1,4 +1,0 @@
-Code/
-Code/*
-Code/IceBreakerMiniProject/folder
-Code/IceBreakerMiniProject/IceBreakerMiniProject/obj
