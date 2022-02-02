@@ -2,3 +2,4 @@ Code/
 Code/*
 Code/IceBreakerMiniProject/folder
 Code/IceBreakerMiniProject/IceBreakerMiniProject/obj
+Code/IceBreakerMiniProject/IceBreakerMiniProject/bin/Debug
