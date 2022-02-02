@@ -4,11 +4,12 @@ using PX.Data.BQL.Fluent;
 
 namespace IceBreakerMiniProject
 {
-  public class IBMPWarehouseMaint : PXGraph<IBMPWarehouseMaint>
+  public class IBMPWarehouseMaint : PXGraph<IBMPWarehouseMaint,IBMPWarehouse>
   {
 
     public PXSave<MasterTable> Save;
     public PXCancel<MasterTable> Cancel;
+
         #region Data Views
         public SelectFrom<IBMPWarehouse>.View Warehouses;
         #endregion
