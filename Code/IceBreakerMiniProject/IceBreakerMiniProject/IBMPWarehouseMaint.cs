@@ -4,7 +4,8 @@ using PX.Data.BQL.Fluent;
 
 namespace IceBreakerMiniProject
 {
-  public class IBMPWarehouseMaint : PXGraph<IBMPWarehouseMaint,IBMPWarehouse>
+  public class IBMPWarehouseMaint :
+        PXGraph<IBMPWarehouseMaint,IBMPWarehouse>
   {
 
     public PXSave<MasterTable> Save;
