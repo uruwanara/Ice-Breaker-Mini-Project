@@ -8,9 +8,17 @@ namespace IceBreakerMiniProject
   public class IBMPWarehouse : IBqlTable
   {
     #region WarehouseID
-    [PXDBIdentity(IsKey = true)]
-    public virtual int? WarehouseID { get; set; }
-    public abstract class warehouseID : PX.Data.BQL.BqlInt.Field<warehouseID> { }
+        //[PXDBIdentity(IsKey = true)]
+        [PXDBInt(IsKey = true)]
+        [PXDefault]
+        [PXUIField(DisplayName = "Warehouse ID", Required = true)]
+        [PXSelector(typeof(Search<IBMPWarehouse.warehouseID>),
+        typeof(IBMPWarehouse.warehouseCD),
+        typeof(IBMPWarehouse.description),
+        SubstituteKey = typeof(IBMPWarehouse.warehouseCD),
+        DescriptionField = typeof(IBMPWarehouse.description))]
+        public virtual int? WarehouseID { get; set; }
+        public abstract class warehouseID : PX.Data.BQL.BqlInt.Field<warehouseID> { }
     #endregion
 
     #region WarehouseCD
@@ -29,6 +37,7 @@ namespace IceBreakerMiniProject
 
     #region LocationLineCntr
     [PXDBInt()]
+    [PXDefault(0)]
     [PXUIField(DisplayName = "Location Line Cntr")]
     public virtual int? LocationLineCntr { get; set; }
     public abstract class locationLineCntr : PX.Data.BQL.BqlInt.Field<locationLineCntr> { }

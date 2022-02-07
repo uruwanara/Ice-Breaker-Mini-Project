@@ -8,17 +8,18 @@ namespace IceBreakerMiniProject
         PXGraph<IBMPWarehouseMaint,IBMPWarehouse>
   {
 
-    public PXSave<MasterTable> Save;
-    public PXCancel<MasterTable> Cancel;
+    public PXSave<IBMPWarehouse> Save;
+    public PXCancel<IBMPWarehouse> Cancel;
 
         #region Data Views
         public SelectFrom<IBMPWarehouse>.View Warehouses;
+        public SelectFrom<IBMPWarehouseLocation>.Where<IBMPWarehouseLocation.warehouseID.IsEqual<IBMPWarehouse.warehouseID.FromCurrent>>.View WarehouseLocations;
         #endregion
-
         public PXFilter<MasterTable> MasterView;
-    public PXFilter<DetailsTable> DetailsView;
+        public PXFilter<DetailsTable> DetailsView;
 
-    [Serializable]
+
+        [Serializable]
     public class MasterTable : IBqlTable
     {
             //Testing 123

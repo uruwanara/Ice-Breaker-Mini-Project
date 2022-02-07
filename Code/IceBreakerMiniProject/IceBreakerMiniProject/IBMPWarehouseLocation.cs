@@ -1,5 +1,6 @@
 using System;
 using PX.Data;
+using PX.Data.BQL.Fluent;
 
 namespace IceBreakerMiniProject
 {
@@ -11,24 +12,27 @@ namespace IceBreakerMiniProject
     [PXDBIdentity]
     public virtual int? LocationID { get; set; }
     public abstract class locationID : PX.Data.BQL.BqlInt.Field<locationID> { }
-    #endregion
-
-    #region WarehouseID
-    [PXDBInt(IsKey = true)]
-    [PXUIField(DisplayName = "Warehouse ID")]
-    public virtual int? WarehouseID { get; set; }
-    public abstract class warehouseID : PX.Data.BQL.BqlInt.Field<warehouseID> { }
-    #endregion
+        #endregion
 
     #region LocationCD
     [PXDBString(15, IsUnicode = true, InputMask = "")]
     [PXUIField(DisplayName = "Location CD")]
     public virtual string LocationCD { get; set; }
     public abstract class locationCD : PX.Data.BQL.BqlString.Field<locationCD> { }
-    #endregion
+        #endregion
 
-    #region Description
-    [PXDBString(15, IsUnicode = true, InputMask = "")]
+
+        #region WarehouseID
+        [PXDBInt(IsKey = true)]
+        [PXDBDefault(typeof(IBMPWarehouse.warehouseID))]
+        [PXUIField(DisplayName = "Warehouse ID")]
+        [PXParent(typeof(SelectFrom<IBMPWarehouse>.Where<IBMPWarehouse.warehouseID.IsEqual<IBMPWarehouseLocation.warehouseID.FromCurrent>>))]
+        public virtual int? WarehouseID { get; set; }
+        public abstract class warehouseID : PX.Data.BQL.BqlInt.Field<warehouseID> { }
+        #endregion
+
+        #region Description
+        [PXDBString(15, IsUnicode = true, InputMask = "")]
     [PXUIField(DisplayName = "Description")]
     public virtual string Description { get; set; }
     public abstract class description : PX.Data.BQL.BqlString.Field<description> { }
@@ -36,7 +40,8 @@ namespace IceBreakerMiniProject
 
     #region LineNbr
     [PXDBInt(IsKey = true)]
-    [PXUIField(DisplayName = "Line Nbr")]
+    [PXLineNbr(typeof(IBMPWarehouse.locationLineCntr))]
+    [PXUIField(DisplayName = "Line Nbr.", Visible = false)]
     public virtual int? LineNbr { get; set; }
     public abstract class lineNbr : PX.Data.BQL.BqlInt.Field<lineNbr> { }
     #endregion

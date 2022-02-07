@@ -7,32 +7,33 @@
         PrimaryView="Warehouses"
         >
 		<CallbackCommands>
-
-		</CallbackCommands>
+			<px:PXDSCallbackCommand Name="Last" ></px:PXDSCallbackCommand>
+			<px:PXDSCallbackCommand Visible="True" Name="Save" ></px:PXDSCallbackCommand></CallbackCommands>
 	</px:PXDataSource>
 </asp:Content>
 <asp:Content ID="cont2" ContentPlaceHolderID="phF" Runat="Server">
-	<px:PXFormView ID="form" runat="server" DataSourceID="ds" DataMember="Warehouses" Width="100%" Height="100px" AllowAutoHide="false">
+	<px:PXFormView SkinID="" ID="form" runat="server" DataSourceID="ds" DataMember="Warehouses" Width="100%" Height="" AllowAutoHide="false">
 		<Template>
 		<px:PXLayoutRule ControlSize="M" LabelsWidth="S" ID="PXLayoutRule1" runat="server" StartRow="True"></px:PXLayoutRule>
 			<px:PXSelector runat="server" ID="CstPXSelector3" DataField="WarehouseID" ></px:PXSelector>
-		</Template>
+			<px:PXTextEdit runat="server" ID="CstPXTextEdit3" DataField="Description" ></px:PXTextEdit></Template>
 	</px:PXFormView>
 </asp:Content>
 <asp:Content ID="cont3" ContentPlaceHolderID="phG" Runat="Server">
 	<px:PXTab ID="tab" runat="server" Width="100%" Height="150px" DataSourceID="ds" AllowAutoHide="false">
 		<Items>
-			<px:PXTabItem Text="Tab item 1">
+			<px:PXTabItem Text="Locations">
 				<Template>
-					
-				</Template>
-			</px:PXTabItem>
-			<px:PXTabItem Text="Tab item 2">
-				<Template>
-					
-				</Template>
-			</px:PXTabItem>
-		</Items>
-		<AutoSize Container="Window" Enabled="True" MinHeight="150" />
+					<px:PXGrid Width="100%" SkinID="Details" runat="server" ID="CstPXGrid2">
+						<Levels>
+							<px:PXGridLevel DataMember="WarehouseLocations" >
+								<Columns>
+									<px:PXGridColumn DataField="LocationCD" Width="140" ></px:PXGridColumn>
+									<px:PXGridColumn DataField="Description" Width="140" ></px:PXGridColumn>
+									<px:PXGridColumn DataField="Address" Width="180" ></px:PXGridColumn></Columns></px:PXGridLevel></Levels>
+						<AutoSize Enabled="True" ></AutoSize>
+						<Mode InitNewRow="False" ></Mode></px:PXGrid></Template>
+			</px:PXTabItem></Items>
+		<AutoSize Container="Window" Enabled="True" MinHeight="150" ></AutoSize>
 	</px:PXTab>
 </asp:Content>
