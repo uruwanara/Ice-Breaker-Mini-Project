@@ -14,11 +14,11 @@ namespace IceBreakerMiniProject
         [PXUIField(DisplayName = "Warehouse ID", Required = true)]
         [PXSelector(typeof(Search<IBMPWarehouse.warehouseID>),
         typeof(IBMPWarehouse.warehouseCD),
-        typeof(IBMPWarehouse.description),
+        typeof(IBMPWarehouse.name),
         SubstituteKey = typeof(IBMPWarehouse.warehouseCD),
-        DescriptionField = typeof(IBMPWarehouse.description))]
+        DescriptionField = typeof(IBMPWarehouse.name))]
         public virtual int? WarehouseID { get; set; }
-        public abstract class warehouseID : PX.Data.BQL.BqlInt.Field<warehouseID> { }
+        public abstract class warehouseID : PX.Data.BQL.BqlInt.Field<warehouseID> {}
     #endregion
 
     #region WarehouseCD
@@ -28,11 +28,11 @@ namespace IceBreakerMiniProject
     public abstract class warehouseCD : PX.Data.BQL.BqlString.Field<warehouseCD> { }
     #endregion
 
-    #region Description
+    #region Name
     [PXDBString(50, IsUnicode = true, InputMask = "")]
-    [PXUIField(DisplayName = "Description")]
-    public virtual string Description { get; set; }
-    public abstract class description : PX.Data.BQL.BqlString.Field<description> { }
+    [PXUIField(DisplayName = "Name")]
+    public virtual string Name { get; set; }
+    public abstract class name : PX.Data.BQL.BqlString.Field<name> { }
     #endregion
 
     #region LocationLineCntr
