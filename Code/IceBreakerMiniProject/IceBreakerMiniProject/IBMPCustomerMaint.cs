@@ -1,16 +1,21 @@
 using System;
 using PX.Data;
-
+using PX.Data.BQL.Fluent;
 namespace IceBreakerMiniProject
 {
   public class IBMPCustomerMaint : PXGraph<IBMPCustomerMaint>
   {
 
-    public PXSave<MasterTable> Save;
-    public PXCancel<MasterTable> Cancel;
+    public PXSave<IBMPCustomer> Save;
+    public PXCancel<IBMPCustomer> Cancel;
+
+   #region View
+   public SelectFrom<IBMPCustomer>.View Customers;
+        #endregion
 
 
-    public PXFilter<MasterTable> MasterView;
+
+        public PXFilter<MasterTable> MasterView;
     public PXFilter<DetailsTable> DetailsView;
 
     [Serializable]

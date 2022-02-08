@@ -16,7 +16,7 @@
 		<Template>
 		<px:PXLayoutRule ControlSize="M" LabelsWidth="S" ID="PXLayoutRule1" runat="server" StartRow="True"></px:PXLayoutRule>
 			<px:PXSelector runat="server" ID="CstPXSelector3" DataField="WarehouseID" ></px:PXSelector>
-			<px:PXTextEdit runat="server" ID="CstPXTextEdit3" DataField="Description" ></px:PXTextEdit></Template>
+			<px:PXTextEdit runat="server" ID="CstPXTextEdit3" DataField="Name" ></px:PXTextEdit></Template>
 	</px:PXFormView>
 </asp:Content>
 <asp:Content ID="cont3" ContentPlaceHolderID="phG" Runat="Server">
