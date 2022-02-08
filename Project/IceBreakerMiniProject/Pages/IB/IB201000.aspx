@@ -12,7 +12,7 @@
 	</px:PXDataSource>
 </asp:Content>
 <asp:Content ID="cont2" ContentPlaceHolderID="phF" Runat="Server">
-	<px:PXFormView SkinID="" ID="form" runat="server" DataSourceID="ds" DataMember="Warehouses" Width="100%" Height="" AllowAutoHide="false">
+	<px:PXFormView SkinID="" ID="form" runat="server" DataSourceID="ds" DataMember="Warehouses" Width="99%" Height="" AllowAutoHide="false">
 		<Template>
 		<px:PXLayoutRule ControlSize="M" LabelsWidth="S" ID="PXLayoutRule1" runat="server" StartRow="True"></px:PXLayoutRule>
 			<px:PXSelector runat="server" ID="CstPXSelector3" DataField="WarehouseID" ></px:PXSelector>
