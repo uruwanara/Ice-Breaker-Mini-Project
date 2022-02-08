@@ -13,7 +13,7 @@ namespace IceBreakerMiniProject
         public SelectFrom<IBMPCustomer>.View Customers;
         #endregion
 
-
+        //Testing
 
         public PXFilter<MasterTable> MasterView;
     public PXFilter<DetailsTable> DetailsView;
