@@ -3,14 +3,14 @@ using PX.Data;
 using PX.Data.BQL.Fluent;
 namespace IceBreakerMiniProject
 {
-  public class IBMPCustomerMaint : PXGraph<IBMPCustomerMaint>
+  public class IBMPCustomerMaint : PXGraph<IBMPCustomerMaint,IBMPCustomer>
   {
 
     public PXSave<IBMPCustomer> Save;
     public PXCancel<IBMPCustomer> Cancel;
 
-   #region View
-   public SelectFrom<IBMPCustomer>.View Customers;
+        #region View
+        public SelectFrom<IBMPCustomer>.View Customers;
         #endregion
 
 
