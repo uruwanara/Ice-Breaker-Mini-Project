@@ -4,7 +4,7 @@ using PX.Data.BQL.Fluent;
 
 namespace IceBreakerMiniProject
 {
-  [Serializable]
+
   [PXCacheName("IBMPWarehouseLocation")]
   public class IBMPWarehouseLocation : IBqlTable
   {
@@ -16,7 +16,7 @@ namespace IceBreakerMiniProject
 
     #region LocationCD
     [PXDBString(15, IsUnicode = true, InputMask = "")]
-    [PXUIField(DisplayName = "Location CD")]
+    [PXUIField(DisplayName = "Location ID")]
     public virtual string LocationCD { get; set; }
     public abstract class locationCD : PX.Data.BQL.BqlString.Field<locationCD> { }
         #endregion
