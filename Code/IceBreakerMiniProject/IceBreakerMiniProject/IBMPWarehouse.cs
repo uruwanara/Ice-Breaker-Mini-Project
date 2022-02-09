@@ -3,7 +3,7 @@ using PX.Data;
 
 namespace IceBreakerMiniProject
 {
-  [Serializable]
+ 
   [PXCacheName("Warehouse")]
   public class IBMPWarehouse : IBqlTable
   {
@@ -23,7 +23,7 @@ namespace IceBreakerMiniProject
 
     #region WarehouseCD
     [PXDBString(15, IsUnicode = true, InputMask = "")]
-    [PXUIField(DisplayName = "Warehouse CD")]
+    [PXUIField(DisplayName = "Warehouse ID")]
     public virtual string WarehouseCD { get; set; }
     public abstract class warehouseCD : PX.Data.BQL.BqlString.Field<warehouseCD> { }
     #endregion
