@@ -63,6 +63,10 @@
     <Compile Include="IBMPWarehouseMaint.cs" />
     <Compile Include="IBMPCustomer.cs" />
 <Compile Include="IBMPCustomerMaint.cs" />
+<Compile Include="IBMPSalesOrder.cs" />
+<Compile Include="IBMPSalesOrderLine.cs" />
+<Compile Include="IBMPProductionOrder.cs" />
+<Compile Include="IBMPProductionOrderLine.cs" />
 <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
