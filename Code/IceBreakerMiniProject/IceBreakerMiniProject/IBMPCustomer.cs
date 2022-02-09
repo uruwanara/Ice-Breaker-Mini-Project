@@ -3,20 +3,21 @@ using PX.Data;
 
 namespace IceBreakerMiniProject
 {
-  [Serializable]
-  [PXCacheName("IBMPCustomer")]
+
+  [PXCacheName("Customer")]
   public class IBMPCustomer : IBqlTable
   {
     #region CustomerID
-    [PXDBInt(IsKey = true)]
+    [PXDBIdentity(IsKey =true)]
+    //[PXDBInt(IsKey = true)]
     [PXUIField(DisplayName = "Customer ID")]
     public virtual int? CustomerID { get; set; }
     public abstract class customerID : PX.Data.BQL.BqlInt.Field<customerID> { }
     #endregion
 
     #region CustomerCD
-    [PXDBString(15, IsUnicode = true, InputMask = "")]
-    [PXUIField(DisplayName = "Customer CD")]
+    [PXDBString(15, IsUnicode = true, InputMask = ">aaaaaaaa")]
+    [PXUIField(DisplayName = "Customer ID")]
     public virtual string CustomerCD { get; set; }
     public abstract class customerCD : PX.Data.BQL.BqlString.Field<customerCD> { }
     #endregion
