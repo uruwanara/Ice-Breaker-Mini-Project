@@ -17,7 +17,7 @@ namespace IceBreakerMiniProject
 
     #region CustomerCD
     [PXDBString(15, IsUnicode = true, InputMask = ">aaaaaaaa")]
-    [PXUIField(DisplayName = "Customer ID")]
+    [PXUIField(DisplayName = "Customer ID", Required =true)]
     public virtual string CustomerCD { get; set; }
     public abstract class customerCD : PX.Data.BQL.BqlString.Field<customerCD> { }
     #endregion
