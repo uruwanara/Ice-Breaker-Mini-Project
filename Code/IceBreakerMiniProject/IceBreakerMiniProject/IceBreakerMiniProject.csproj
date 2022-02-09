@@ -67,6 +67,7 @@
 <Compile Include="IBMPSalesOrderLine.cs" />
 <Compile Include="IBMPProductionOrder.cs" />
 <Compile Include="IBMPProductionOrderLine.cs" />
+<Compile Include="IBMPCustomerInq.cs" />
 <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
