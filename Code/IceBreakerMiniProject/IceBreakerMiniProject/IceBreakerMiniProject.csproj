@@ -1,4 +1,4 @@
-﻿<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -69,7 +69,8 @@
     <Compile Include="IBMPProductionOrderLine.cs" />
     <Compile Include="IBMPCustomerInq.cs" />
     <Compile Include="IBMPSalesOrderMaint.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="IBMPProductionOrderMaint.cs" />
+<Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PXSave.cs" />
   </ItemGroup>
   <ItemGroup>

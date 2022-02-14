@@ -15,6 +15,7 @@
   <col name="LastModifiedByScreenID" type="Char(8)" />
   <col name="tstamp" type="Timestamp" />
   <col name="NoteID" type="UniqueIdentifier" />
+  <col name="Status" type="NChar(10)" nullable="true" />
   <index name="PK_IBMPSalesOrder" clustered="true" primary="true" unique="true">
     <col name="SalesOrderID" />
   </index>
