@@ -3,29 +3,25 @@ using PX.Data;
 
 namespace IceBreakerMiniProject
 {
- 
-  [PXCacheName("Warehouse")]
-  public class IBMPWarehouse : IBqlTable
-  {
-    #region WarehouseID
-        //[PXDBIdentity(IsKey = true)]
-        [PXDBInt(IsKey = true)]
-        [PXDefault]
-        [PXUIField(DisplayName = "Warehouse ID", Required = true)]
-        [PXSelector(typeof(Search<IBMPWarehouse.warehouseID>),
-        typeof(IBMPWarehouse.warehouseCD),
-        typeof(IBMPWarehouse.name),
-        SubstituteKey = typeof(IBMPWarehouse.warehouseCD),
-        DescriptionField = typeof(IBMPWarehouse.name))]
+    [PXCacheName("Warehouse")]
+    [PXPrimaryGraph(typeof(IBMPWarehouseMaint))]
+    public class IBMPWarehouse : IBqlTable
+    {
+        #region WarehouseID
+        [PXDBIdentity]
         public virtual int? WarehouseID { get; set; }
         public abstract class warehouseID : PX.Data.BQL.BqlInt.Field<warehouseID> {}
-    #endregion
+        #endregion
 
-    #region WarehouseCD
-    [PXDBString(15, IsUnicode = true, InputMask = "")]
-    [PXUIField(DisplayName = "Warehouse ID")]
-    public virtual string WarehouseCD { get; set; }
-    public abstract class warehouseCD : PX.Data.BQL.BqlString.Field<warehouseCD> { }
+        #region WarehouseCD
+        [PXDefault]
+        [PXDBString(15, IsUnicode = true, IsKey =true, InputMask = ">aaaaaaaaaaaaaaa")]
+        [PXUIField(DisplayName = "Warehouse")]
+        [PXSelector(typeof(Search<IBMPWarehouse.warehouseCD>),
+        typeof(IBMPWarehouse.warehouseCD),
+        typeof(IBMPWarehouse.name))]
+        public virtual string WarehouseCD { get; set; }
+        public abstract class warehouseCD : PX.Data.BQL.BqlString.Field<warehouseCD> { }
     #endregion
 
     #region Name
