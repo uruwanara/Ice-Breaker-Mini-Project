@@ -25,8 +25,17 @@
         </layout>
         <data>
             <SiteMap>
-                <row Position="21522" Title="Sales Order" Url="~/Pages/IB/IB204000.aspx" ScreenID="IB204000" NodeID="9a74e042-b2d5-4d07-a939-1c6d0f8f2b4d" ParentID="00000000-0000-0000-0000-000000000000" />
+                <row Position="21522" Title="Sales Order" Url="~/Pages/IB/IB204000.aspx" ScreenID="IB204000" NodeID="9a74e042-b2d5-4d07-a939-1c6d0f8f2b4d" ParentID="00000000-0000-0000-0000-000000000000">
+                    <MUIScreen IsPortal="0" WorkspaceID="0fd31f30-c998-45d9-874b-acef56fbff55" Order="50" SubcategoryID="aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa">
+                        <MUIPinnedScreen IsPortal="0" Username="" IsPinned="1" />
+                    </MUIScreen>
+                </row>
             </SiteMap>
+            <MUIWorkspace>
+                <row IsPortal="0" WorkspaceID="0fd31f30-c998-45d9-874b-acef56fbff55" Order="16" Title="Ice Breaker Mini Project" Icon="cran" IsSystem="0">
+                    <MUIFavoriteWorkspace IsPortal="0" Username="" IsFavorite="1" />
+                </row>
+            </MUIWorkspace>
         </data>
     </data-set>
 </SiteMapNode>
