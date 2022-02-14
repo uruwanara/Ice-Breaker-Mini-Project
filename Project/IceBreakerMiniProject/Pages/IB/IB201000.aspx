@@ -15,16 +15,16 @@
 	<px:PXFormView SkinID="" ID="form" runat="server" DataSourceID="ds" DataMember="Warehouses" Width="99%" Height="" AllowAutoHide="false">
 		<Template>
 		<px:PXLayoutRule ControlSize="M" LabelsWidth="S" ID="PXLayoutRule1" runat="server" StartRow="True"></px:PXLayoutRule>
-			<px:PXSelector runat="server" ID="CstPXSelector3" DataField="WarehouseID" ></px:PXSelector>
+			<px:PXSelector runat="server" ID="CstPXSelector4" DataField="WarehouseCD" />
 			<px:PXTextEdit runat="server" ID="CstPXTextEdit3" DataField="Name" ></px:PXTextEdit></Template>
 	</px:PXFormView>
 </asp:Content>
 <asp:Content ID="cont3" ContentPlaceHolderID="phG" Runat="Server">
-	<px:PXTab ID="tab" runat="server" Width="100%" Height="150px" DataSourceID="ds" AllowAutoHide="false">
+	<px:PXTab ID="tab" runat="server" Width="99%" Height="150px" DataSourceID="ds" AllowAutoHide="false">
 		<Items>
 			<px:PXTabItem Text="Locations">
 				<Template>
-					<px:PXGrid Width="100%" SkinID="Details" runat="server" ID="CstPXGrid2">
+					<px:PXGrid AutoAdjustColumns="True" Width="100%" SkinID="Details" runat="server" ID="CstPXGrid2">
 						<Levels>
 							<px:PXGridLevel DataMember="WarehouseLocations" >
 								<Columns>
