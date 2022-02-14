@@ -22,7 +22,7 @@ namespace IceBreakerMiniProject
         typeof(IBMPWarehouse.name))]
         public virtual string WarehouseCD { get; set; }
         public abstract class warehouseCD : PX.Data.BQL.BqlString.Field<warehouseCD> { }
-    #endregion
+        #endregion
 
     #region Name
     [PXDBString(50, IsUnicode = true, InputMask = "")]
