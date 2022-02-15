@@ -1,48 +1,43 @@
 using System;
 using PX.Data;
+using PX.Data.BQL.Fluent;
 
 namespace IceBreakerMiniProject
 {
     [Serializable]
-    [PXCacheName("Warehouse")]
-    public class IBMPWarehouse : IBqlTable
+    [PXCacheName("IBMPLocationInventory")]
+    public class IBMPLocationInventory : IBqlTable
     {
-        #region WarehouseID
-        //[PXDBIdentity(IsKey = true)]
+        #region LocationID
         [PXDBInt(IsKey = true)]
-        [PXDefault]
-        [PXUIField(DisplayName = "Warehouse ID", Required = true)]
-        [PXSelector(
-            typeof(Search<IBMPWarehouse.warehouseID>),
-            typeof(IBMPWarehouse.warehouseCD),
-            typeof(IBMPWarehouse.name),
-            SubstituteKey = typeof(IBMPWarehouse.warehouseCD),
-            DescriptionField = typeof(IBMPWarehouse.name)
-        )]
-        public virtual int? WarehouseID { get; set; }
-        public abstract class warehouseID : PX.Data.BQL.BqlInt.Field<warehouseID> { }
+        [PXUIField(DisplayName = "Location ID")]
+        [PXDBDefault(typeof(IBMPWarehouseLocation.locationID))]
+        [PXParent(typeof(SelectFrom<IBMPWarehouseLocation>
+            .Where<IBMPWarehouseLocation.locationID
+                .IsEqual<IBMPLocationInventory.locationID.FromCurrent>>))]
+        public virtual int? LocationID { get; set; }
+        public abstract class locationID : PX.Data.BQL.BqlInt.Field<locationID> { }
         #endregion
 
-        #region WarehouseCD
-        [PXDBString(15, IsUnicode = true, InputMask = "")]
-        [PXUIField(DisplayName = "Warehouse CD")]
-        public virtual string WarehouseCD { get; set; }
-        public abstract class warehouseCD : PX.Data.BQL.BqlString.Field<warehouseCD> { }
+        #region InventoryID
+        [PXDBInt(IsKey = true)]
+        [PXUIField(DisplayName = "Inventory ID")]
+        public virtual int? InventoryID { get; set; }
+        public abstract class inventoryID : PX.Data.BQL.BqlInt.Field<inventoryID> { }
         #endregion
 
-        #region Name
-        [PXDBString(50, IsUnicode = true, InputMask = "")]
-        [PXUIField(DisplayName = "Name")]
-        public virtual string Name { get; set; }
-        public abstract class name : PX.Data.BQL.BqlString.Field<name> { }
-        #endregion
-
-        #region LocationLineCntr
+        #region QtyHand
         [PXDBInt()]
-        [PXDefault(0)]
-        [PXUIField(DisplayName = "Location Line Cntr")]
-        public virtual int? LocationLineCntr { get; set; }
-        public abstract class locationLineCntr : PX.Data.BQL.BqlInt.Field<locationLineCntr> { }
+        [PXUIField(DisplayName = "Qty Hand")]
+        public virtual int? QtyHand { get; set; }
+        public abstract class qtyHand : PX.Data.BQL.BqlInt.Field<qtyHand> { }
+        #endregion
+
+        #region QtyReserved
+        [PXDBInt()]
+        [PXUIField(DisplayName = "Qty Reserved")]
+        public virtual int? QtyReserved { get; set; }
+        public abstract class qtyReserved : PX.Data.BQL.BqlInt.Field<qtyReserved> { }
         #endregion
 
         #region CreatedDateTime
@@ -93,5 +88,6 @@ namespace IceBreakerMiniProject
         public virtual Guid? Noteid { get; set; }
         public abstract class noteid : PX.Data.BQL.BqlGuid.Field<noteid> { }
         #endregion
+
     }
 }

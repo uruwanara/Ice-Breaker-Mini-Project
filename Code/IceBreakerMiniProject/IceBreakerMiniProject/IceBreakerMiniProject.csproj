@@ -57,12 +57,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants.cs" />
     <Compile Include="Examples.cs" />
+    <Compile Include="IBMPStockItems.cs" />
     <Compile Include="IBMPWarehouse.cs" />
     <Compile Include="IBMPWarehouseLocation.cs" />
     <Compile Include="IBMPWarehouseMaint.cs" />
     <Compile Include="IBMPCustomer.cs" />
-<Compile Include="IBMPCustomerMaint.cs" />
+    <Compile Include="IBMPCustomerMaint.cs" />
+    <Compile Include="IBMPInventory.cs" />
+    <Compile Include="IBMPStockItemsMaint.cs" />
+    <Compile Include="IBMPNonStockItems.cs" />
+<Compile Include="IBMPLocationInventory.cs" />
+<Compile Include="IBMPNonStockItemsMaint.cs" />
 <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

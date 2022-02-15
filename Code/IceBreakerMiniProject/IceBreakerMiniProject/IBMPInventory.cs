@@ -3,46 +3,62 @@ using PX.Data;
 
 namespace IceBreakerMiniProject
 {
-    [Serializable]
-    [PXCacheName("Warehouse")]
-    public class IBMPWarehouse : IBqlTable
+    [PXCacheName("Inventory")]
+    public class IBMPInventory : IBqlTable
     {
-        #region WarehouseID
-        //[PXDBIdentity(IsKey = true)]
-        [PXDBInt(IsKey = true)]
-        [PXDefault]
-        [PXUIField(DisplayName = "Warehouse ID", Required = true)]
-        [PXSelector(
-            typeof(Search<IBMPWarehouse.warehouseID>),
-            typeof(IBMPWarehouse.warehouseCD),
-            typeof(IBMPWarehouse.name),
-            SubstituteKey = typeof(IBMPWarehouse.warehouseCD),
-            DescriptionField = typeof(IBMPWarehouse.name)
-        )]
-        public virtual int? WarehouseID { get; set; }
-        public abstract class warehouseID : PX.Data.BQL.BqlInt.Field<warehouseID> { }
+        #region InventoryID
+        [PXDBIdentity]
+        public virtual int? InventoryID { get; set; }
+        public abstract class inventoryID : PX.Data.BQL.BqlInt.Field<inventoryID> { }
         #endregion
 
-        #region WarehouseCD
+        #region InventoryCD
         [PXDBString(15, IsUnicode = true, InputMask = "")]
-        [PXUIField(DisplayName = "Warehouse CD")]
-        public virtual string WarehouseCD { get; set; }
-        public abstract class warehouseCD : PX.Data.BQL.BqlString.Field<warehouseCD> { }
+        [PXDefault]
+        [PXUIField(DisplayName = "Inventory CD")]
+        public virtual string InventoryCD { get; set; }
+        public abstract class inventoryCD : PX.Data.BQL.BqlString.Field<inventoryCD> { }
         #endregion
 
-        #region Name
+        #region Description
         [PXDBString(50, IsUnicode = true, InputMask = "")]
-        [PXUIField(DisplayName = "Name")]
-        public virtual string Name { get; set; }
-        public abstract class name : PX.Data.BQL.BqlString.Field<name> { }
+        [PXUIField(DisplayName = "Description")]
+        public virtual string Description { get; set; }
+        public abstract class description : PX.Data.BQL.BqlString.Field<description> { }
         #endregion
 
-        #region LocationLineCntr
+        #region Price
+        [PXDBDecimal()]
+        [PXUIField(DisplayName = "Price")]
+        public virtual Decimal? Price { get; set; }
+        public abstract class price : PX.Data.BQL.BqlDecimal.Field<price> { }
+        #endregion
+
+        #region PartType
+        [PXDBString(15, IsUnicode = true, InputMask = "")]
+        [PXUIField(DisplayName = "Part Type")]
+        public virtual string PartType { get; set; }
+        public abstract class partType : PX.Data.BQL.BqlString.Field<partType> { }
+        #endregion
+
+        #region InventoryType
+        [PXDBString(15, IsUnicode = true, InputMask = "")]
+        [PXUIField(DisplayName = "Inventory Type")]
+        [PXStringList(
+            new string[]
+        { IceBreakerMiniProject.InventoryType.Stock ,
+            IceBreakerMiniProject.InventoryType.NonStock
+        },
+            new string[] { "ss", "kk" })]
+        public virtual string InventoryType { get; set; }
+        public abstract class inventoryType : PX.Data.BQL.BqlString.Field<inventoryType> { }
+        #endregion
+
+        #region LineCntr
         [PXDBInt()]
-        [PXDefault(0)]
-        [PXUIField(DisplayName = "Location Line Cntr")]
-        public virtual int? LocationLineCntr { get; set; }
-        public abstract class locationLineCntr : PX.Data.BQL.BqlInt.Field<locationLineCntr> { }
+        [PXUIField(DisplayName = "Line Cntr")]
+        public virtual int? LineCntr { get; set; }
+        public abstract class lineCntr : PX.Data.BQL.BqlInt.Field<lineCntr> { }
         #endregion
 
         #region CreatedDateTime
