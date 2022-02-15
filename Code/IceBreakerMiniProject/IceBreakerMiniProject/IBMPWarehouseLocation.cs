@@ -14,8 +14,16 @@ namespace IceBreakerMiniProject
         #endregion
 
         #region LocationCD
-        [PXDBString(15, IsUnicode = true, InputMask = "")]
-        [PXUIField(DisplayName = "Location ID")]
+        [PXDBString(15, IsUnicode = true)]
+        [PXDBDefault]
+        [PXUIField(DisplayName = "Location")]
+        [PXSelector(
+            typeof(
+                Search<IBMPWarehouseLocation.locationCD>
+            ),
+            typeof(IBMPWarehouseLocation.locationCD),
+            typeof(IBMPWarehouseLocation.description)
+        )]
         public virtual string LocationCD { get; set; }
         public abstract class locationCD : PX.Data.BQL.BqlString.Field<locationCD> { }
         #endregion

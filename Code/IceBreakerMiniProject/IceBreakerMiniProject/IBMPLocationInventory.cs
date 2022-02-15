@@ -4,14 +4,12 @@ using PX.Data.BQL.Fluent;
 
 namespace IceBreakerMiniProject
 {
-    [Serializable]
     [PXCacheName("IBMPLocationInventory")]
     public class IBMPLocationInventory : IBqlTable
     {
         #region LocationID
         [PXDBInt(IsKey = true)]
-        [PXUIField(DisplayName = "Location ID")]
-        [PXDBDefault(typeof(IBMPWarehouseLocation.locationID))]
+        //[PXDBDefault(typeof(IBMPWarehouseLocation.locationID))]
         [PXParent(typeof(SelectFrom<IBMPWarehouseLocation>
             .Where<IBMPWarehouseLocation.locationID
                 .IsEqual<IBMPLocationInventory.locationID.FromCurrent>>))]

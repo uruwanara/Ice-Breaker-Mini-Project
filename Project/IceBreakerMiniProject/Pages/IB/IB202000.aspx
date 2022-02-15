@@ -17,8 +17,8 @@
 		<Template>
 			<px:PXLayoutRule ID="PXLayoutRule1" runat="server" StartRow="True"></px:PXLayoutRule>
 			<px:PXSelector runat="server" ID="CstPXSelector12" DataField="InventoryCD" ></px:PXSelector>
-			<px:PXTextEdit runat="server" ID="CstPXTextEdit1" DataField="Description" ></px:PXTextEdit>
 			<px:PXDropDown runat="server" ID="CstPXDropDown13" DataField="PartType" ></px:PXDropDown>
+			<px:PXTextEdit runat="server" ID="CstPXTextEdit14" DataField="Description" ></px:PXTextEdit>
 			<px:PXNumberEdit runat="server" ID="CstPXNumberEdit4" DataField="Price" ></px:PXNumberEdit></Template>
 	
 		<ContentLayout AutoSizeControls="False" ></ContentLayout></px:PXFormView>
