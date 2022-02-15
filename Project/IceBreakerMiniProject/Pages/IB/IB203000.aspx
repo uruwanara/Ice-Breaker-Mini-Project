@@ -15,7 +15,7 @@
 	<px:PXFormView ID="form" runat="server" DataSourceID="ds" DataMember="NonStockItems" Width="100%" AllowAutoHide="false">
 		<Template>
 			<px:PXLayoutRule ID="PXLayoutRule1" runat="server" StartRow="True"></px:PXLayoutRule>
-			<px:PXSelector runat="server" ID="CstPXSelector4" DataField="InventoryID" ></px:PXSelector>
+			<px:PXSelector runat="server" ID="CstPXSelector5" DataField="InventoryCD" ></px:PXSelector>
 			<px:PXTextEdit runat="server" ID="CstPXTextEdit1" DataField="Description" ></px:PXTextEdit>
 			<px:PXNumberEdit runat="server" ID="CstPXNumberEdit3" DataField="Price" ></px:PXNumberEdit></Template>
 		<AutoSize Container="Window" Enabled="True" MinHeight="200" ></AutoSize>

@@ -23,10 +23,21 @@ namespace IceBreakerMiniProject
             }
         }
 
+        public const string nonStockItemConstant = "NONSTOCK";
+        public class nonStockItem : PX.Data.BQL.BqlString.Constant<nonStockItem>
+        {
+            public nonStockItem()
+            : base(nonStockItemConstant)
+            {
+            }
+        }
+
+
         public static class PartType
         {
             public const string Manufactured = "MANUFACTURED";
             public const string Purchased = "PURCHASED";
+            public const string NoPart = "NOPART";
         }
 
 

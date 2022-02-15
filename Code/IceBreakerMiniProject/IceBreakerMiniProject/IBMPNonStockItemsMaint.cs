@@ -10,26 +10,9 @@ namespace IceBreakerMiniProject
         new public PXSave<IBMPNonStockItems> Save;
         new public PXCancel<IBMPNonStockItems> Cancel;
 
-        public PXFilter<MasterTable> MasterView;
-        public PXFilter<DetailsTable> DetailsView;
-
         #region Data Views
         public SelectFrom<IBMPNonStockItems>.View NonStockItems;
         #endregion
-
-
-        [Serializable]
-        public class MasterTable : IBqlTable
-        {
-
-        }
-
-        [Serializable]
-        public class DetailsTable : IBqlTable
-        {
-
-        }
-
 
     }
 }

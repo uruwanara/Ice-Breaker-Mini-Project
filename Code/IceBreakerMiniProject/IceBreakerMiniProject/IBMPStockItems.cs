@@ -42,11 +42,9 @@ namespace IceBreakerMiniProject
         new public abstract class partType : PX.Data.BQL.BqlString.Field<partType> { }
         #endregion
 
-
         #region InventoryType
         [PXDefault(typeof(Constant.stockItem))]
         [PXDBString(15, IsUnicode = true, InputMask = "")]
-        [PXUIField(DisplayName = "Inventory Type")]
         new public virtual string InventoryType { get; set; }
         new public abstract class inventoryType : PX.Data.BQL.BqlString.Field<inventoryType> { }
         #endregion

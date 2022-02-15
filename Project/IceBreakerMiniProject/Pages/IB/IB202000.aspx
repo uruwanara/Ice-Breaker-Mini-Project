@@ -7,12 +7,13 @@
         PrimaryView="StockItems"
         >
 		<CallbackCommands>
-
+			<px:PXDSCallbackCommand Name="Last" ></px:PXDSCallbackCommand>
+			<px:PXDSCallbackCommand Visible="True" Name="Save" ></px:PXDSCallbackCommand>
 		</CallbackCommands>
 	</px:PXDataSource>
 </asp:Content>
 <asp:Content ID="cont2" ContentPlaceHolderID="phF" Runat="Server">
-	<px:PXFormView ID="form" runat="server" DataSourceID="ds" DataMember="StockItems" Width="100%" Height="150px" AllowAutoHide="false">
+	<px:PXFormView ID="form" runat="server" DataSourceID="ds" DataMember="StockItems" Width="99%" Height="150px" AllowAutoHide="false">
 		<Template>
 			<px:PXLayoutRule ID="PXLayoutRule1" runat="server" StartRow="True"></px:PXLayoutRule>
 			<px:PXSelector runat="server" ID="CstPXSelector12" DataField="InventoryCD" ></px:PXSelector>
@@ -23,17 +24,18 @@
 		<ContentLayout AutoSizeControls="False" ></ContentLayout></px:PXFormView>
 </asp:Content>
 <asp:Content ID="cont3" ContentPlaceHolderID="phG" Runat="Server">
-	<px:PXTab ID="tab" runat="server" Width="100%" Height="150px" DataSourceID="ds" AllowAutoHide="false">
+	<px:PXTab ID="tab" runat="server" Width="99%" Height="150px" DataSourceID="ds" AllowAutoHide="false">
 		<Items>
 			<px:PXTabItem Text="Warehouse Locations">
 				<Template>
-					<px:PXGrid Width="100%" SkinID="Details" runat="server" ID="CstPXGrid11">
+					<px:PXGrid Width="100%" SkinID="Details" runat="server" ID="CstPXGrid11" AutoAdjustColumns="True">
 						<Levels>
 							<px:PXGridLevel DataMember="InventoryLocations" >
 								<Columns>
 									<px:PXGridColumn DataField="IBMPWarehouseLocation__LocationCD" Width="140" ></px:PXGridColumn>
 									<px:PXGridColumn DataField="QtyReserved" Width="70" ></px:PXGridColumn>
 									<px:PXGridColumn DataField="QtyHand" Width="70" ></px:PXGridColumn></Columns></px:PXGridLevel></Levels>
+						<AutoSize Enabled="True" ></AutoSize>
 						<Mode InitNewRow="True" ></Mode></px:PXGrid></Template>
 			</px:PXTabItem></Items>
 		<AutoSize Container="Window" Enabled="True" MinHeight="150" ></AutoSize>
