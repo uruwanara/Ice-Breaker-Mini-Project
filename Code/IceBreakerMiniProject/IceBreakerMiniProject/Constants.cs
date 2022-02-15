@@ -6,10 +6,30 @@ using System.Threading.Tasks;
 
 namespace IceBreakerMiniProject
 {
-    public static class InventoryType
+    public static class Constant
     {
-        public const string Stock = "Stock";
-        public const string NonStock = "NonStock";
+        public static class InventoryType
+        {
+            public const string Stock = "STOCK";
+            public const string NonStock = "NONSTOCK";
+        }
+
+        public const string stockItemConstant = "STOCK";
+        public class stockItem : PX.Data.BQL.BqlString.Constant<stockItem>
+        {
+            public stockItem()
+            : base(stockItemConstant)
+            {
+            }
+        }
+
+        public static class PartType
+        {
+            public const string Manufactured = "MANUFACTURED";
+            public const string Purchased = "PURCHASED";
+        }
+
+
     }
 
 }

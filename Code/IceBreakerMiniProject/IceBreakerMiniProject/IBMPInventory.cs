@@ -44,17 +44,12 @@ namespace IceBreakerMiniProject
         #region InventoryType
         [PXDBString(15, IsUnicode = true, InputMask = "")]
         [PXUIField(DisplayName = "Inventory Type")]
-        [PXStringList(
-            new string[]
-        { IceBreakerMiniProject.InventoryType.Stock ,
-            IceBreakerMiniProject.InventoryType.NonStock
-        },
-            new string[] { "ss", "kk" })]
         public virtual string InventoryType { get; set; }
         public abstract class inventoryType : PX.Data.BQL.BqlString.Field<inventoryType> { }
         #endregion
 
         #region LineCntr
+        [PXDefault(0)]
         [PXDBInt()]
         [PXUIField(DisplayName = "Line Cntr")]
         public virtual int? LineCntr { get; set; }
