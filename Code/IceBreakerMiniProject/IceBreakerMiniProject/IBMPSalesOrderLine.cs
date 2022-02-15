@@ -4,51 +4,67 @@ using PX.Data.BQL.Fluent;
 
 namespace IceBreakerMiniProject
 {
-    [PXCacheName("IBMPWarehouseLocation")]
-    public class IBMPWarehouseLocation : IBqlTable
+    [PXCacheName("IBMPSalesOrderLine")]
+    public class IBMPSalesOrderLine : IBqlTable
     {
-        #region LocationID
-        [PXDBIdentity]
-        public virtual int? LocationID { get; set; }
-        public abstract class locationID : PX.Data.BQL.BqlInt.Field<locationID> { }
-        #endregion
-
-        #region LocationCD
-        [PXDBString(15, IsUnicode = true, InputMask = "")]
-        [PXUIField(DisplayName = "Location ID")]
-        public virtual string LocationCD { get; set; }
-        public abstract class locationCD : PX.Data.BQL.BqlString.Field<locationCD> { }
-        #endregion
-
-        #region WarehouseID
+        #region SalesOrderID
         [PXDBInt(IsKey = true)]
-        [PXDBDefault(typeof(IBMPWarehouse.warehouseID))]
-        [PXUIField(DisplayName = "Warehouse")]
-        [PXParent(typeof(SelectFrom<IBMPWarehouse>.Where<IBMPWarehouse.warehouseID.IsEqual<IBMPWarehouseLocation.warehouseID.FromCurrent>>))]
-        public virtual int? WarehouseID { get; set; }
-        public abstract class warehouseID : PX.Data.BQL.BqlInt.Field<warehouseID> { }
-        #endregion
-
-        #region Description
-        [PXDBString(15, IsUnicode = true, InputMask = "")]
-        [PXUIField(DisplayName = "Description")]
-        public virtual string Description { get; set; }
-        public abstract class description : PX.Data.BQL.BqlString.Field<description> { }
+        [PXDefault(typeof(IBMPSalesOrder.salesOrderID))]
+        [PXParent(typeof(SelectFrom<IBMPSalesOrder>.Where<IBMPSalesOrder.salesOrderID.IsEqual<IBMPSalesOrderLine.salesOrderID.FromCurrent>>))]
+        public virtual int? SalesOrderID { get; set; }
+        public abstract class salesOrderID : PX.Data.BQL.BqlInt.Field<salesOrderID> { }
         #endregion
 
         #region LineNbr
         [PXDBInt(IsKey = true)]
-        [PXLineNbr(typeof(IBMPWarehouse.locationLineCntr))]
+        [PXLineNbr(typeof(IBMPSalesOrder.lineCntr))]
         [PXUIField(DisplayName = "Line Nbr.", Visible = false)]
         public virtual int? LineNbr { get; set; }
         public abstract class lineNbr : PX.Data.BQL.BqlInt.Field<lineNbr> { }
         #endregion
 
-        #region Address
-        [PXDBString(50, IsUnicode = true, InputMask = "")]
-        [PXUIField(DisplayName = "Address")]
-        public virtual string Address { get; set; }
-        public abstract class address : PX.Data.BQL.BqlString.Field<address> { }
+        #region Partid
+        [PXDBInt()]
+        [PXUIField(DisplayName = "Partid")]
+        public virtual int? Partid { get; set; }
+        public abstract class partid : PX.Data.BQL.BqlInt.Field<partid> { }
+        #endregion
+
+        #region ServiceID
+        [PXDBInt()]
+        [PXUIField(DisplayName = "Service ID")]
+        public virtual int? ServiceID { get; set; }
+        public abstract class serviceID : PX.Data.BQL.BqlInt.Field<serviceID> { }
+        #endregion
+
+        #region Qty
+        [PXDBInt()]
+        [PXUIField(DisplayName = "Qty")]
+        public virtual int? Qty { get; set; }
+        public abstract class qty : PX.Data.BQL.BqlInt.Field<qty> { }
+        #endregion
+
+        #region Price
+        [PXDBDecimal()]
+        [PXUIField(DisplayName = "Price")]
+        public virtual Decimal? Price { get; set; }
+        public abstract class price : PX.Data.BQL.BqlDecimal.Field<price> { }
+        #endregion
+
+        #region Total Price
+        [PXDecimal]
+        [PXDefault(TypeCode.Decimal, "0.0", PersistingCheck = PXPersistingCheck.Nothing)]
+        [PXUIField(DisplayName = "Total Price")]
+        [PXFormula(typeof(Mult<IBMPSalesOrderLine.qty,IBMPSalesOrderLine.price>))]
+        public virtual Decimal? TotalPrice { get; set; }
+        public abstract class totalprice : PX.Data.BQL.BqlDecimal.Field<price> { }
+        #endregion
+
+        #region Status
+        [PXDBString(15, IsUnicode = true, InputMask = "")]
+        [PXUIField(DisplayName = "Status")]
+        public virtual string Status { get; set; }
+        public abstract class status : PX.Data.BQL.BqlString.Field<status> { }
         #endregion
 
         #region CreatedDateTime

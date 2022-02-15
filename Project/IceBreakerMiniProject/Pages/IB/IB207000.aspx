@@ -12,17 +12,10 @@
 	</px:PXDataSource>
 </asp:Content>
 <asp:Content ID="cont2" ContentPlaceHolderID="phL" runat="Server">
-	<px:PXGrid ID="grid" runat="server" DataSourceID="ds" Width="100%" Height="150px" SkinID="Primary" AllowAutoHide="false">
-		<Levels>
-			<px:PXGridLevel DataMember="Customers">
-			    <Columns>
-				<px:PXGridColumn DataField="Name" Width="140" ></px:PXGridColumn>
-				<px:PXGridColumn DataField="Address" Width="280" ></px:PXGridColumn>
-				<px:PXGridColumn DataField="Contact" Width="120" ></px:PXGridColumn></Columns>
-			</px:PXGridLevel>
-		</Levels>
-		<AutoSize Container="Window" Enabled="True" MinHeight="150" />
-		<ActionBar >
-		</ActionBar>
-	</px:PXGrid>
-</asp:Content>
+	<px:PXFormView runat="server" ID="CstFormView1" DataMember="Customers" SkinID="" Width="100%" Height="150px" >
+		<Template>
+			<px:PXLayoutRule runat="server" ID="CstPXLayoutRule10" StartRow="True" />
+			<px:PXSelector runat="server" ID="CstPXSelector9" DataField="CustomerCD" ></px:PXSelector>
+			<px:PXTextEdit runat="server" ID="CstPXTextEdit5" DataField="Name" ></px:PXTextEdit>
+			<px:PXTextEdit runat="server" ID="CstPXTextEdit2" DataField="Address" ></px:PXTextEdit>
+			<px:PXTextEdit runat="server" ID="CstPXTextEdit3" DataField="Contact" ></px:PXTextEdit></Template></px:PXFormView></asp:Content>

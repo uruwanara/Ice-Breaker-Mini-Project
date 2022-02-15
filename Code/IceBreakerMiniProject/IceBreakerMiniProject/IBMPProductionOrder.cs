@@ -3,40 +3,46 @@ using PX.Data;
 
 namespace IceBreakerMiniProject
 {
-    [PXCacheName("Warehouse")]
-    [PXPrimaryGraph(typeof(IBMPWarehouseMaint))]
-    public class IBMPWarehouse : IBqlTable
+    [PXCacheName("IBMPProductionOrder")]
+    [PXPrimaryGraph(typeof(IBMPProductionOrder))]
+    public class IBMPProductionOrder : IBqlTable
     {
-        #region WarehouseID
-        [PXDBIdentity]
-        public virtual int? WarehouseID { get; set; }
-        public abstract class warehouseID : PX.Data.BQL.BqlInt.Field<warehouseID> {}
+        #region ProductionOrderID
+        [PXDBIdentity()]
+        public virtual int? ProductionOrderID { get; set; }
+        public abstract class productionOrderID : PX.Data.BQL.BqlInt.Field<productionOrderID> { }
         #endregion
 
-        #region WarehouseCD
+        #region ProductionOrderCD
         [PXDefault]
-        [PXDBString(15, IsUnicode = true, IsKey =true, InputMask = ">aaaaaaaaaaaaaaa")]
-        [PXUIField(DisplayName = "Warehouse")]
-        [PXSelector(typeof(Search<IBMPWarehouse.warehouseCD>),
-        typeof(IBMPWarehouse.warehouseCD),
-        typeof(IBMPWarehouse.name))]
-        public virtual string WarehouseCD { get; set; }
-        public abstract class warehouseCD : PX.Data.BQL.BqlString.Field<warehouseCD> { }
+        [PXDBString(15, IsUnicode = true,IsKey =true, InputMask = "")]
+        [PXUIField(DisplayName = "Production Order")]
+        [PXSelector(typeof(Search<IBMPProductionOrder.productionOrderCD>),
+            typeof(IBMPProductionOrder.productionOrderCD),
+            typeof(IBMPProductionOrder.status))]
+        public virtual string ProductionOrderCD { get; set; }
+        public abstract class productionOrderCD : PX.Data.BQL.BqlString.Field<productionOrderCD> { }
         #endregion
 
-        #region Name
-        [PXDBString(50, IsUnicode = true, InputMask = "")]
-        [PXUIField(DisplayName = "Name")]
-        public virtual string Name { get; set; }
-        public abstract class name : PX.Data.BQL.BqlString.Field<name> { }
+        #region OrderDate
+        [PXDBDate()]
+        [PXUIField(DisplayName = "Order Date")]
+        public virtual DateTime? OrderDate { get; set; }
+        public abstract class orderDate : PX.Data.BQL.BqlDateTime.Field<orderDate> { }
         #endregion
 
-        #region LocationLineCntr
-        [PXDBInt()]
-        [PXDefault(0)]
-        [PXUIField(DisplayName = "Location Line Cntr")]
-        public virtual int? LocationLineCntr { get; set; }
-        public abstract class locationLineCntr : PX.Data.BQL.BqlInt.Field<locationLineCntr> { }
+        #region RequiredDate
+        [PXDBDate()]
+        [PXUIField(DisplayName = "Required Date")]
+        public virtual DateTime? RequiredDate { get; set; }
+        public abstract class requiredDate : PX.Data.BQL.BqlDateTime.Field<requiredDate> { }
+        #endregion
+
+        #region Status
+        [PXDBString(15, IsUnicode = true, InputMask = "")]
+        [PXUIField(DisplayName = "Status")]
+        public virtual string Status { get; set; }
+        public abstract class status : PX.Data.BQL.BqlString.Field<status> { }
         #endregion
 
         #region CreatedDateTime
