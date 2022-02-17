@@ -14,11 +14,10 @@ namespace IceBreakerMiniProject
             public const string NonStock = "NONSTOCK";
         }
 
-        public const string stockItemConstant = "STOCK";
         public class stockItem : PX.Data.BQL.BqlString.Constant<stockItem>
         {
             public stockItem()
-            : base(stockItemConstant)
+            : base(InventoryType.Stock)
             {
             }
         }
@@ -27,7 +26,7 @@ namespace IceBreakerMiniProject
         public class nonStockItem : PX.Data.BQL.BqlString.Constant<nonStockItem>
         {
             public nonStockItem()
-            : base(nonStockItemConstant)
+            : base(InventoryType.NonStock)
             {
             }
         }
@@ -40,6 +39,13 @@ namespace IceBreakerMiniProject
             public const string NoPart = "NOPART";
         }
 
+        public class manufacturedItem : PX.Data.BQL.BqlString.Constant<manufacturedItem>
+        {
+            public manufacturedItem()
+            : base(PartType.Manufactured)
+            {
+            }
+        }
 
     }
 

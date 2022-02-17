@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="Examples.cs" />
+    <Compile Include="IBMPManufacturedItems.cs" />
     <Compile Include="IBMPStockItems.cs" />
     <Compile Include="IBMPWarehouse.cs" />
     <Compile Include="IBMPWarehouseLocation.cs" />
@@ -78,6 +79,8 @@
     <Compile Include="IBMPSalesOrderMaint.cs" />
     <Compile Include="IBMPProductionOrderMaint.cs" />
     <Compile Include="Messages.cs" />
+    <Compile Include="IBMPBOMMaint.cs" />
+    <Compile Include="IBMPBOM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PXSave.cs" />
   </ItemGroup>
