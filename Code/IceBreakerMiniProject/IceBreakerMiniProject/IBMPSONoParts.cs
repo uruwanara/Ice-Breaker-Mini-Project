@@ -2,9 +2,8 @@
 using PX.Data;
 namespace IceBreakerMiniProject
 {
-    [PXCacheName("SOParts")]
-    [PXPrimaryGraph(typeof(IBMPSalesOrderMaint))]
-    public class IBMPSOParts : IBMPSalesOrderLine
+    [PXCacheName("SONoParts")]
+    public class IBMPSONoParts : IBMPSalesOrderLine
     {
         #region Partid
         [PXDBInt(IsKey = true)]
@@ -13,12 +12,12 @@ namespace IceBreakerMiniProject
         [PXSelector(
               typeof(
                   Search<IBMPInventory.inventoryID,
-                      Where<IBMPInventory.inventoryType.IsEqual<Constant.stockItem>>>
+                      Where<IBMPInventory.inventoryType.IsEqual<Constant.nonStockItem>>>
               ),
               typeof(IBMPInventory.inventoryCD),
               typeof(IBMPInventory.price)
-            //,SubstituteKey =typeof(IBMPInventory.inventoryCD),
-            //DescriptionField =typeof(IBMPInventory.description)
+          , SubstituteKey = typeof(IBMPInventory.inventoryCD),
+          DescriptionField = typeof(IBMPInventory.description)
 
           )]
         public virtual int? Partid { get; set; }
