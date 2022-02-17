@@ -6,13 +6,16 @@ namespace IceBreakerMiniProject
 {
     public class IBMPSalesOrderMaint : PXGraph<IBMPSalesOrderMaint, IBMPSalesOrder>
     {
-
-      //  public PXSave<IBMPSalesOrder> Save;
-       // public PXCancel<IBMPSalesOrder> Cancel;
-
         #region View
         public SelectFrom<IBMPSalesOrder>.View SalesOrders;
-        public SelectFrom<IBMPSalesOrderLine>.Where<IBMPSalesOrderLine.salesOrderID.IsEqual<IBMPSalesOrder.salesOrderID.FromCurrent>>.View SalesOrderLines;
+
+        public SelectFrom<IBMPSOParts>.Where<IBMPSOParts.salesOrderID.IsEqual<IBMPSalesOrder.salesOrderID.FromCurrent>>.View Parts;
+        public SelectFrom<IBMPSONoParts>.Where<IBMPSONoParts.salesOrderID.IsEqual<IBMPSalesOrder.salesOrderID.FromCurrent>>.View NoParts;
+
+        //public SelectFrom<IBMPSalesOrderLine>.
+        //    InnerJoin<IBMPNonStockItems>.On<IBMPSalesOrderLine.partid.IsEqual<IBMPNonStockItems.inventoryID>>.
+        //    Where<IBMPSalesOrderLine.salesOrderID.IsEqual<IBMPSalesOrder.salesOrderID.FromCurrent>.
+        //    And<IBMPNonStockItems.inventoryType.IsEqual<Constant.nonStockItem>>>.View NoParts;
         #endregion
 
     }

@@ -32,7 +32,7 @@
 						<Levels>
 							<px:PXGridLevel DataMember="InventoryLocations" >
 								<Columns>
-									<px:PXGridColumn DataField="IBMPWarehouseLocation__LocationCD" Width="140" ></px:PXGridColumn>
+									<px:PXGridColumn DataField="LocationID" Width="140" />
 									<px:PXGridColumn DataField="QtyReserved" Width="70" ></px:PXGridColumn>
 									<px:PXGridColumn DataField="QtyHand" Width="70" ></px:PXGridColumn></Columns></px:PXGridLevel></Levels>
 						<AutoSize Enabled="True" ></AutoSize>

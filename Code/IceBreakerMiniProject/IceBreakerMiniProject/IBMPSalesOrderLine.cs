@@ -24,17 +24,10 @@ namespace IceBreakerMiniProject
         #endregion
 
         #region Partid
-        [PXDBInt()]
-        [PXUIField(DisplayName = "Partid")]
+        [PXDBInt(IsKey = true)]
+        [PXUIField(DisplayName = "Inventory")]
         public virtual int? Partid { get; set; }
         public abstract class partid : PX.Data.BQL.BqlInt.Field<partid> { }
-        #endregion
-
-        #region ServiceID
-        [PXDBInt()]
-        [PXUIField(DisplayName = "Service ID")]
-        public virtual int? ServiceID { get; set; }
-        public abstract class serviceID : PX.Data.BQL.BqlInt.Field<serviceID> { }
         #endregion
 
         #region Qty
@@ -43,6 +36,15 @@ namespace IceBreakerMiniProject
         public virtual int? Qty { get; set; }
         public abstract class qty : PX.Data.BQL.BqlInt.Field<qty> { }
         #endregion
+
+
+        #region ServiceID
+        [PXDBInt()]
+        [PXUIField(DisplayName = "Service ID")]
+        public virtual int? ServiceID { get; set; }
+        public abstract class serviceID : PX.Data.BQL.BqlInt.Field<serviceID> { }
+        #endregion
+
 
         #region Price
         [PXDBDecimal()]

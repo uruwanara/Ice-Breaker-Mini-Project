@@ -9,17 +9,23 @@ namespace IceBreakerMiniProject
     {
         #region LocationID
         [PXDBInt(IsKey = true)]
-        //[PXDBDefault(typeof(IBMPWarehouseLocation.locationID))]
-        [PXParent(typeof(SelectFrom<IBMPWarehouseLocation>
-            .Where<IBMPWarehouseLocation.locationID
-                .IsEqual<IBMPLocationInventory.locationID.FromCurrent>>))]
+        [PXUIField(DisplayName = "Location -")]
+        [PXDBDefault(typeof(IBMPWarehouseLocation.locationID))]
+        [PXSelector(typeof(Search<IBMPWarehouseLocation.locationID>),
+            typeof(IBMPWarehouseLocation.locationCD),
+            typeof(IBMPWarehouseLocation.description),
+            SubstituteKey = typeof(IBMPWarehouseLocation.locationCD),
+            DescriptionField = typeof(IBMPWarehouseLocation.description))]
         public virtual int? LocationID { get; set; }
         public abstract class locationID : PX.Data.BQL.BqlInt.Field<locationID> { }
         #endregion
 
         #region InventoryID
         [PXDBInt(IsKey = true)]
+        [PXDefault(typeof(IBMPInventory.inventoryID))]
         [PXUIField(DisplayName = "Inventory ID")]
+        [PXParent(typeof(SelectFrom<IBMPStockItems>.Where<IBMPStockItems.inventoryID.IsEqual<IBMPLocationInventory.inventoryID.FromCurrent>>))]
+
         public virtual int? InventoryID { get; set; }
         public abstract class inventoryID : PX.Data.BQL.BqlInt.Field<inventoryID> { }
         #endregion

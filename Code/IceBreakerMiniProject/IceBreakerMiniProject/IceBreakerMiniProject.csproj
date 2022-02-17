@@ -60,6 +60,8 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Examples.cs" />
     <Compile Include="IBMPManufacturedItems.cs" />
+    <Compile Include="IBMPSONoParts.cs" />
+    <Compile Include="IBMPSOParts.cs" />
     <Compile Include="IBMPStockItems.cs" />
     <Compile Include="IBMPWarehouse.cs" />
     <Compile Include="IBMPWarehouseLocation.cs" />
@@ -91,6 +93,9 @@
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe">
       <Version>5.0.0</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DAC\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -17,7 +17,19 @@ namespace IceBreakerMiniProject
 
         #region InventoryID
         [PXDBInt(IsKey = true)]
-        [PXUIField(DisplayName = "Inventory ID")]
+        [PXDefault(typeof(IBMPInventory.inventoryID))]
+        [PXUIField(DisplayName = "Inventory")]
+        [PXSelector(
+              typeof(
+                  Search<IBMPInventory.inventoryID,
+                      Where<IBMPInventory.partType.IsEqual<Constant.stockItem>>>
+              ),
+              typeof(IBMPInventory.inventoryCD),
+              typeof(IBMPInventory.price)
+          , SubstituteKey = typeof(IBMPInventory.inventoryCD),
+          DescriptionField = typeof(IBMPInventory.description)
+
+          )]
         public virtual int? InventoryID { get; set; }
         public abstract class inventoryID : PX.Data.BQL.BqlInt.Field<inventoryID> { }
         #endregion
