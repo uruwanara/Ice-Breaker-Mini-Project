@@ -26,9 +26,10 @@
 		<Levels>
 			<px:PXGridLevel DataMember="ProductionOrderLines">
 			    <Columns>
-				<px:PXGridColumn DataField="InventoryID" Width="70" ></px:PXGridColumn>
-				<px:PXGridColumn DataField="Status" Width="140" ></px:PXGridColumn>
-				<px:PXGridColumn DataField="Qty" Width="70" ></px:PXGridColumn></Columns>
+				<px:PXGridColumn DataField="InventoryID" Width="140" />
+				<px:PXGridColumn DataField="InventoryID_description" Width="180" />
+				<px:PXGridColumn DataField="Qty" Width="70" ></px:PXGridColumn>
+				<px:PXGridColumn DataField="Status" Width="140" ></px:PXGridColumn></Columns>
 			</px:PXGridLevel>
 		</Levels>
 		<AutoSize Container="Window" Enabled="True" MinHeight="150" ></AutoSize>
