@@ -9,7 +9,7 @@ namespace IceBreakerMiniProject
     {
         #region LocationID
         [PXDBInt(IsKey = true)]
-        [PXUIField(DisplayName = "Location -")]
+        [PXUIField(DisplayName = "Location")]
         [PXDBDefault(typeof(IBMPWarehouseLocation.locationID))]
         [PXSelector(typeof(Search<IBMPWarehouseLocation.locationID>),
             typeof(IBMPWarehouseLocation.locationCD),

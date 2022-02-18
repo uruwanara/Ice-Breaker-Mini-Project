@@ -8,7 +8,6 @@ namespace IceBreakerMiniProject
 
     public class IBMPStockItems : IBMPInventory
     {
-
         #region InventoryCD
         [PXDefault]
         [PXDBString(15, IsUnicode = true, InputMask = "", IsKey = true)]

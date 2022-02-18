@@ -47,6 +47,14 @@ namespace IceBreakerMiniProject
             }
         }
 
+        public class purchasedItem : PX.Data.BQL.BqlString.Constant<purchasedItem>
+        {
+            public purchasedItem()
+            : base(PartType.Purchased)
+            {
+            }
+        }
+
     }
 
 }
