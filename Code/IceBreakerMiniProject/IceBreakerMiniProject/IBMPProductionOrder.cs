@@ -4,22 +4,22 @@ using PX.Data;
 namespace IceBreakerMiniProject
 {
     [PXCacheName("IBMPProductionOrder")]
-    [PXPrimaryGraph(typeof(IBMPProductionOrder))]
+    [PXPrimaryGraph(typeof(IBMPProductionOrderMaint))]
     public class IBMPProductionOrder : IBqlTable
     {
         #region ProductionOrderID
-        [PXDBIdentity()]
+        [PXDBIdentity]
         public virtual int? ProductionOrderID { get; set; }
         public abstract class productionOrderID : PX.Data.BQL.BqlInt.Field<productionOrderID> { }
         #endregion
 
         #region ProductionOrderCD
         [PXDefault]
-        [PXDBString(15, IsUnicode = true,IsKey =true, InputMask = "")]
+        [PXDBString(15, IsUnicode = true, IsKey = true, InputMask = ">aaaaaaaa")]
         [PXUIField(DisplayName = "Production Order")]
         [PXSelector(typeof(Search<IBMPProductionOrder.productionOrderCD>),
-            typeof(IBMPProductionOrder.productionOrderCD),
-            typeof(IBMPProductionOrder.status))]
+        typeof(IBMPProductionOrder.productionOrderCD),
+        typeof(IBMPProductionOrder.status))]
         public virtual string ProductionOrderCD { get; set; }
         public abstract class productionOrderCD : PX.Data.BQL.BqlString.Field<productionOrderCD> { }
         #endregion
@@ -43,6 +43,25 @@ namespace IceBreakerMiniProject
         [PXUIField(DisplayName = "Status")]
         public virtual string Status { get; set; }
         public abstract class status : PX.Data.BQL.BqlString.Field<status> { }
+        #endregion
+
+        #region Partid
+        [PXDBInt]
+        [PXDefault(typeof(IBMPInventory.inventoryID))]
+        [PXUIField(DisplayName = "Inventory")]
+        [PXSelector(
+              typeof(
+                  Search<IBMPInventory.inventoryID,
+                      Where<IBMPInventory.partType.IsEqual<Constant.manufacturedItem>>>
+              ),
+              typeof(IBMPInventory.inventoryCD),
+              typeof(IBMPInventory.price)
+          , SubstituteKey = typeof(IBMPInventory.inventoryCD),
+          DescriptionField = typeof(IBMPInventory.description)
+
+          )]
+        public virtual int? Partid { get; set; }
+        public abstract class partid : PX.Data.BQL.BqlInt.Field<partid> { }
         #endregion
 
         #region CreatedDateTime

@@ -16,8 +16,8 @@ namespace IceBreakerMiniProject
               ),
               typeof(IBMPInventory.inventoryCD),
               typeof(IBMPInventory.price)
-            //,SubstituteKey =typeof(IBMPInventory.inventoryCD),
-            //DescriptionField =typeof(IBMPInventory.description)
+            , SubstituteKey = typeof(IBMPInventory.inventoryCD),
+            DescriptionField = typeof(IBMPInventory.description)
 
           )]
         public virtual int? Partid { get; set; }

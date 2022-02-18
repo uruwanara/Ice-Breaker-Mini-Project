@@ -10,12 +10,12 @@ namespace IceBreakerMiniProject
         #region WarehouseID
         [PXDBIdentity]
         public virtual int? WarehouseID { get; set; }
-        public abstract class warehouseID : PX.Data.BQL.BqlInt.Field<warehouseID> {}
+        public abstract class warehouseID : PX.Data.BQL.BqlInt.Field<warehouseID> { }
         #endregion
 
         #region WarehouseCD
         [PXDefault]
-        [PXDBString(15, IsUnicode = true, IsKey =true, InputMask = ">aaaaaaaaaaaaaaa")]
+        [PXDBString(15, IsUnicode = true, IsKey = true, InputMask = ">aaaaaaaaaaaaaaa")]
         [PXUIField(DisplayName = "Warehouse")]
         [PXSelector(typeof(Search<IBMPWarehouse.warehouseCD>),
         typeof(IBMPWarehouse.warehouseCD),

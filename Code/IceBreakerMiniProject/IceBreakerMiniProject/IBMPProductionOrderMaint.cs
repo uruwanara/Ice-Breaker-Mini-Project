@@ -8,7 +8,6 @@ namespace IceBreakerMiniProject
   {
         #region Views
         public SelectFrom<IBMPProductionOrder>.View ProductionOrders;
-        public SelectFrom<IBMPProductionOrderLine>.Where<IBMPProductionOrderLine.productionOrderID.IsEqual<IBMPProductionOrder.productionOrderID.FromCurrent>>.View ProductionOrderLines;
         #endregion
     }
 }

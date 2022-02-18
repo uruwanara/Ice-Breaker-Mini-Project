@@ -15,13 +15,13 @@ namespace IceBreakerMiniProject
                       Where<IBMPInventory.inventoryType.IsEqual<Constant.nonStockItem>>>
               ),
               typeof(IBMPInventory.inventoryCD),
-              typeof(IBMPInventory.price)
-          , SubstituteKey = typeof(IBMPInventory.inventoryCD),
+              typeof(IBMPInventory.price),
+          SubstituteKey = typeof(IBMPInventory.inventoryCD),
           DescriptionField = typeof(IBMPInventory.description)
 
           )]
-        public virtual int? Partid { get; set; }
-        public abstract class partid : PX.Data.BQL.BqlInt.Field<partid> { }
+        public new virtual int? Partid { get; set; }
+        public new abstract class partid : PX.Data.BQL.BqlInt.Field<partid> { }
         #endregion
     }
 }
