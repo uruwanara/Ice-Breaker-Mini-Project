@@ -6,8 +6,6 @@ namespace IceBreakerMiniProject
 {
     public class IBMPWarehouseMaint : PXGraph<IBMPWarehouseMaint, IBMPWarehouse>
     {
-       // public PXSave<IBMPWarehouse> Save;
-       //public PXCancel<IBMPWarehouse> Cancel;
 
         #region Data Views
         public SelectFrom<IBMPWarehouse>.View Warehouses;
