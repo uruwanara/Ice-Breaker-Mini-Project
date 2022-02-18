@@ -4,7 +4,7 @@
 <asp:Content ID="cont1" ContentPlaceHolderID="phDS" Runat="Server">
 	<px:PXDataSource ID="ds" runat="server" Visible="True" Width="100%"
         TypeName="IceBreakerMiniProject.IBMPProductionOrderMaint"
-        PrimaryView="StockItems"
+        PrimaryView="ProductionOrders"
         >
 		<CallbackCommands>
 
@@ -21,5 +21,17 @@
 			<px:PXDateTimeEdit runat="server" ID="CstPXDateTimeEdit3" DataField="RequiredDate" ></px:PXDateTimeEdit>
 			<px:PXTextEdit runat="server" ID="CstPXTextEdit4" DataField="Status" ></px:PXTextEdit></Template>
 	</px:PXFormView>
-</asp:Content>
-<asp:Content ID="cont3" ContentPlaceHolderID="phG" Runat="Server"></asp:Content>
+	<px:PXTab runat="server" ID="CstPXTab9">
+		<Items>
+			<px:PXTabItem Text="BOM" >
+				<Template>
+					<px:PXGrid SkinID="Details" Width="100%" AutoAdjustColumns="True" runat="server" ID="CstPXGrid10">
+						<Levels>
+							<px:PXGridLevel DataMember="ProductionBom" >
+								<Columns>
+									<px:PXGridColumn DataField="ComponentID" Width="140" ></px:PXGridColumn>
+									<px:PXGridColumn DataField="ComponentID_description" Width="180" ></px:PXGridColumn>
+									<px:PXGridColumn DataField="Qty" Width="70" ></px:PXGridColumn>
+									<px:PXGridColumn DataField="UsrTotalQty" Width="70" ></px:PXGridColumn>
+									<px:PXGridColumn DataField="UsrAvailability" Width="60" ></px:PXGridColumn></Columns></px:PXGridLevel></Levels>
+						<AutoSize Enabled="True" /></px:PXGrid></Template></px:PXTabItem></Items></px:PXTab></asp:Content>

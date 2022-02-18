@@ -1,0 +1,12 @@
+﻿<DAC type="IceBreakerMiniProject.IBMPBOM">
+    <Field FieldName="UsrTotalQty" TypeName="int" TextAttributes="#CDATA" StorageName="AddColumn">
+        <CDATA name="TextAttributes"><![CDATA[[PXInt]
+[PXUIField(DisplayName="Total Qty")]
+]]></CDATA>
+    </Field>
+    <Field FieldName="UsrAvailability" TypeName="bool" TextAttributes="#CDATA" StorageName="AddColumn">
+        <CDATA name="TextAttributes"><![CDATA[[PXBool]
+[PXUIField(DisplayName="Availability")]
+]]></CDATA>
+    </Field>
+</DAC>

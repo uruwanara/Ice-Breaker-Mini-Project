@@ -48,7 +48,7 @@ namespace IceBreakerMiniProject
         #region Partid
         [PXDBInt]
         [PXDefault(typeof(IBMPInventory.inventoryID))]
-        [PXUIField(DisplayName = "Inventory")]
+        [PXUIField(DisplayName = "Manufacture Product")]
         [PXSelector(
               typeof(
                   Search<IBMPInventory.inventoryID,
@@ -62,6 +62,13 @@ namespace IceBreakerMiniProject
           )]
         public virtual int? Partid { get; set; }
         public abstract class partid : PX.Data.BQL.BqlInt.Field<partid> { }
+        #endregion
+        #region Qty
+        [PXDBInt]
+        [PXDefault(0)]
+        [PXUIField(DisplayName = "Quantity")]
+        public virtual int? Qty { get; set; }
+        public abstract class qty : PX.Data.BQL.BqlInt.Field<qty> { }
         #endregion
 
         #region CreatedDateTime
