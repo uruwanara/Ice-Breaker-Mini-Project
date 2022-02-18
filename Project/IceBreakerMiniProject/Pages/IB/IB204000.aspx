@@ -33,6 +33,7 @@
             <px:PXTabItem Visible="True" Text="Parts">
                 <Template>
                     <px:PXGrid AutoAdjustColumns="True" Width="100%" SkinID="Details" runat="server" ID="CstPXGrid31">
+                        <AutoSize Enabled="True" MinHeight="200" />
                         <Levels>
                             <px:PXGridLevel DataMember="Parts">
                                 <Columns>
@@ -52,6 +53,7 @@
             <px:PXTabItem Text="NoParts" Visible="True">
                 <Template>
                     <px:PXGrid AutoAdjustColumns="True" Width="99%" SkinID="Details" runat="server" ID="CstPXGrid34">
+                        <AutoSize Enabled="True" MinHeight="200" />
                         <Levels>
                             <px:PXGridLevel DataMember="NoParts">
                                 <Columns>
@@ -69,7 +71,7 @@
                 </Template>
             </px:PXTabItem>
         </Items>
-		<AutoSize Container="Window" Enabled="True" MinHeight="150" ></AutoSize>
+        <AutoSize Container="Window" Enabled="True" MinHeight="150"></AutoSize>
     </px:PXTab>
 </asp:Content>
 
