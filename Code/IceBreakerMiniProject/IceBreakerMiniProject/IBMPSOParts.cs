@@ -20,8 +20,8 @@ namespace IceBreakerMiniProject
             DescriptionField = typeof(IBMPInventory.description)
 
           )]
-        public virtual int? Partid { get; set; }
-        public abstract class partid : PX.Data.BQL.BqlInt.Field<partid> { }
+        new public virtual int? Partid { get; set; }
+        new public abstract class partid : PX.Data.BQL.BqlInt.Field<partid> { }
         #endregion
     }
 }

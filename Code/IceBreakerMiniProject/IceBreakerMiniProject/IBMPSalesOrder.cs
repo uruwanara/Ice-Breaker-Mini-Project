@@ -13,6 +13,14 @@ namespace IceBreakerMiniProject
         public abstract class salesOrderID : PX.Data.BQL.BqlInt.Field<salesOrderID> { }
         #endregion
 
+        #region Sum Price
+        [PXDecimal]
+        [PXDefault(TypeCode.Decimal, "0.0", PersistingCheck = PXPersistingCheck.Nothing)]
+        [PXUIField(DisplayName = "Total Price", Enabled = false)]
+        public virtual Decimal? SumPrice { get; set; }
+        public abstract class sumprice : PX.Data.BQL.BqlDecimal.Field<sumprice> { }
+        #endregion
+
         #region SalesOrderCD
         [PXDefault]
         [PXDBString(15, IsUnicode = true, IsKey = true, InputMask = "aaaaaaa")]
@@ -92,6 +100,7 @@ namespace IceBreakerMiniProject
         //public virtual int? Partid { get; set; }
         //public abstract class partid : PX.Data.BQL.BqlInt.Field<partid> { }
         //#endregion
+
 
         #region CreatedDateTime
         [PXDBCreatedDateTime()]

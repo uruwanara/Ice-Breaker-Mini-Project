@@ -60,6 +60,7 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Examples.cs" />
     <Compile Include="IBMPManufacturedItems.cs" />
+    <Compile Include="IBMPPOBOM.cs" />
     <Compile Include="IBMPSONoParts.cs" />
     <Compile Include="IBMPSOParts.cs" />
     <Compile Include="IBMPStockItems.cs" />
@@ -76,7 +77,6 @@
     <Compile Include="IBMPSalesOrder.cs" />
     <Compile Include="IBMPSalesOrderLine.cs" />
     <Compile Include="IBMPProductionOrder.cs" />
-    <Compile Include="IBMPProductionOrderLine.cs" />
     <Compile Include="IBMPCustomerInq.cs" />
     <Compile Include="IBMPSalesOrderMaint.cs" />
     <Compile Include="IBMPProductionOrderMaint.cs" />

@@ -32,6 +32,7 @@ namespace IceBreakerMiniProject
 
         #region Qty
         [PXDBInt()]
+        [PXDefault(0)]
         [PXUIField(DisplayName = "Qty")]
         public virtual int? Qty { get; set; }
         public abstract class qty : PX.Data.BQL.BqlInt.Field<qty> { }
@@ -56,10 +57,11 @@ namespace IceBreakerMiniProject
         #region Total Price
         [PXDecimal]
         [PXDefault(TypeCode.Decimal, "0.0", PersistingCheck = PXPersistingCheck.Nothing)]
-        [PXUIField(DisplayName = "Total Price")]
-        [PXFormula(typeof(Mult<IBMPSalesOrderLine.qty,IBMPSalesOrderLine.price>))]
+        [PXUIField(DisplayName = "Total Price", Enabled =false)]
+        [PXFormula(typeof(Mult<IBMPSalesOrderLine.qty, IBMPSalesOrderLine.price>),
+            typeof(SumCalc<IBMPSalesOrder.sumprice>))]
         public virtual Decimal? TotalPrice { get; set; }
-        public abstract class totalprice : PX.Data.BQL.BqlDecimal.Field<price> { }
+        public abstract class totalprice : PX.Data.BQL.BqlDecimal.Field<totalprice> { }
         #endregion
 
         #region Status
