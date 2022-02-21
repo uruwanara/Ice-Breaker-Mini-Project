@@ -4,22 +4,23 @@ namespace IceBreakerMiniProject
 {
     [PXCacheName("ManufacturedItems")]
     [PXPrimaryGraph(typeof(IBMPBOMMaint))]
-    public class IBMPManufacturedItems: IBMPInventory
+    public class IBMPManufacturedItems : IBMPInventory
     {
         #region InventoryCD
         [PXDefault]
         [PXDBString(15, IsUnicode = true, InputMask = "", IsKey = true)]
-        [PXUIField(DisplayName = "Manufactured Product", Required = true)]
+        [PXUIField(DisplayName = "Manufactured Products", Required = true)]
         [PXSelector(
             typeof(
                 Search<IBMPInventory.inventoryCD,
                     Where<IBMPInventory.partType.IsEqual<Constant.manufacturedItem>>>
             ),
-            typeof(IBMPInventory.inventoryCD)
+            typeof(IBMPInventory.inventoryCD),
+            typeof(IBMPInventory.description)
         )]
 
-        new public virtual string InventoryCD { get; set; }
-        new public abstract class inventoryCD : PX.Data.BQL.BqlString.Field<inventoryCD> { }
+        public new virtual string InventoryCD { get; set; }
+        public new abstract class inventoryCD : PX.Data.BQL.BqlString.Field<inventoryCD> { }
         #endregion
     }
 }

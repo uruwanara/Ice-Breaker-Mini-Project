@@ -9,7 +9,6 @@ namespace IceBreakerMiniProject
 {
   public  class IBMPPOBOM : IBMPBOM
      {
-
         #region Total Qty
         [PXInt]
         [PXUIField(DisplayName = "Total Quantity")]

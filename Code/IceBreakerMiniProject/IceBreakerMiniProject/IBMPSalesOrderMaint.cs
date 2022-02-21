@@ -26,24 +26,17 @@ namespace IceBreakerMiniProject
 
         #region Events
 
-        protected void _(Events.FieldUpdated<IBMPSOParts,
-       IBMPSOParts.partid> e)
+        protected void _(Events.FieldUpdated<IBMPSOParts, IBMPSOParts.partid> e)
         {
-            Console.WriteLine("!st");
             IBMPSOParts row = e.Row;
+
             if (row.Partid != null)
             {
-                Console.WriteLine("2nd");
-                //Use the PXSelector attribute to select the stock item.
-                IBMPInventory item = PXSelectorAttribute.
-                Select<IBMPSOParts.partid>(e.Cache, row)
-                as IBMPInventory;
-                //Copy the repair item type from the stock item to the row.
-                Console.WriteLine("End2nd");
-                e.Cache.SetValue<IBMPInventory.price>(row,item.Price);
-                Console.WriteLine("3rd");
+                Console.WriteLine("GFNBJNBFJSNFjs");
+                IBMPInventory item = IBMPInventory.PK.Find(this, row.Partid);
+
+                e.Cache.SetValue<IBMPInventory.price>(row, item.Price);
             }
-          
         }
         #endregion
 

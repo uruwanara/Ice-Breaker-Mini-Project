@@ -51,13 +51,13 @@ namespace IceBreakerMiniProject
         [PXUIField(DisplayName = "Manufacture Product")]
         [PXSelector(
               typeof(
-                  Search<IBMPInventory.inventoryID,
-                      Where<IBMPInventory.partType.IsEqual<Constant.manufacturedItem>>>
+                  Search<IBMPManufacturedItems.inventoryID,
+                      Where<IBMPManufacturedItems.partType.IsEqual<Constant.manufacturedItem>>>
               ),
-              typeof(IBMPInventory.inventoryCD),
-              typeof(IBMPInventory.price)
-          , SubstituteKey = typeof(IBMPInventory.inventoryCD),
-          DescriptionField = typeof(IBMPInventory.description)
+              typeof(IBMPManufacturedItems.inventoryCD),
+              typeof(IBMPManufacturedItems.price)
+          , SubstituteKey = typeof(IBMPManufacturedItems.inventoryCD),
+          DescriptionField = typeof(IBMPManufacturedItems.description)
 
           )]
         public virtual int? Partid { get; set; }

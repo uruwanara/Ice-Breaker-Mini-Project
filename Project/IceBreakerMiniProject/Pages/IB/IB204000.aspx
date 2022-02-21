@@ -37,11 +37,11 @@
                         <Levels>
                             <px:PXGridLevel DataMember="Parts">
                                 <Columns>
-                                    <px:PXGridColumn DataField="Partid" Width="140"></px:PXGridColumn>
-                                    <px:PXGridColumn DataField="Partid_IBMPInventory_description" Width="180"></px:PXGridColumn>
-                                    <px:PXGridColumn DataField="Price" Width="100"></px:PXGridColumn>
-                                    <px:PXGridColumn DataField="Qty" Width="70"></px:PXGridColumn>
-                                    <px:PXGridColumn DataField="TotalPrice" Width="100"></px:PXGridColumn>
+                                    <px:PXGridColumn CommitChanges="True" DataField="Partid" Width="140"></px:PXGridColumn>
+                                    <px:PXGridColumn DataField="Partid_description" Width="180"></px:PXGridColumn>
+                                    <px:PXGridColumn CommitChanges="True" DataField="Price" Width="100"></px:PXGridColumn>
+                                    <px:PXGridColumn CommitChanges="True" DataField="Qty" Width="70"></px:PXGridColumn>
+                                    <px:PXGridColumn CommitChanges="False" DataField="TotalPrice" Width="100"></px:PXGridColumn>
                                     <px:PXGridColumn DataField="Status" Width="140"></px:PXGridColumn>
                                 </Columns>
                             </px:PXGridLevel>
@@ -57,10 +57,10 @@
                         <Levels>
                             <px:PXGridLevel DataMember="NoParts">
                                 <Columns>
-                                    <px:PXGridColumn DataField="Partid" Width="140"></px:PXGridColumn>
+                                    <px:PXGridColumn CommitChanges="True" DataField="Partid" Width="140"></px:PXGridColumn>
                                     <px:PXGridColumn DataField="Partid_description" Width="180"></px:PXGridColumn>
                                     <px:PXGridColumn DataField="Price" Width="100"></px:PXGridColumn>
-                                    <px:PXGridColumn DataField="Qty" Width="70"></px:PXGridColumn>
+                                    <px:PXGridColumn CommitChanges="True" DataField="Qty" Width="70"></px:PXGridColumn>
                                     <px:PXGridColumn DataField="TotalPrice" Width="100"></px:PXGridColumn>
                                     <px:PXGridColumn DataField="Status" Width="140"></px:PXGridColumn>
                                 </Columns>

@@ -16,7 +16,8 @@
 		<Template>
 			<px:PXLayoutRule ID="PXLayoutRule1" runat="server" StartRow="True"></px:PXLayoutRule>
 			<px:PXSelector runat="server" ID="CstPXSelector7" DataField="ProductionOrderCD" ></px:PXSelector>
-			<px:PXSelector runat="server" ID="CstPXSelector5" DataField="Partid" ></px:PXSelector>
+			<px:PXSelector CommitChanges="True" runat="server" ID="CstPXSelector5" DataField="Partid" ></px:PXSelector>
+			<px:PXNumberEdit CommitChanges="True" runat="server" ID="CstPXNumberEdit11" DataField="Qty" ></px:PXNumberEdit>
 			<px:PXDateTimeEdit runat="server" ID="CstPXDateTimeEdit1" DataField="OrderDate" ></px:PXDateTimeEdit>
 			<px:PXDateTimeEdit runat="server" ID="CstPXDateTimeEdit3" DataField="RequiredDate" ></px:PXDateTimeEdit>
 			<px:PXTextEdit runat="server" ID="CstPXTextEdit4" DataField="Status" ></px:PXTextEdit></Template>
@@ -32,6 +33,6 @@
 									<px:PXGridColumn DataField="ComponentID" Width="140" ></px:PXGridColumn>
 									<px:PXGridColumn DataField="ComponentID_description" Width="180" ></px:PXGridColumn>
 									<px:PXGridColumn DataField="Qty" Width="70" ></px:PXGridColumn>
-									<px:PXGridColumn DataField="UsrTotalQty" Width="70" ></px:PXGridColumn>
-									<px:PXGridColumn DataField="UsrAvailability" Width="60" ></px:PXGridColumn></Columns></px:PXGridLevel></Levels>
+									<px:PXGridColumn DataField="TotalQty" Width="70" />
+									<px:PXGridColumn DataField="Available" Width="60" /></Columns></px:PXGridLevel></Levels>
 						<AutoSize Enabled="True" /></px:PXGrid></Template></px:PXTabItem></Items></px:PXTab></asp:Content>

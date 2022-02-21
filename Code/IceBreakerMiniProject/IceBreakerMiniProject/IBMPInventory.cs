@@ -1,19 +1,28 @@
 using System;
 using PX.Data;
+using PX.Data.ReferentialIntegrity.Attributes;
 
 namespace IceBreakerMiniProject
 {
     [PXCacheName("Inventory")]
     public class IBMPInventory : IBqlTable
     {
+        #region Keys
+        public class PK : PrimaryKeyOf<IBMPInventory>.By<inventoryID>
+        {
+            public static IBMPInventory Find(PXGraph graph, int? inventoryID) => FindBy(graph, inventoryID);
+        }
+        #endregion
+
         #region InventoryID
         [PXDBIdentity]
+        [PXUIField(DisplayName ="Inventory ID")]
         public virtual int? InventoryID { get; set; }
         public abstract class inventoryID : PX.Data.BQL.BqlInt.Field<inventoryID> { }
         #endregion
 
         #region InventoryCD
-        [PXDBString(15, IsUnicode = true, InputMask = "")]
+        [PXDBString(15, IsUnicode = true, InputMask = "", IsKey =true)]
         [PXDefault]
         [PXUIField(DisplayName = "Inventory CD")]
         public virtual string InventoryCD { get; set; }

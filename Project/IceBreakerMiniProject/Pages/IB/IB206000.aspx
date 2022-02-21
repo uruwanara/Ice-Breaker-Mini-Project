@@ -25,16 +25,16 @@
 		<Items>
 			<px:PXTabItem Text="Components">
 				<Template>
-					<px:PXGrid AutoAdjustColumns="True" Width="99%" runat="server" ID="CstPXGrid8">
+					<px:PXGrid SkinID="Details" AutoAdjustColumns="True" Width="99%" runat="server" ID="CstPXGrid8">
 						<Levels>
 							<px:PXGridLevel DataMember="Components" >
 								<Columns>
-									<px:PXGridColumn DataField="IBMPInventory__InventoryCD" Width="140" ></px:PXGridColumn>
 									<px:PXGridColumn DataField="ComponentID" Width="70" ></px:PXGridColumn>
 									<px:PXGridColumn DataField="IBMPInventory__Description" Width="180" ></px:PXGridColumn>
 									<px:PXGridColumn DataField="Qty" Width="70" ></px:PXGridColumn></Columns></px:PXGridLevel></Levels>
 						<AutoSize Enabled="True" ></AutoSize>
-						</px:PXGrid></Template>
+						
+						<Mode InitNewRow="True" /></px:PXGrid></Template>
 			</px:PXTabItem></Items>
 		<AutoSize Container="Window" Enabled="True" MinHeight="150" ></AutoSize>
 	</px:PXTab>
