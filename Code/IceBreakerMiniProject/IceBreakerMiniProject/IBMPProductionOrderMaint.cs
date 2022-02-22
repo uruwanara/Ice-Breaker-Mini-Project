@@ -15,15 +15,13 @@ namespace IceBreakerMiniProject
         #endregion
 
         //#region Events
-
-        //protected void _(Events.FieldUpdated<IBMPSOParts, IBMPSOParts.partid> e)
+        //protected void _(Events.FieldUpdated<IBMPPOBOM, IBMPPOBOM.componentID> e)
         //{
-        //    IBMPSOParts row = e.Row;
+        //    IBMPPOBOM row = e.Row;
 
-        //    if (row.Partid != null)
+        //    if (row.ComponentID != null)
         //    {
-        //        Console.WriteLine("GFNBJNBFJSNFjs");
-        //        IBMPInventory item = IBMPInventory.PK.Find(this, row.Partid);
+        //        IBMPInventory item = IBMPInventory.PK.Find(this, row.ComponentID);
 
         //        e.Cache.SetValue<IBMPInventory.price>(row, item.Price);
         //    }
