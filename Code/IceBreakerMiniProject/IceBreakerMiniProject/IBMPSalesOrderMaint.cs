@@ -22,8 +22,6 @@ namespace IceBreakerMiniProject
         //    And<IBMPNonStockItems.inventoryType.IsEqual<Constant.nonStockItem>>>.View NoParts;
         #endregion
 
-
-
         #region Events
 
         protected void _(Events.FieldUpdated<IBMPSOParts, IBMPSOParts.partid> e)

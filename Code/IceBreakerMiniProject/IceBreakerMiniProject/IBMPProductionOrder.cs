@@ -48,21 +48,22 @@ namespace IceBreakerMiniProject
         #region Partid
         [PXDBInt]
         [PXDefault(typeof(IBMPInventory.inventoryID))]
-        [PXUIField(DisplayName = "Manufacture Product")]
+        [PXUIField(DisplayName = "Manufactured Product")]
         [PXSelector(
               typeof(
                   Search<IBMPManufacturedItems.inventoryID,
-                      Where<IBMPManufacturedItems.partType.IsEqual<Constant.manufacturedItem>>>
+                      Where<IBMPManufacturedItems.partType
+                          .IsEqual<Constant.manufacturedItem>>>
               ),
               typeof(IBMPManufacturedItems.inventoryCD),
-              typeof(IBMPManufacturedItems.price)
-          , SubstituteKey = typeof(IBMPManufacturedItems.inventoryCD),
-          DescriptionField = typeof(IBMPManufacturedItems.description)
-
+              typeof(IBMPManufacturedItems.price),
+              SubstituteKey = typeof(IBMPManufacturedItems.inventoryCD),
+              DescriptionField = typeof(IBMPManufacturedItems.description)
           )]
         public virtual int? Partid { get; set; }
         public abstract class partid : PX.Data.BQL.BqlInt.Field<partid> { }
         #endregion
+
         #region Qty
         [PXDBInt]
         [PXDefault(0)]
@@ -70,7 +71,6 @@ namespace IceBreakerMiniProject
         public virtual int? Qty { get; set; }
         public abstract class qty : PX.Data.BQL.BqlInt.Field<qty> { }
         #endregion
-
 
         #region CreatedDateTime
         [PXDBCreatedDateTime()]

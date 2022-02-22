@@ -30,14 +30,6 @@ namespace IceBreakerMiniProject
         public abstract class partid : PX.Data.BQL.BqlInt.Field<partid> { }
         #endregion
 
-        #region ServiceID
-        [PXDBInt()]
-        [PXUIField(DisplayName = "Service ID")]
-        public virtual int? ServiceID { get; set; }
-        public abstract class serviceID : PX.Data.BQL.BqlInt.Field<serviceID> { }
-        #endregion
-
-
         #region Price
         [PXDBDecimal()]
         [PXUIField(DisplayName = "Price")]

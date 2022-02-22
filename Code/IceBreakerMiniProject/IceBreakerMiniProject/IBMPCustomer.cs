@@ -4,7 +4,7 @@ using PX.Data;
 namespace IceBreakerMiniProject
 {
     [PXCacheName("Customer")]
-    [PXPrimaryGraph(typeof(IBMPCustomer))]
+    [PXPrimaryGraph(typeof(IBMPCustomerMaint))]
     public class IBMPCustomer : IBqlTable
     {
         #region CustomerID

@@ -58,7 +58,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
-    <Compile Include="Examples.cs" />
     <Compile Include="IBMPManufacturedItems.cs" />
     <Compile Include="IBMPPOBOM.cs" />
     <Compile Include="IBMPSONoParts.cs" />
