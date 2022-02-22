@@ -15,7 +15,6 @@ namespace IceBreakerMiniProject
         }
         #endregion
 
-
         #region CustomerID
         [PXDBIdentity]
         public virtual int? CustomerID { get; set; }

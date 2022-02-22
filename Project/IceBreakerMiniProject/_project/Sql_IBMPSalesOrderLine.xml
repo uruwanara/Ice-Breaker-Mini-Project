@@ -3,7 +3,6 @@
   <col name="SalesOrderID" type="Int" />
   <col name="LineNbr" type="Int" />
   <col name="PartID" type="Int" />
-  <col name="ServiceID" type="Int" />
   <col name="Qty" type="Int" />
   <col name="Price" type="Decimal(19,6)" nullable="true" />
   <col name="Status" type="NVarChar(15)" />

@@ -1,0 +1,22 @@
+﻿<Sql TableName="IBMPInventory" TableSchemaXml="#CDATA">
+    <CDATA name="TableSchemaXml"><![CDATA[<table name="IBMPInventory">
+  <col name="InventoryID" type="Int" identity="true" />
+  <col name="InventoryCD" type="NVarChar(15)" />
+  <col name="Description" type="NVarChar(50)" />
+  <col name="Price" type="Decimal(19,6)" />
+  <col name="PartType" type="NVarChar(15)" />
+  <col name="InventoryType" type="NVarChar(15)" />
+  <col name="LineCntr" type="Int" />
+  <col name="CreatedDateTime" type="DateTime" />
+  <col name="CreatedByID" type="UniqueIdentifier" />
+  <col name="CreatedByScreenID" type="Char(8)" />
+  <col name="LastModifiedDateTime" type="DateTime" />
+  <col name="LastModifiedByID" type="UniqueIdentifier" />
+  <col name="LastModifiedByScreenID" type="Char(8)" />
+  <col name="tstamp" type="Timestamp" />
+  <col name="NoteID" type="UniqueIdentifier" />
+  <index name="PK_IBMPInventory" clustered="true" primary="true" unique="true">
+    <col name="InventoryID" />
+  </index>
+</table>]]></CDATA>
+</Sql>
