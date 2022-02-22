@@ -33,7 +33,7 @@ namespace IceBreakerMiniProject
             typeof(IBMPCustomer.customerCD),
             typeof(IBMPCustomer.name),
             SubstituteKey = typeof(IBMPCustomer.customerCD),
-        DescriptionField = typeof(IBMPCustomer.name))]
+            DescriptionField = typeof(IBMPCustomer.name))]
         public virtual int? CustomerID { get; set; }
         public abstract class customerID : PX.Data.BQL.BqlInt.Field<customerID> { }
         #endregion
@@ -68,8 +68,7 @@ namespace IceBreakerMiniProject
         #endregion
 
         #region Sum Price
-        [PXDecimal]
-        [PXDefault(TypeCode.Decimal, "0.0", PersistingCheck = PXPersistingCheck.Nothing)]
+        [PXDBDecimal]
         [PXUIField(DisplayName = "Total Price", Enabled = false)]
         public virtual Decimal? SumPrice { get; set; }
         public abstract class sumprice : PX.Data.BQL.BqlDecimal.Field<sumprice> { }

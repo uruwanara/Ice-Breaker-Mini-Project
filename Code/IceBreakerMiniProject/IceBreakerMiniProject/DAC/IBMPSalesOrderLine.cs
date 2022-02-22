@@ -47,7 +47,7 @@ namespace IceBreakerMiniProject
 
         #region Total Price
         [PXDecimal]
-        //[PXDefault(TypeCode.Decimal, "0.0", PersistingCheck = PXPersistingCheck.Nothing)]
+        [PXDefault(TypeCode.Decimal, "0.0", PersistingCheck = PXPersistingCheck.Nothing)]
         [PXUIField(DisplayName = "Total Price", Enabled = false)]
         [PXFormula(typeof(Mult<IBMPSalesOrderLine.price, IBMPSalesOrderLine.qty>),
             typeof(SumCalc<IBMPSalesOrder.sumprice>))]

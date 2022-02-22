@@ -8,18 +8,7 @@ namespace IceBreakerMiniProject
     {
         #region Data Views
         public SelectFrom<IBMPManufacturedItems>.View ManufacturedProducts;
-
-        //public SelectFrom<IBMPBOM>
-        //    .InnerJoin<IBMPInventory>
-        //        .On<IBMPBOM.manufacPartID.IsEqual<IBMPInventory.inventoryID>>
-        //    .Where<IBMPInventory.inventoryID.IsEqual<IBMPManufacturedItems.inventoryID.FromCurrent>>
-        //    .View Components;
-
-        public SelectFrom<IBMPBOM>
-            //.InnerJoin<IBMPInventory>
-            //    .On<IBMPBOM.manufacPartID.IsEqual<IBMPInventory.inventoryID>>
-            .Where<IBMPBOM.manufacPartID.IsEqual<IBMPManufacturedItems.inventoryID.FromCurrent>>
-            .View Components;
+        public SelectFrom<IBMPBOM>.Where<IBMPBOM.manufacPartID.IsEqual<IBMPManufacturedItems.inventoryID.FromCurrent>>.View Components;
 
         #endregion
 

@@ -29,8 +29,8 @@
 						<Levels>
 							<px:PXGridLevel DataMember="Components" >
 								<Columns>
-									<px:PXGridColumn DataField="ComponentID" Width="70" ></px:PXGridColumn>
-									<px:PXGridColumn DataField="IBMPInventory__Description" Width="180" ></px:PXGridColumn>
+									<px:PXGridColumn CommitChanges="True" DataField="ComponentID" Width="70" ></px:PXGridColumn>
+									<px:PXGridColumn DataField="ComponentID_description" Width="180" />
 									<px:PXGridColumn DataField="Qty" Width="70" ></px:PXGridColumn></Columns></px:PXGridLevel></Levels>
 						<AutoSize Enabled="True" ></AutoSize>
 						
