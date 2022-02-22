@@ -1,12 +1,21 @@
 using System;
 using PX.Data;
+using PX.Data.ReferentialIntegrity.Attributes;
 
 namespace IceBreakerMiniProject
 {
     [PXCacheName("Customer")]
-    [PXPrimaryGraph(typeof(IBMPCustomer))]
+    [PXPrimaryGraph(typeof(IBMPCustomerMaint))]
     public class IBMPCustomer : IBqlTable
     {
+        #region Keys
+        public class PK : PrimaryKeyOf<IBMPCustomer>.By<customerID>
+        {
+            public static IBMPCustomer Find(PXGraph graph, int? customerID) => FindBy(graph, customerID);
+        }
+        #endregion
+
+
         #region CustomerID
         [PXDBIdentity]
         public virtual int? CustomerID { get; set; }
@@ -15,7 +24,7 @@ namespace IceBreakerMiniProject
 
         #region CustomerCD
         [PXDefault]
-        [PXDBString(15, IsUnicode = true,IsKey =true, InputMask = ">aaaaaaaa")]
+        [PXDBString(15, IsUnicode = true, IsKey = true, InputMask = ">aaaaaaaa")]
         [PXUIField(DisplayName = "Customer", Required = true)]
         [PXSelector(typeof(Search<IBMPCustomer.customerCD>),
             typeof(IBMPCustomer.customerCD),

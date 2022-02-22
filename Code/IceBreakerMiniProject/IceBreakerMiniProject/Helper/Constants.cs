@@ -55,6 +55,23 @@ namespace IceBreakerMiniProject
             }
         }
 
+
+        public static class SOStatus
+        {
+            public const string Planned = "PLANNED";
+            public const string Released = "RELEASED";
+            public const string Closed = "CLOSED";
+            public const string Cancelled = "CANCELLED";
+
+        }
+
+        public static class SOLineStatus
+        {
+            public const string Required = "REQUIRED";
+            public const string Delivered = "DELIVERED";
+            public const string Cancelled = "CANCELLED";
+        }
+
     }
 
 }

@@ -30,14 +30,6 @@ namespace IceBreakerMiniProject
         public abstract class partid : PX.Data.BQL.BqlInt.Field<partid> { }
         #endregion
 
-        #region ServiceID
-        [PXDBInt()]
-        [PXUIField(DisplayName = "Service ID")]
-        public virtual int? ServiceID { get; set; }
-        public abstract class serviceID : PX.Data.BQL.BqlInt.Field<serviceID> { }
-        #endregion
-
-
         #region Price
         [PXDBDecimal()]
         [PXUIField(DisplayName = "Price")]
@@ -53,10 +45,9 @@ namespace IceBreakerMiniProject
         public abstract class qty : PX.Data.BQL.BqlInt.Field<qty> { }
         #endregion
 
-
         #region Total Price
         [PXDecimal]
-        [PXDefault(TypeCode.Decimal, "0.0", PersistingCheck = PXPersistingCheck.Nothing)]
+        //[PXDefault(TypeCode.Decimal, "0.0", PersistingCheck = PXPersistingCheck.Nothing)]
         [PXUIField(DisplayName = "Total Price", Enabled = false)]
         [PXFormula(typeof(Mult<IBMPSalesOrderLine.price, IBMPSalesOrderLine.qty>),
             typeof(SumCalc<IBMPSalesOrder.sumprice>))]
@@ -66,6 +57,7 @@ namespace IceBreakerMiniProject
 
         #region Status
         [PXDBString(15, IsUnicode = true, InputMask = "")]
+        [PXDefault(Constant.SOLineStatus.Required)]
         [PXUIField(DisplayName = "Status")]
         public virtual string Status { get; set; }
         public abstract class status : PX.Data.BQL.BqlString.Field<status> { }

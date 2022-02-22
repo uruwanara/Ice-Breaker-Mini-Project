@@ -12,22 +12,5 @@ namespace IceBreakerMiniProject
         public SelectFrom<IBMPWarehouseLocation>.Where<IBMPWarehouseLocation.warehouseID.IsEqual<IBMPWarehouse.warehouseID.FromCurrent>>.View WarehouseLocations;
         #endregion
 
-        /*
- public PXFilter<MasterTable> MasterView;
- public PXFilter<DetailsTable> DetailsView;
-
- [Serializable]
- public class MasterTable : IBqlTable
- {
-     //Testing 123
- }
-
- [Serializable]
- public class DetailsTable : IBqlTable
- {
-
- }
-    */
-
     }
 }

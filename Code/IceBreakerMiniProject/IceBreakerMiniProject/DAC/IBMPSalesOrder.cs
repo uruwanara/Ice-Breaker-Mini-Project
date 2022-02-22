@@ -13,14 +13,6 @@ namespace IceBreakerMiniProject
         public abstract class salesOrderID : PX.Data.BQL.BqlInt.Field<salesOrderID> { }
         #endregion
 
-        #region Sum Price
-        [PXDecimal]
-        [PXDefault(TypeCode.Decimal, "0.0", PersistingCheck = PXPersistingCheck.Nothing)]
-        [PXUIField(DisplayName = "Total Price", Enabled = false)]
-        public virtual Decimal? SumPrice { get; set; }
-        public abstract class sumprice : PX.Data.BQL.BqlDecimal.Field<sumprice> { }
-        #endregion
-
         #region SalesOrderCD
         [PXDefault]
         [PXDBString(15, IsUnicode = true, IsKey = true, InputMask = "aaaaaaa")]
@@ -36,7 +28,7 @@ namespace IceBreakerMiniProject
         [PXDBInt]
         [PXDefault(typeof(IBMPCustomer.customerID))]
         [PXUIField(DisplayName = "Customer")]
-      //  [PXParent(typeof(SelectFrom<IBMPCustomer>.Where<IBMPCustomer.customerID.IsEqual<IBMPSalesOrder.customerID.FromCurrent>>))]
+        //  [PXParent(typeof(SelectFrom<IBMPCustomer>.Where<IBMPCustomer.customerID.IsEqual<IBMPSalesOrder.customerID.FromCurrent>>))]
         [PXSelector(typeof(Search<IBMPCustomer.customerID>),
             typeof(IBMPCustomer.customerCD),
             typeof(IBMPCustomer.name),
@@ -69,9 +61,18 @@ namespace IceBreakerMiniProject
 
         #region Status
         [PXDBString(15)]
+        [PXDefault(Constant.SOStatus.Planned)]
         [PXUIField(DisplayName = "Status")]
         public virtual string Status { get; set; }
         public abstract class status : PX.Data.BQL.BqlString.Field<status> { }
+        #endregion
+
+        #region Sum Price
+        [PXDecimal]
+        [PXDefault(TypeCode.Decimal, "0.0", PersistingCheck = PXPersistingCheck.Nothing)]
+        [PXUIField(DisplayName = "Total Price", Enabled = false)]
+        public virtual Decimal? SumPrice { get; set; }
+        public abstract class sumprice : PX.Data.BQL.BqlDecimal.Field<sumprice> { }
         #endregion
 
         #region LineCntr
@@ -81,26 +82,6 @@ namespace IceBreakerMiniProject
         public virtual int? LineCntr { get; set; }
         public abstract class lineCntr : PX.Data.BQL.BqlInt.Field<lineCntr> { }
         #endregion
-
-        //#region Partid
-        //[PXDBInt(IsKey = true)]
-        //[PXDefault(typeof(IBMPInventory.inventoryID))]
-        //[PXUIField(DisplayName = "Inventory")]
-        //[PXSelector(
-        //      typeof(
-        //          Search<IBMPInventory.inventoryID,
-        //              Where<IBMPInventory.inventoryType.IsEqual<Constant.stockItem>>>
-        //      ),
-        //      typeof(IBMPInventory.inventoryCD),
-        //      typeof(IBMPInventory.price)
-        //  //,SubstituteKey =typeof(IBMPInventory.inventoryCD),
-        //  //DescriptionField =typeof(IBMPInventory.description)
-
-        //  )]
-        //public virtual int? Partid { get; set; }
-        //public abstract class partid : PX.Data.BQL.BqlInt.Field<partid> { }
-        //#endregion
-
 
         #region CreatedDateTime
         [PXDBCreatedDateTime()]
