@@ -34,5 +34,5 @@
 									<px:PXGridColumn DataField="ComponentID_description" Width="180" ></px:PXGridColumn>
 									<px:PXGridColumn DataField="Qty" Width="70" ></px:PXGridColumn>
 									<px:PXGridColumn DataField="TotalQty" Width="70" />
-									<px:PXGridColumn DataField="Available" Width="60" /></Columns></px:PXGridLevel></Levels>
+									<px:PXGridColumn CommitChanges="True" Type="CheckBox" DataField="Available" Width="60" ></px:PXGridColumn></Columns></px:PXGridLevel></Levels>
 						<AutoSize Enabled="True" /></px:PXGrid></Template></px:PXTabItem></Items></px:PXTab></asp:Content>
