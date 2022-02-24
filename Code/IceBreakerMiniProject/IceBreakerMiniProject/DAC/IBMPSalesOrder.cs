@@ -26,7 +26,7 @@ namespace IceBreakerMiniProject
 
         #region CustomerID
         [PXDBInt]
-        [PXDefault(typeof(IBMPCustomer.customerID))]
+        [PXDefault(typeof(IBMPCustomer.customerCD))]
         [PXUIField(DisplayName = "Customer")]
         //  [PXParent(typeof(SelectFrom<IBMPCustomer>.Where<IBMPCustomer.customerID.IsEqual<IBMPSalesOrder.customerID.FromCurrent>>))]
         [PXSelector(typeof(Search<IBMPCustomer.customerID>),

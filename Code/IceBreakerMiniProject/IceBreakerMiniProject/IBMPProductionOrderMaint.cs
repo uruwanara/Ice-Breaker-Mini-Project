@@ -13,32 +13,32 @@ namespace IceBreakerMiniProject
         public SelectFrom<IBMPPOBOM>.Where<IBMPPOBOM.manufacPartID.IsEqual<IBMPProductionOrder.partid.FromCurrent>>.View ProductionBom;
         #endregion
 
-        [PX.Api.Export.PXOptimizationBehavior(IgnoreBqlDelegate = true)]
-        public virtual IEnumerable productionBom()
-        {
-            if (ProductionOrders.Current.Partid == null || ProductionOrders.Current.Partid==null) return null;
+        //[PX.Api.Export.PXOptimizationBehavior(IgnoreBqlDelegate = true)]
+        //public virtual IEnumerable productionBom()
+        //{
+        //    if (ProductionOrders.Current.Partid == null || ProductionOrders.Current.Partid==null) return null;
 
-            var query = new SelectFrom<IBMPBOM>
-                            .InnerJoin<IBMPLocationInventory>.On<IBMPLocationInventory.inventoryID.IsEqual<IBMPBOM.componentID>>
-                            .Where<IBMPPOBOM.manufacPartID.IsEqual<IBMPProductionOrder.partid.FromCurrent>>
-                            .AggregateTo<GroupBy<IBMPLocationInventory.inventoryID>, Sum<IBMPLocationInventory.qtyHand>>.View.ReadOnly(this);
+        //    var query = new SelectFrom<IBMPBOM>
+        //                    .InnerJoin<IBMPLocationInventory>.On<IBMPLocationInventory.inventoryID.IsEqual<IBMPBOM.componentID>>
+        //                    .Where<IBMPPOBOM.manufacPartID.IsEqual<IBMPProductionOrder.partid.FromCurrent>>
+        //                    .AggregateTo<GroupBy<IBMPLocationInventory.inventoryID>, Sum<IBMPLocationInventory.qtyHand>>.View.ReadOnly(this);
 
-            using (new PXFieldScope(query.View, typeof(IBMPLocationInventory.inventoryID), typeof(IBMPLocationInventory.qtyHand)))
-            {
-                int startRow = PXView.StartRow;
-                int totalRows = 0;
+        //    using (new PXFieldScope(query.View, typeof(IBMPLocationInventory.inventoryID), typeof(IBMPLocationInventory.qtyHand)))
+        //    {
+        //        int startRow = PXView.StartRow;
+        //        int totalRows = 0;
 
-                foreach (PXResult<IBMPBOM, IBMPLocationInventory> record in
-                    query.View.Select(PXView.Currents, PXView.Parameters, PXView.Searches, PXView.SortColumns,
-                PXView.Descendings, PXView.Filters, ref startRow, PXView.MaximumRows, ref totalRows))
-                {
+        //        foreach (PXResult<IBMPBOM, IBMPLocationInventory> record in
+        //            query.View.Select(PXView.Currents, PXView.Parameters, PXView.Searches, PXView.SortColumns,
+        //        PXView.Descendings, PXView.Filters, ref startRow, PXView.MaximumRows, ref totalRows))
+        //        {
 
-                }
-            }
+        //        }
+        //    }
 
-            return null;
+        //    return null;
 
-        }
+        //}
 
 
         #region Actions
@@ -55,13 +55,18 @@ namespace IceBreakerMiniProject
                     .Where<IBMPLocationInventory.inventoryID.IsEqual<@P.AsInt>>
                     .AggregateTo<GroupBy<IBMPLocationInventory.inventoryID>, Sum<IBMPLocationInventory.qtyHand>>.View.Select(this, item.ComponentID);
 
-
+                if (qty.QtyHand > item.TotalQty)
+                {
+                    item.Available = true;
+                }
 
                 //select IBMPLocationInventory.InventoryID, sum(IBMPLocationInventory.QtyHand) from
                 //IBMPLocationInventory where IBMPLocationInventory.InventoryID=1 
                 //group by IBMPLocationInventory.InventoryID
 
             }
+            ProductionBom.Update(bomParts);
+            Actions.PressSave();
         }
 
 
@@ -77,7 +82,7 @@ namespace IceBreakerMiniProject
 
             foreach (IBMPPOBOM item in bomParts)
             {
-                if (item.Available == false)
+                if (item.Available == false || item.Available==null)
                 {
                     flag = false;
                     break;
@@ -87,7 +92,45 @@ namespace IceBreakerMiniProject
 
             if (flag == true)
             {
+
+
+                foreach (IBMPPOBOM inventory in bomParts)
+                {
+                    int? tq = inventory.TotalQty;
+
+                    PXResultset<IBMPLocationInventory> abc = SelectFrom<IBMPLocationInventory>.
+                                              Where<IBMPLocationInventory.inventoryID.IsEqual<@P.AsInt>
+                                              >.OrderBy<IBMPLocationInventory.qtyHand.Desc>.View.Select(this, inventory.ComponentID);
+
+                    foreach (IBMPLocationInventory i in abc)
+                    {
+                        if (i.QtyHand >= tq)
+                        {
+                            i.QtyHand = i.QtyHand - tq;
+                            i.QtyReserved = i.QtyReserved + tq;
+
+                            break;
+
+                        }
+                        else
+                        {
+                            tq = tq - i.QtyHand;
+                            i.QtyReserved = i.QtyHand;
+                            i.QtyHand = 0;
+                        }
+
+                        PXUpdate<Set<IBMPLocationInventory.qtyHand, Required<IBMPLocationInventory.qtyHand>>, IBMPLocationInventory>.Update(this);
+
+                        //PXUpdate<
+                        //    Set<ARSetup.prepareStatements, Required<ARSetup.prepareStatements>>, 
+                        //    ARSetup, 
+                        //    Where<ARSetup.prepareStatements, Equal<Required<ARSetup.prepareStatements>>>>.
+                        //    Update(this, ARSetup.prepareStatements.ForEachBranch, ARSetup.prepareStatements.ConsolidatedForAllCompanies);
+                    }
+                }
+
                 row.Status = Constant.POStatus.Reserved;
+
             }
             else
             {
@@ -116,7 +159,6 @@ namespace IceBreakerMiniProject
             if (e.Row == null) return;
 
             e.Cache.SetValueExt<IBMPPOBOM.totalqty>(e.Row, e.Row.Qty * ProductionOrders.Current.Qty);
-
 
         }
         protected void _(Events.FieldUpdating<IBMPPOBOM.totalqty> e)
