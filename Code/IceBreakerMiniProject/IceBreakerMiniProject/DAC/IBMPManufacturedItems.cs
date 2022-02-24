@@ -4,7 +4,7 @@ namespace IceBreakerMiniProject
 {
     [PXCacheName("ManufacturedItems")]
     [PXPrimaryGraph(typeof(IBMPBOMMaint))]
-   // [PXBreakInheritance]
+    //[PXBreakInheritance]
     public class IBMPManufacturedItems : IBMPInventory
     {
         #region InventoryCD
