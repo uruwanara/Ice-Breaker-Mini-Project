@@ -39,6 +39,7 @@ namespace IceBreakerMiniProject
         #endregion
 
         #region Status
+        [PXDefault(Constant.POStatus.Released)]
         [PXDBString(15, IsUnicode = true, InputMask = "")]
         [PXUIField(DisplayName = "Status")]
         public virtual string Status { get; set; }
@@ -66,7 +67,7 @@ namespace IceBreakerMiniProject
 
         #region Qty
         [PXDBInt]
-        [PXDefault(0)]
+        [PXDefault]
         [PXUIField(DisplayName = "Quantity")]
         public virtual int? Qty { get; set; }
         public abstract class qty : PX.Data.BQL.BqlInt.Field<qty> { }

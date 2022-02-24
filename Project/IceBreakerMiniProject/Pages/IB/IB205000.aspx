@@ -32,7 +32,7 @@
 								<Columns>
 									<px:PXGridColumn DataField="ComponentID" Width="140" ></px:PXGridColumn>
 									<px:PXGridColumn DataField="ComponentID_description" Width="180" ></px:PXGridColumn>
-									<px:PXGridColumn DataField="Qty" Width="70" ></px:PXGridColumn>
-									<px:PXGridColumn DataField="TotalQty" Width="70" />
+									<px:PXGridColumn CommitChanges="True" DataField="Qty" Width="70" ></px:PXGridColumn>
+									<px:PXGridColumn CommitChanges="True" DataField="TotalQty" Width="70" ></px:PXGridColumn>
 									<px:PXGridColumn DataField="Available" Width="60" /></Columns></px:PXGridLevel></Levels>
 						<AutoSize Enabled="True" /></px:PXGrid></Template></px:PXTabItem></Items></px:PXTab></asp:Content>

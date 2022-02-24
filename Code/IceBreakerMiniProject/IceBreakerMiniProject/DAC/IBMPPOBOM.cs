@@ -8,25 +8,21 @@ using System.Threading.Tasks;
 
 namespace IceBreakerMiniProject
 {
-    [PXCacheName("IBMPBOM")]
-    public  class IBMPPOBOM : IBMPBOM
-     {
+    [PXCacheName("POBOM")]
+    public class IBMPPOBOM : IBMPBOM
+    {
         #region ManufacPartID
         [PXDBInt(IsKey = true)]
-        [PXDefault(typeof(IBMPManufacturedItems.inventoryID))]
-        [PXParent(
-            typeof(
-            SelectFrom<IBMPProductionOrder>
-            .Where<IBMPProductionOrder.partid
-                .IsEqual<IBMPPOBOM.manufacPartID.FromCurrent>>))]
+        [PXDefault(typeof(IBMPProductionOrder.partid))]
+        [PXParent(typeof(SelectFrom<IBMPPOBOM>.Where<IBMPProductionOrder.partid.IsEqual<IBMPBOM.manufacPartID.FromCurrent>>))]
         public new virtual int? ManufacPartID { get; set; }
         public new abstract class manufacPartID : PX.Data.BQL.BqlInt.Field<manufacPartID> { }
         #endregion
 
         #region Total Qty
         [PXInt]
-        [PXUIField(DisplayName = "Total Quantity", Enabled = false)]
-        [PXFormula(typeof(Mult<IBMPBOM.qty, IBMPProductionOrder.qty>))]
+        [PXUIField(DisplayName = "Total Qty", Enabled = false)]
+        [PXFormula(typeof(Default<IBMPProductionOrder.qty>))]
         public virtual int? TotalQty { get; set; }
         public abstract class totalqty : PX.Data.BQL.BqlInt.Field<totalqty> { }
         #endregion

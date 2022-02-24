@@ -72,6 +72,14 @@ namespace IceBreakerMiniProject
             public const string Cancelled = "CANCELLED";
         }
 
+        public static class POStatus
+        {
+            public const string Released = "RELEASED";
+            public const string Reserved = "RESERVED";
+            public const string Closed = "CLOSED";
+            public const string Cancelled = "CANCELLED";
+        }
+
     }
 
 }
