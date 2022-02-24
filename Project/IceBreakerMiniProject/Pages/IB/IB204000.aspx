@@ -22,9 +22,9 @@
             <px:PXDateTimeEdit runat="server" ID="CstPXDateTimeEdit15" DataField="RequiredDate"></px:PXDateTimeEdit>
             <px:PXTextEdit runat="server" ID="CstPXTextEdit17" DataField="Status"></px:PXTextEdit>
             <px:PXLayoutRule runat="server" ID="CstPXLayoutRule23" StartColumn="True"></px:PXLayoutRule>
-            <px:PXSelector CommitChanges="True" runat="server" ID="CstPXSelector25" DataField="CustomerID"></px:PXSelector>
+            <px:PXSelector runat="server" ID="CstPXSelector25" DataField="CustomerID"></px:PXSelector>
             <px:PXTextEdit runat="server" ID="CstPXTextEdit13" DataField="DeliveryAddress"></px:PXTextEdit>
-	<px:PXNumberEdit CommitChanges="True" runat="server" ID="CstPXNumberEdit28" DataField="SumPrice" ></px:PXNumberEdit></Template>
+        </Template>
     </px:PXFormView>
 </asp:Content>
 <asp:Content ID="cont3" ContentPlaceHolderID="phG" runat="Server">
@@ -32,8 +32,8 @@
         <Items>
             <px:PXTabItem Visible="True" Text="Parts">
                 <Template>
-                    <px:PXGrid AutoAdjustColumns="True" Width="100%" SkinID="Details" runat="server" ID="CstPXGrid31">
-                        <AutoSize Enabled="True" MinHeight="200" />
+                    <px:PXGrid SyncPosition="True" AutoAdjustColumns="True" Width="100%" SkinID="Details" runat="server" ID="CstPXGrid31">
+                        <AutoSize Enabled="True" MinHeight="200"></AutoSize>
                         <Levels>
                             <px:PXGridLevel DataMember="Parts">
                                 <Columns>
@@ -42,10 +42,20 @@
                                     <px:PXGridColumn CommitChanges="True" DataField="Price" Width="100"></px:PXGridColumn>
                                     <px:PXGridColumn CommitChanges="True" DataField="Qty" Width="70"></px:PXGridColumn>
                                     <px:PXGridColumn CommitChanges="False" DataField="TotalPrice" Width="100"></px:PXGridColumn>
-                                    <px:PXGridColumn DataField="Status" Width="140"></px:PXGridColumn>
+                                    <px:PXGridColumn CommitChanges="True" DataField="Status" Width="140"></px:PXGridColumn>
                                 </Columns>
                             </px:PXGridLevel>
                         </Levels>
+                        <ActionBar>
+                            <CustomItems>
+                                <px:PXToolBarButton Text="Deliver">
+                                    <AutoCallBack Command="Deliver" Target="ds"></AutoCallBack>
+                                </px:PXToolBarButton>
+                                <px:PXToolBarButton Text="Cancel">
+                                    <AutoCallBack Command="CancelOrderLine" Target="ds"></AutoCallBack>
+                                </px:PXToolBarButton>
+                            </CustomItems>
+                        </ActionBar>
                         <Mode InitNewRow="True"></Mode>
                     </px:PXGrid>
                 </Template>
@@ -59,9 +69,9 @@
                                 <Columns>
                                     <px:PXGridColumn CommitChanges="True" DataField="Partid" Width="140"></px:PXGridColumn>
                                     <px:PXGridColumn DataField="Partid_description" Width="180"></px:PXGridColumn>
-                                    <px:PXGridColumn CommitChanges="True" DataField="Price" Width="100"></px:PXGridColumn>
+                                    <px:PXGridColumn DataField="Price" Width="100"></px:PXGridColumn>
                                     <px:PXGridColumn CommitChanges="True" DataField="Qty" Width="70"></px:PXGridColumn>
-                                    <px:PXGridColumn CommitChanges="True" DataField="TotalPrice" Width="100"></px:PXGridColumn>
+                                    <px:PXGridColumn DataField="TotalPrice" Width="100"></px:PXGridColumn>
                                     <px:PXGridColumn DataField="Status" Width="140"></px:PXGridColumn>
                                 </Columns>
                             </px:PXGridLevel>

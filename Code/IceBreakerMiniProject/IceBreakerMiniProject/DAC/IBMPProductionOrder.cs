@@ -49,7 +49,7 @@ namespace IceBreakerMiniProject
         #region Partid
         [PXDBInt]
         [PXDefault(typeof(IBMPInventory.inventoryID))]
-        [PXUIField(DisplayName = "Manufacture Product")]
+        [PXUIField(DisplayName = "Manufactured Product")]
         [PXSelector(
               typeof(
                   Search<IBMPInventory.inventoryID,
