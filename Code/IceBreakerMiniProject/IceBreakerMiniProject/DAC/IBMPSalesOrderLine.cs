@@ -58,7 +58,7 @@ namespace IceBreakerMiniProject
         #region Status
         [PXDBString(15, IsUnicode = true, InputMask = "")]
         [PXDefault(Constant.SOLineStatus.Required)]
-        [PXUIField(DisplayName = "Status")]
+        [PXUIField(DisplayName = "Status", Enabled = false)]
         public virtual string Status { get; set; }
         public abstract class status : PX.Data.BQL.BqlString.Field<status> { }
         #endregion

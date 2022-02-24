@@ -14,9 +14,11 @@ namespace IceBreakerMiniProject
         public SelectFrom<IBMPSalesOrder>.View SalesOrders;
 
         public SelectFrom<IBMPSOParts>.InnerJoin<IBMPInventory>.On<IBMPInventory.inventoryID.IsEqual<IBMPSOParts.partid>>
-            .Where<IBMPSOParts.salesOrderID.IsEqual<IBMPSalesOrder.salesOrderID.FromCurrent>.And<IBMPInventory.inventoryType.IsEqual<Constant.stockItem>>>.View Parts;
+            .Where<IBMPSOParts.salesOrderID.IsEqual<IBMPSalesOrder.salesOrderID.FromCurrent>.And<IBMPInventory.inventoryType.IsEqual<Constant.stockItem>>>
+            .View Parts;
         public SelectFrom<IBMPSONoParts>.InnerJoin<IBMPInventory>.On<IBMPInventory.inventoryID.IsEqual<IBMPSONoParts.partid>>
-            .Where<IBMPSONoParts.salesOrderID.IsEqual<IBMPSalesOrder.salesOrderID.FromCurrent>.And<IBMPInventory.inventoryType.IsEqual<Constant.nonStockItem>>>.View NoParts;
+            .Where<IBMPSONoParts.salesOrderID.IsEqual<IBMPSalesOrder.salesOrderID.FromCurrent>.And<IBMPInventory.inventoryType.IsEqual<Constant.nonStockItem>>>
+            .View NoParts;
 
         #endregion
 
@@ -68,6 +70,40 @@ namespace IceBreakerMiniProject
             }
         }
 
+        protected virtual void _(Events.RowSelected<IBMPSalesOrder> e)
+        {
+            IBMPSalesOrder row = e.Row;
+            if (row == null) return;
+
+            Release.SetEnabled(row.Status == Constant.SOStatus.Planned);
+            Deliver.SetEnabled(row.Status == Constant.SOStatus.Released);
+
+        }
+
+        #endregion
+
+        #region Actions
+        public PXAction<IBMPSalesOrder> Release;
+        [PXButton(CommitChanges = true)]
+        [PXUIField(DisplayName = "Release", Enabled = true)]
+        protected virtual void release()
+        {
+            IBMPSalesOrder row = SalesOrders.Current;
+            row.Status = Constant.SOStatus.Released;
+            SalesOrders.Update(row);
+            Actions.PressSave();
+        }
+
+        public PXAction<IBMPSOParts> Deliver;
+        [PXButton(CommitChanges = true)]
+        [PXUIField(DisplayName = "Deliver", Enabled = true)]
+        protected virtual void deliver()
+        {
+            IBMPSOParts row = Parts.Current;
+            row.Status = Constant.SOLineStatus.Delivered;
+            Parts.Update(row);
+            Actions.PressSave();
+        }
         #endregion
 
 
