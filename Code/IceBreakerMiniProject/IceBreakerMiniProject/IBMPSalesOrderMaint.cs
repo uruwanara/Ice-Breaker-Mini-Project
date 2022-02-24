@@ -77,7 +77,33 @@ namespace IceBreakerMiniProject
 
             Release.SetEnabled(row.Status == Constant.SOStatus.Planned);
             Deliver.SetEnabled(row.Status == Constant.SOStatus.Released);
+            CancelOrderLine.SetEnabled(row.Status == Constant.SOStatus.Released);
 
+            PXResultset<IBMPSOParts> parts = Parts.Select();
+            bool allCancelled = true;
+
+            foreach (IBMPSOParts part in parts)
+            {
+                if (part.Status != Constant.SOLineStatus.Cancelled)
+                {
+                    allCancelled = false;
+                    break;
+                }
+            }
+
+            CancelOrder.SetEnabled(allCancelled);
+
+        }
+
+        protected virtual void _(Events.RowSelected<IBMPSOParts> e)
+        {
+            IBMPSOParts row = e.Row;
+            if (row == null) return;
+            Deliver.SetEnabled(row.Status != Constant.SOLineStatus.Delivered);
+            CancelOrderLine.SetEnabled(
+                row.Status != Constant.SOLineStatus.Delivered &&
+                row.Status != Constant.SOLineStatus.Cancelled
+                );
         }
 
         #endregion
@@ -94,6 +120,17 @@ namespace IceBreakerMiniProject
             Actions.PressSave();
         }
 
+        public PXAction<IBMPSalesOrder> CancelOrder;
+        [PXButton(CommitChanges = true)]
+        [PXUIField(DisplayName = "Cancel", Enabled = true)]
+        protected virtual void cancelOrder()
+        {
+            IBMPSalesOrder row = SalesOrders.Current;
+            row.Status = Constant.SOStatus.Cancelled;
+            SalesOrders.Update(row);
+            Actions.PressSave();
+        }
+
         public PXAction<IBMPSOParts> Deliver;
         [PXButton(CommitChanges = true)]
         [PXUIField(DisplayName = "Deliver", Enabled = true)]
@@ -102,10 +139,39 @@ namespace IceBreakerMiniProject
             IBMPSOParts row = Parts.Current;
             row.Status = Constant.SOLineStatus.Delivered;
             Parts.Update(row);
+
+            PXResultset<IBMPSOParts> parts = Parts.Select();
+
+            bool allDelivered = true;
+
+            foreach(IBMPSOParts part in parts)
+            {
+                if (part.Status != Constant.SOLineStatus.Delivered)
+                {
+                    allDelivered = false;
+                    break;
+                }
+            }
+
+            if(allDelivered)
+            {
+                SalesOrders.Current.Status = Constant.SOStatus.Closed;
+            }
+
             Actions.PressSave();
         }
         #endregion
 
+        public PXAction<IBMPSOParts> CancelOrderLine;
+        [PXButton(CommitChanges = true)]
+        [PXUIField(DisplayName = "Cancel", Enabled = true)]
+        protected virtual void cancelOrderLine()
+        {
+            IBMPSOParts row = Parts.Current;
+            row.Status = Constant.SOLineStatus.Cancelled;
+            Parts.Update(row);
 
+            Actions.PressSave();
+        }
     }
 }

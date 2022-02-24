@@ -33,7 +33,7 @@
             <px:PXTabItem Visible="True" Text="Parts">
                 <Template>
                     <px:PXGrid SyncPosition="True" AutoAdjustColumns="True" Width="100%" SkinID="Details" runat="server" ID="CstPXGrid31">
-                        <AutoSize Enabled="True" MinHeight="200" ></AutoSize>
+                        <AutoSize Enabled="True" MinHeight="200"></AutoSize>
                         <Levels>
                             <px:PXGridLevel DataMember="Parts">
                                 <Columns>
@@ -47,11 +47,14 @@
                             </px:PXGridLevel>
                         </Levels>
                         <ActionBar>
-                         <CustomItems>
-                         <px:PXToolBarButton Text="Deliver">
-                         <AutoCallBack Command="Deliver" Target="ds" ></AutoCallBack>
-                         </px:PXToolBarButton>
-                         </CustomItems>
+                            <CustomItems>
+                                <px:PXToolBarButton Text="Deliver">
+                                    <AutoCallBack Command="Deliver" Target="ds"></AutoCallBack>
+                                </px:PXToolBarButton>
+                                <px:PXToolBarButton Text="Cancel">
+                                    <AutoCallBack Command="CancelOrderLine" Target="ds"></AutoCallBack>
+                                </px:PXToolBarButton>
+                            </CustomItems>
                         </ActionBar>
                         <Mode InitNewRow="True"></Mode>
                     </px:PXGrid>
