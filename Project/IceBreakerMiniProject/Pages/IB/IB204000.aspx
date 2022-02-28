@@ -17,18 +17,19 @@
     <px:PXFormView Width="100%" Height="150px" DataMember="SalesOrders" runat="server" ID="form">
         <Template>
             <px:PXLayoutRule runat="server" ID="CstPXLayoutRule11" StartRow="True"></px:PXLayoutRule>
-            <px:PXSelector runat="server" ID="CstPXSelector16" DataField="SalesOrderCD"></px:PXSelector>
+            <px:PXSelector CommitChanges="True" runat="server" ID="CstPXSelector16" DataField="SalesOrderCD"></px:PXSelector>
             <px:PXDateTimeEdit runat="server" ID="CstPXDateTimeEdit14" DataField="OrderDate"></px:PXDateTimeEdit>
             <px:PXDateTimeEdit runat="server" ID="CstPXDateTimeEdit15" DataField="RequiredDate"></px:PXDateTimeEdit>
             <px:PXTextEdit runat="server" ID="CstPXTextEdit17" DataField="Status"></px:PXTextEdit>
             <px:PXLayoutRule runat="server" ID="CstPXLayoutRule23" StartColumn="True"></px:PXLayoutRule>
-            <px:PXSelector runat="server" ID="CstPXSelector25" DataField="CustomerID"></px:PXSelector>
-            <px:PXTextEdit runat="server" ID="CstPXTextEdit13" DataField="DeliveryAddress"></px:PXTextEdit>
-        </Template>
+            <px:PXSelector CommitChanges="True" runat="server" ID="CstPXSelector25" DataField="CustomerID"></px:PXSelector>
+            <px:PXTextEdit CommitChanges="True" runat="server" ID="CstPXTextEdit13" DataField="DeliveryAddress"></px:PXTextEdit>
+	<px:PXLayoutRule runat="server" ID="CstPXLayoutRule28" StartColumn="True" />
+	<px:PXNumberEdit runat="server" ID="CstPXNumberEdit29" DataField="SumPrice" /></Template>
     </px:PXFormView>
 </asp:Content>
 <asp:Content ID="cont3" ContentPlaceHolderID="phG" runat="Server">
-    <px:PXTab Height="500px" Width="99%" runat="server" ID="CstPXTab30">
+    <px:PXTab Height="500px" Width="100%" runat="server" ID="CstPXTab30">
         <Items>
             <px:PXTabItem Visible="True" Text="Parts">
                 <Template>
@@ -62,7 +63,7 @@
             </px:PXTabItem>
             <px:PXTabItem Text="NoParts" Visible="True">
                 <Template>
-                    <px:PXGrid AutoAdjustColumns="True" Width="99%" SkinID="Details" runat="server" ID="CstPXGrid34">
+                    <px:PXGrid AutoAdjustColumns="True" Width="100%" SkinID="Details" runat="server" ID="CstPXGrid34">
                         <AutoSize Enabled="True" MinHeight="200" />
                         <Levels>
                             <px:PXGridLevel DataMember="NoParts">

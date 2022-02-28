@@ -54,6 +54,7 @@ namespace IceBreakerMiniProject
 
         #region DeliveryAddress
         [PXDBString(255, IsUnicode = true, InputMask = "")]
+        //[PXDBDefault(typeof(IBMPCustomer.address))]
         [PXUIField(DisplayName = "Delivery Address")]
         public virtual string DeliveryAddress { get; set; }
         public abstract class deliveryAddress : PX.Data.BQL.BqlString.Field<deliveryAddress> { }
