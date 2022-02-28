@@ -10,38 +10,39 @@ namespace IceBreakerMiniProject
     {
         #region Views
         public SelectFrom<IBMPProductionOrder>.View ProductionOrders;
-        public SelectFrom<IBMPPOBOM>
-            .Where<IBMPPOBOM.manufacPartID
-                .IsEqual<IBMPProductionOrder.partid.FromCurrent>>
-            .View ProductionBom;
+        public SelectFrom<IBMPPOBOM>.Where<IBMPPOBOM.manufacPartID.IsEqual<IBMPProductionOrder.partid.FromCurrent>>.View ProductionBom;
+
+        public SelectFrom<IBMPLocationInventory>.Where<IBMPLocationInventory.inventoryID.IsEqual<@P.AsInt>>.View Locations;
         #endregion
 
-        //[PX.Api.Export.PXOptimizationBehavior(IgnoreBqlDelegate = true)]
-        //public virtual IEnumerable productionBom()
-        //{
-        //    if (ProductionOrders.Current.Partid == null || ProductionOrders.Current.Partid==null) return null;
+        [PX.Api.Export.PXOptimizationBehavior(IgnoreBqlDelegate = true)]
+        public virtual IEnumerable productionBom()
+        {
+            if (ProductionOrders.Current.Partid == null || ProductionOrders.Current.ProductionOrderID == null) return null;
 
-        //    var query = new SelectFrom<IBMPBOM>
-        //                    .InnerJoin<IBMPLocationInventory>.On<IBMPLocationInventory.inventoryID.IsEqual<IBMPBOM.componentID>>
-        //                    .Where<IBMPPOBOM.manufacPartID.IsEqual<IBMPProductionOrder.partid.FromCurrent>>
-        //                    .AggregateTo<GroupBy<IBMPLocationInventory.inventoryID>, Sum<IBMPLocationInventory.qtyHand>>.View.ReadOnly(this);
+            var query = new SelectFrom<IBMPBOM>
+                            .InnerJoin<IBMPLocationInventory>.On<IBMPLocationInventory.inventoryID.IsEqual<IBMPBOM.componentID>>
+                            .Where<IBMPBOM.manufacPartID.IsEqual<IBMPProductionOrder.partid.FromCurrent>>
+                            .AggregateTo<GroupBy<IBMPBOM.componentID>, GroupBy<IBMPLocationInventory.inventoryID>, Sum<IBMPLocationInventory.qtyHand>>.View.ReadOnly(this);
 
-        //    using (new PXFieldScope(query.View, typeof(IBMPLocationInventory.inventoryID), typeof(IBMPLocationInventory.qtyHand)))
-        //    {
-        //        int startRow = PXView.StartRow;
-        //        int totalRows = 0;
+            using (new PXFieldScope(query.View, typeof(IBMPLocationInventory.inventoryID), typeof(IBMPLocationInventory.qtyHand)))
+            {
 
-        //        foreach (PXResult<IBMPBOM, IBMPLocationInventory> record in
-        //            query.View.Select(PXView.Currents, PXView.Parameters, PXView.Searches, PXView.SortColumns,
-        //        PXView.Descendings, PXView.Filters, ref startRow, PXView.MaximumRows, ref totalRows))
-        //        {
+                int startRow = PXView.StartRow;
+                int totalRows = 0;
 
-        //        }
-        //    }
+                foreach (PXResult<IBMPBOM, IBMPLocationInventory> record in
+                    query.View.Select(PXView.Currents, PXView.Parameters, PXView.Searches, PXView.SortColumns,
+                PXView.Descendings, PXView.Filters, ref startRow, PXView.MaximumRows, ref totalRows))
+                {
+                    Locations.StoreResult((IBMPLocationInventory)record);
 
-        //    return null;
+                }
+            }
 
-        //}
+            return null;
+
+        }
 
 
         #region Actions
@@ -85,7 +86,7 @@ namespace IceBreakerMiniProject
 
             foreach (IBMPPOBOM item in bomParts)
             {
-                if (item.Available == false || item.Available==null)
+                if (item.Available == false || item.Available == null)
                 {
                     flag = false;
                     break;
@@ -95,15 +96,13 @@ namespace IceBreakerMiniProject
 
             if (flag == true)
             {
-
-
                 foreach (IBMPPOBOM inventory in bomParts)
                 {
                     int? tq = inventory.TotalQty;
 
-                    PXResultset<IBMPLocationInventory> abc = SelectFrom<IBMPLocationInventory>.
-                                              Where<IBMPLocationInventory.inventoryID.IsEqual<@P.AsInt>
-                                              >.OrderBy<IBMPLocationInventory.qtyHand.Desc>.View.Select(this, inventory.ComponentID);
+                    var abc = SelectFrom<IBMPLocationInventory>.Where<IBMPLocationInventory.inventoryID.IsEqual<@P.AsInt>
+                                             >.OrderBy<IBMPLocationInventory.qtyHand.Desc>.View.Select(this, inventory.ComponentID);
+                    //qty !=0
 
                     foreach (IBMPLocationInventory i in abc)
                     {
@@ -111,7 +110,6 @@ namespace IceBreakerMiniProject
                         {
                             i.QtyHand = i.QtyHand - tq;
                             i.QtyReserved = i.QtyReserved + tq;
-
                             break;
 
                         }
@@ -121,19 +119,13 @@ namespace IceBreakerMiniProject
                             i.QtyReserved = i.QtyHand;
                             i.QtyHand = 0;
                         }
-
-                        PXUpdate<Set<IBMPLocationInventory.qtyHand, Required<IBMPLocationInventory.qtyHand>>, IBMPLocationInventory>.Update(this);
-
-                        //PXUpdate<
-                        //    Set<ARSetup.prepareStatements, Required<ARSetup.prepareStatements>>, 
-                        //    ARSetup, 
-                        //    Where<ARSetup.prepareStatements, Equal<Required<ARSetup.prepareStatements>>>>.
-                        //    Update(this, ARSetup.prepareStatements.ForEachBranch, ARSetup.prepareStatements.ConsolidatedForAllCompanies);
+                        this.Caches<IBMPLocationInventory>().Update(i);
                     }
+
+
                 }
 
                 row.Status = Constant.POStatus.Reserved;
-
             }
             else
             {
@@ -162,26 +154,50 @@ namespace IceBreakerMiniProject
             if (e.Row == null) return;
 
             e.Cache.SetValueExt<IBMPPOBOM.totalqty>(e.Row, e.Row.Qty * ProductionOrders.Current.Qty);
+            using (new PXConnectionScope())
+            {
+                IBMPLocationInventory location = Locations.Select(e.Row.ComponentID);
+                if (location != null && location.QtyHand >= e.Row.TotalQty)
+                {
+                    e.Row.Available = true;
+                }
+            }
 
         }
-        protected void _(Events.FieldUpdating<IBMPPOBOM.totalqty> e)
+
+        protected void _(Events.RowUpdated<IBMPPOBOM> e)
         {
-            e.Cancel = true;
+            if (e.Row == null) return;
+
+            using (new PXConnectionScope())
+            {
+                IBMPLocationInventory location = Locations.Select(e.Row.ComponentID);
+                if (location != null && location.QtyHand >= e.Row.TotalQty)
+                {
+                    e.Row.Available = true;
+                }
+            }
+
         }
 
-        protected void _(Events.FieldUpdated<IBMPBOM, IBMPPOBOM.totalqty> e)
+        protected void _(Events.FieldDefaulting<IBMPPOBOM, IBMPPOBOM.totalqty> e)
         {
-            IBMPInventory item = IBMPInventory.PK.Find(this, e.Row.ManufacPartID);
-
+            //  e.Cache.SetValue<IBMPPOBOM.totalqty>(e.Row, e.Row.Qty * ProductionOrders.Current.Qty);
+            e.NewValue = e.Row.Qty * ProductionOrders.Current.Qty;
         }
 
+        protected void _(Events.RowUpdated<IBMPProductionOrder> e)
+        {
+            foreach (IBMPPOBOM item in ProductionBom.Select())
+            {
+              IBMPPOBOM newRow = PXCache<IBMPPOBOM>.CreateCopy(item);
+              newRow.TotalQty = e.Row.Qty * newRow.Qty;
+              ProductionBom.Cache.RaiseRowUpdated(newRow,item);
+               // ProductionBom.Cache.SetValueExt<IBMPPOBOM.totalqty>(item, item.Qty * e.Row.Qty);
+            }
+            // this.Caches<IBMPPOBOM>().RaiseFieldSelecting(Row);
 
-
-        //protected void _(Events.FieldDefaulting<IBMPPOBOM,IBMPPOBOM.totalqty> e)
-        //{
-        //  //  e.Cache.SetValue<IBMPPOBOM.totalqty>(e.Row, e.Row.Qty * ProductionOrders.Current.Qty);
-        //    e.NewValue = e.Row.Qty * ProductionOrders.Current.Qty;
-        //}
+        }
 
 
         //#endregion
