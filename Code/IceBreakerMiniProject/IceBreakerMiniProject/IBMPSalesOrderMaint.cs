@@ -1,10 +1,5 @@
-using System;
 using PX.Data;
 using PX.Data.BQL.Fluent;
-using PX.Objects.IN;
-using System.Linq;
-using PX.Objects.CT;
-using PX.Objects.CN.CacheExtensions;
 
 namespace IceBreakerMiniProject
 {
@@ -75,8 +70,12 @@ namespace IceBreakerMiniProject
             IBMPSalesOrder row = e.Row;
             if (row == null) return;
 
-            Release.SetEnabled(row.Status == Constant.SOStatus.Planned);
+            bool salesOrderCacheStatus = SalesOrders.Cache.GetStatus(row) != PXEntryStatus.Inserted;
+
+            #region Action Availability
+            Release.SetEnabled(row.Status == Constant.SOStatus.Planned && salesOrderCacheStatus);
             Deliver.SetEnabled(row.Status == Constant.SOStatus.Released);
+            CancelOrder.SetEnabled(salesOrderCacheStatus);
             CancelOrderLine.SetEnabled(row.Status == Constant.SOStatus.Released);
 
             PXResultset<IBMPSOParts> parts = Parts.Select();
@@ -91,19 +90,50 @@ namespace IceBreakerMiniProject
                 }
             }
 
-            CancelOrder.SetEnabled(allCancelled);
+            CancelOrder.SetEnabled(allCancelled && row.Status != Constant.SOStatus.Cancelled);
+            #endregion
 
+            #region Field Availability
+            PXUIFieldAttribute.SetEnabled<IBMPSalesOrder.orderDate>(SalesOrders.Cache, null, row.Status == Constant.SOStatus.Planned);
+            PXUIFieldAttribute.SetEnabled<IBMPSalesOrder.requiredDate>(SalesOrders.Cache, null, row.Status == Constant.SOStatus.Planned);
+            PXUIFieldAttribute.SetEnabled<IBMPSalesOrder.customerID>(SalesOrders.Cache, null, row.Status == Constant.SOStatus.Planned);
+            PXUIFieldAttribute.SetEnabled<IBMPSalesOrder.deliveryAddress>(SalesOrders.Cache, null, row.Status == Constant.SOStatus.Planned);
+            #endregion
+
+            #region Tab Availability
+            Parts.Cache.AllowSelect = salesOrderCacheStatus;
+            NoParts.Cache.AllowSelect = salesOrderCacheStatus;
+            #endregion
         }
 
         protected virtual void _(Events.RowSelected<IBMPSOParts> e)
         {
             IBMPSOParts row = e.Row;
             if (row == null) return;
+
+            #region Action Availability
             Deliver.SetEnabled(row.Status != Constant.SOLineStatus.Delivered);
             CancelOrderLine.SetEnabled(
                 row.Status != Constant.SOLineStatus.Delivered &&
                 row.Status != Constant.SOLineStatus.Cancelled
                 );
+            #endregion
+
+            #region Field Availability
+            PXUIFieldAttribute.SetEnabled<IBMPSOParts.qty>(Parts.Cache, null, SalesOrders.Current.Status == Constant.SOStatus.Planned);
+            #endregion
+
+        }
+
+        protected virtual void _(Events.RowSelected<IBMPSONoParts> e)
+        {
+            IBMPSONoParts row = e.Row;
+            if (row == null) return;
+
+            #region Field Availability
+            PXUIFieldAttribute.SetEnabled<IBMPSONoParts.qty>(Parts.Cache, null, SalesOrders.Current.Status == Constant.SOStatus.Planned);
+            #endregion
+
         }
 
         #endregion
@@ -117,6 +147,14 @@ namespace IceBreakerMiniProject
             IBMPSalesOrder row = SalesOrders.Current;
             row.Status = Constant.SOStatus.Released;
             SalesOrders.Update(row);
+
+            PXResultset<IBMPSONoParts> noParts = NoParts.Select();
+            foreach (IBMPSONoParts noPart in noParts)
+            {
+                noPart.Status = Constant.SOLineStatus.Delivered;
+                NoParts.Update(noPart);
+            }
+
             Actions.PressSave();
         }
 
@@ -144,7 +182,7 @@ namespace IceBreakerMiniProject
 
             bool allDelivered = true;
 
-            foreach(IBMPSOParts part in parts)
+            foreach (IBMPSOParts part in parts)
             {
                 if (part.Status != Constant.SOLineStatus.Delivered)
                 {
@@ -153,14 +191,13 @@ namespace IceBreakerMiniProject
                 }
             }
 
-            if(allDelivered)
+            if (allDelivered)
             {
                 SalesOrders.Current.Status = Constant.SOStatus.Closed;
             }
 
             Actions.PressSave();
         }
-        #endregion
 
         public PXAction<IBMPSOParts> CancelOrderLine;
         [PXButton(CommitChanges = true)]
@@ -173,5 +210,9 @@ namespace IceBreakerMiniProject
 
             Actions.PressSave();
         }
+
+        #endregion
+
+
     }
 }

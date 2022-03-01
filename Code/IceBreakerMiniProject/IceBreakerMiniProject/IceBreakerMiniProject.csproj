@@ -84,6 +84,7 @@
     <Compile Include="IBMPBOMMaint.cs" />
     <Compile Include="DAC\IBMPBOM.cs" />
     <Compile Include="DAC\IBMPLocationInventorySmartPanel.cs" />
+    <Compile Include="IBMPSalesOrderInq.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PXSave.cs" />
   </ItemGroup>

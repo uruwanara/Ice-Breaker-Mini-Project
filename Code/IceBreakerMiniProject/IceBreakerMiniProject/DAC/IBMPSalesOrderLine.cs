@@ -25,6 +25,7 @@ namespace IceBreakerMiniProject
 
         #region Partid
         [PXDBInt(IsKey = true)]
+        [PXLineNbr(typeof(IBMPSalesOrder.lineCntr))]
         [PXUIField(DisplayName = "Inventory")]
         public virtual int? Partid { get; set; }
         public abstract class partid : PX.Data.BQL.BqlInt.Field<partid> { }
@@ -32,7 +33,7 @@ namespace IceBreakerMiniProject
 
         #region Price
         [PXDBDecimal()]
-        [PXUIField(DisplayName = "Price")]
+        [PXUIField(DisplayName = "Price", Enabled = false)]
         public virtual Decimal? Price { get; set; }
         public abstract class price : PX.Data.BQL.BqlDecimal.Field<price> { }
         #endregion
