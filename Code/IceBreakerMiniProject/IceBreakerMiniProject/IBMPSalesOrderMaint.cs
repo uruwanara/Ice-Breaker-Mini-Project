@@ -70,10 +70,12 @@ namespace IceBreakerMiniProject
             IBMPSalesOrder row = e.Row;
             if (row == null) return;
 
+            bool salesOrderCacheStatus = SalesOrders.Cache.GetStatus(row) != PXEntryStatus.Inserted;
+
             #region Action Availability
-            Release.SetEnabled(row.Status == Constant.SOStatus.Planned && SalesOrders.Cache.GetStatus(row) != PXEntryStatus.Inserted);
+            Release.SetEnabled(row.Status == Constant.SOStatus.Planned && salesOrderCacheStatus);
             Deliver.SetEnabled(row.Status == Constant.SOStatus.Released);
-            CancelOrder.SetEnabled(SalesOrders.Cache.GetStatus(row) != PXEntryStatus.Inserted);
+            CancelOrder.SetEnabled(salesOrderCacheStatus);
             CancelOrderLine.SetEnabled(row.Status == Constant.SOStatus.Released);
 
             PXResultset<IBMPSOParts> parts = Parts.Select();
@@ -96,6 +98,11 @@ namespace IceBreakerMiniProject
             PXUIFieldAttribute.SetEnabled<IBMPSalesOrder.requiredDate>(SalesOrders.Cache, null, row.Status == Constant.SOStatus.Planned);
             PXUIFieldAttribute.SetEnabled<IBMPSalesOrder.customerID>(SalesOrders.Cache, null, row.Status == Constant.SOStatus.Planned);
             PXUIFieldAttribute.SetEnabled<IBMPSalesOrder.deliveryAddress>(SalesOrders.Cache, null, row.Status == Constant.SOStatus.Planned);
+            #endregion
+
+            #region Tab Availability
+            Parts.Cache.AllowSelect = salesOrderCacheStatus;
+            NoParts.Cache.AllowSelect = salesOrderCacheStatus;
             #endregion
         }
 

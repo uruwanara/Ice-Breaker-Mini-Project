@@ -31,7 +31,7 @@
 <asp:Content ID="cont3" ContentPlaceHolderID="phG" runat="Server">
     <px:PXTab Height="500px" Width="100%" runat="server" ID="CstPXTab30">
         <Items>
-            <px:PXTabItem Visible="True" Text="Parts">
+            <px:PXTabItem RepaintOnDemand="False" Visible="True" Text="Parts">
                 <Template>
                     <px:PXGrid SyncPosition="True" AutoAdjustColumns="True" Width="100%" SkinID="Details" runat="server" ID="CstPXGrid31">
                         <AutoSize Enabled="True" MinHeight="200"></AutoSize>
@@ -61,10 +61,10 @@
                     </px:PXGrid>
                 </Template>
             </px:PXTabItem>
-            <px:PXTabItem Text="NoParts" Visible="True">
+            <px:PXTabItem RepaintOnDemand="False" Text="NoParts" Visible="True">
                 <Template>
                     <px:PXGrid AutoAdjustColumns="True" Width="100%" SkinID="Details" runat="server" ID="CstPXGrid34">
-                        <AutoSize Enabled="True" MinHeight="200" />
+                        <AutoSize Enabled="True" MinHeight="200" ></AutoSize>
                         <Levels>
                             <px:PXGridLevel DataMember="NoParts">
                                 <Columns>
