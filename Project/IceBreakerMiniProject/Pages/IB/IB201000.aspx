@@ -28,7 +28,7 @@
 						<Levels>
 							<px:PXGridLevel DataMember="WarehouseLocations" >
 								<Columns>
-									<px:PXGridColumn DataField="LocationCD" Width="140" ></px:PXGridColumn>
+									<px:PXGridColumn CommitChanges="True" DataField="LocationCD" Width="140" ></px:PXGridColumn>
 									<px:PXGridColumn DataField="Description" Width="140" ></px:PXGridColumn>
 									<px:PXGridColumn DataField="Address" Width="180" ></px:PXGridColumn></Columns></px:PXGridLevel></Levels>
 						<AutoSize Enabled="True" ></AutoSize>

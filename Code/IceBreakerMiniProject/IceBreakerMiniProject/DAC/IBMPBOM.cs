@@ -35,7 +35,7 @@ namespace IceBreakerMiniProject
 
         #region Qty
         [PXDBInt()]
-        [PXUIField(DisplayName = "Qty")]
+        [PXUIField(DisplayName = "Qty per Item")]
         public virtual int? Qty { get; set; }
         public abstract class qty : PX.Data.BQL.BqlInt.Field<qty> { }
         #endregion

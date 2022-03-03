@@ -19,7 +19,10 @@
 			<px:PXSelector runat="server" ID="CstPXSelector12" DataField="InventoryCD" ></px:PXSelector>
 			<px:PXDropDown runat="server" ID="CstPXDropDown13" DataField="PartType" ></px:PXDropDown>
 			<px:PXTextEdit runat="server" ID="CstPXTextEdit14" DataField="Description" ></px:PXTextEdit>
-			<px:PXNumberEdit runat="server" ID="CstPXNumberEdit4" DataField="Price" ></px:PXNumberEdit></Template>
+			<px:PXNumberEdit runat="server" ID="CstPXNumberEdit4" DataField="Price" ></px:PXNumberEdit>
+			<px:PXLayoutRule runat="server" ID="CstPXLayoutRule17" StartColumn="True" />
+			<px:PXNumberEdit runat="server" ID="CstPXNumberEdit15" DataField="OnHandTotalQty" />
+			<px:PXNumberEdit runat="server" ID="CstPXNumberEdit16" DataField="ReservedTotalQty" /></Template>
 	
 		<ContentLayout AutoSizeControls="False" ></ContentLayout></px:PXFormView>
 </asp:Content>

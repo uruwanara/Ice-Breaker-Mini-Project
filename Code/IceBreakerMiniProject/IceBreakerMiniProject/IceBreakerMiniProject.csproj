@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IBMPSetup.cs" />
     <Compile Include="Helper\Constants.cs" />
     <Compile Include="DAC\IBMPManufacturedItems.cs" />
     <Compile Include="DAC\IBMPPOBOM.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="DAC\IBMPStockItems.cs" />
     <Compile Include="DAC\IBMPWarehouse.cs" />
     <Compile Include="DAC\IBMPWarehouseLocation.cs" />
+    <Compile Include="IBMPReceiveShopOrder.cs" />
     <Compile Include="IBMPWarehouseMaint.cs" />
     <Compile Include="DAC\IBMPCustomer.cs" />
     <Compile Include="IBMPCustomerMaint.cs" />
@@ -82,6 +84,7 @@
     <Compile Include="Helper\Messages.cs" />
     <Compile Include="IBMPBOMMaint.cs" />
     <Compile Include="DAC\IBMPBOM.cs" />
+    <Compile Include="DAC\IBMPLocationInventorySmartPanel.cs" />
     <Compile Include="IBMPSalesOrderInq.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PXSave.cs" />
