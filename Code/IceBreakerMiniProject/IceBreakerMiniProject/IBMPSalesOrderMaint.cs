@@ -184,22 +184,12 @@ namespace IceBreakerMiniProject
              */
 
             // 1. traversing all the SO lines
-            PXResultset<IBMPSOParts> currentSOLines = Parts.Select();
-            
+            PXResultset<IBMPSOParts> currentSOLines = Parts.Select();         
 
             foreach (IBMPSOParts SOLine in currentSOLines)
             {
                 // 1.1 getting all the inventory locations for inventory id
-                //PXResultset<IBMPLocationInventory> locationInventories =
-                //     SelectFrom<IBMPLocationInventory>
-                //     .Where<IBMPLocationInventory.inventoryID.IsIn<@P.AsInt>>
-                //     .View.Select(this, SOLine.Partid);
-
                 PXResultset<IBMPLocationInventory> locationInventories = LocationInventory.Select(SOLine.Partid);
-
-
-                //PXResultset<IBMPLocationInventory> locationInventories =
-                //    LocationInventory.Select(this, SOLine.Partid);
 
                 int? qtyNeed = SOLine.Qty;
                 // 1.2 traversing each inventory in order and update
@@ -211,7 +201,6 @@ namespace IceBreakerMiniProject
                     {
                         locationInventory.QtyHand -= qtyNeed;
                         locationInventory.QtyReserved += qtyNeed;
-                        //this.Caches<IBMPLocationInventory>().Update(locationInventory);
                         LocationInventory.Cache.Update(locationInventory);
                         break;
                     }
@@ -223,13 +212,6 @@ namespace IceBreakerMiniProject
                 }
 
             }
-
-            //IBMPLocationInventory locationInventory =
-            //     SelectFrom<IBMPLocationInventory>
-            //     .Where<IBMPLocationInventory.inventoryID.IsIn<@P.AsInt>>
-            //     .View.Select(this, row.Partid);
-
-
 
             Actions.PressSave();
         }
