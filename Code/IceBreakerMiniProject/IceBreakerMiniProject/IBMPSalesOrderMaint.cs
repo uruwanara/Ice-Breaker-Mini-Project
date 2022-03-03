@@ -1,4 +1,5 @@
 using PX.Data;
+using PX.Data.BQL;
 using PX.Data.BQL.Fluent;
 
 namespace IceBreakerMiniProject
@@ -14,7 +15,7 @@ namespace IceBreakerMiniProject
         public SelectFrom<IBMPSONoParts>.InnerJoin<IBMPInventory>.On<IBMPInventory.inventoryID.IsEqual<IBMPSONoParts.partid>>
             .Where<IBMPSONoParts.salesOrderID.IsEqual<IBMPSalesOrder.salesOrderID.FromCurrent>.And<IBMPInventory.inventoryType.IsEqual<Constant.nonStockItem>>>
             .View NoParts;
-
+        public SelectFrom<IBMPLocationInventory>.Where<IBMPLocationInventory.inventoryID.IsEqual<@P.AsInt>>.View LocationInventory;
         #endregion
 
         #region Events
@@ -71,14 +72,14 @@ namespace IceBreakerMiniProject
             if (row == null) return;
 
             bool salesOrderCacheStatus = SalesOrders.Cache.GetStatus(row) != PXEntryStatus.Inserted;
+            PXResultset<IBMPSOParts> parts = Parts.Select();
 
             #region Action Availability
-            Release.SetEnabled(row.Status == Constant.SOStatus.Planned && salesOrderCacheStatus);
+            Release.SetEnabled(row.Status == Constant.SOStatus.Planned && salesOrderCacheStatus && parts.Count > 0);
             Deliver.SetEnabled(row.Status == Constant.SOStatus.Released);
             CancelOrder.SetEnabled(salesOrderCacheStatus);
             CancelOrderLine.SetEnabled(row.Status == Constant.SOStatus.Released);
 
-            PXResultset<IBMPSOParts> parts = Parts.Select();
             bool allCancelled = true;
 
             foreach (IBMPSOParts part in parts)
@@ -101,8 +102,8 @@ namespace IceBreakerMiniProject
             #endregion
 
             #region Tab Availability
-            Parts.Cache.AllowSelect = salesOrderCacheStatus;
-            NoParts.Cache.AllowSelect = salesOrderCacheStatus;
+            Parts.Cache.AllowInsert = salesOrderCacheStatus && row.Status == Constant.SOStatus.Planned;
+            NoParts.Cache.AllowInsert = salesOrderCacheStatus && row.Status == Constant.SOStatus.Planned;
             #endregion
         }
 
@@ -112,7 +113,7 @@ namespace IceBreakerMiniProject
             if (row == null) return;
 
             #region Action Availability
-            Deliver.SetEnabled(row.Status != Constant.SOLineStatus.Delivered);
+            Deliver.SetEnabled(row.Status != Constant.SOLineStatus.Delivered && SalesOrders.Current.Status == Constant.SOStatus.Released);
             CancelOrderLine.SetEnabled(
                 row.Status != Constant.SOLineStatus.Delivered &&
                 row.Status != Constant.SOLineStatus.Cancelled
@@ -136,6 +137,29 @@ namespace IceBreakerMiniProject
 
         }
 
+        protected virtual void _(Events.FieldUpdated<IBMPSOParts, IBMPSOParts.qty> e)
+        {
+            IBMPSOParts row = e.Row;
+            if (row == null) return;
+
+            IBMPLocationInventory currentInventoryWithQtyHandSum = new SelectFrom<IBMPLocationInventory>
+                 .Where<IBMPLocationInventory.inventoryID.IsIn<@P.AsInt>>
+                 .AggregateTo<GroupBy<IBMPLocationInventory.inventoryID>, Sum<IBMPLocationInventory.qtyHand>>
+                 .View.ReadOnly(this).Select(row.Partid);
+
+            if (row.Qty > currentInventoryWithQtyHandSum.QtyHand)
+            {
+                this.Parts.Ask(Parts.Current, "Warning", "Not enough quantity on stocks. Maximum quantity is set", MessageButtons.OK);
+                //row.Qty = currentInventoryWithQtyHandSum.QtyHand;
+                //Parts.Update(row);
+
+                Parts.Cache.SetValueExt<IBMPSOParts.qty>(row, currentInventoryWithQtyHandSum.QtyHand);
+
+                // update the inventory after RELEASE action
+
+            }
+        }
+
         #endregion
 
         #region Actions
@@ -155,6 +179,58 @@ namespace IceBreakerMiniProject
                 NoParts.Update(noPart);
             }
 
+            /**
+             * update the invetory to qty reserved traversing all the sales order lines
+             */
+
+            // 1. traversing all the SO lines
+            PXResultset<IBMPSOParts> currentSOLines = Parts.Select();
+            
+
+            foreach (IBMPSOParts SOLine in currentSOLines)
+            {
+                // 1.1 getting all the inventory locations for inventory id
+                //PXResultset<IBMPLocationInventory> locationInventories =
+                //     SelectFrom<IBMPLocationInventory>
+                //     .Where<IBMPLocationInventory.inventoryID.IsIn<@P.AsInt>>
+                //     .View.Select(this, SOLine.Partid);
+
+                PXResultset<IBMPLocationInventory> locationInventories = LocationInventory.Select(SOLine.Partid);
+
+
+                //PXResultset<IBMPLocationInventory> locationInventories =
+                //    LocationInventory.Select(this, SOLine.Partid);
+
+                int? qtyNeed = SOLine.Qty;
+                // 1.2 traversing each inventory in order and update
+                foreach (IBMPLocationInventory locationInventory in locationInventories)
+                {
+                    if (qtyNeed == 0) break;
+
+                    if (locationInventory.QtyHand >= qtyNeed)
+                    {
+                        locationInventory.QtyHand -= qtyNeed;
+                        locationInventory.QtyReserved += qtyNeed;
+                        //this.Caches<IBMPLocationInventory>().Update(locationInventory);
+                        LocationInventory.Cache.Update(locationInventory);
+                        break;
+                    }
+
+                    qtyNeed -= locationInventory.QtyHand;
+                    locationInventory.QtyReserved += locationInventory.QtyHand;
+                    locationInventory.QtyHand = 0;
+                    LocationInventory.Cache.Update(locationInventory);
+                }
+
+            }
+
+            //IBMPLocationInventory locationInventory =
+            //     SelectFrom<IBMPLocationInventory>
+            //     .Where<IBMPLocationInventory.inventoryID.IsIn<@P.AsInt>>
+            //     .View.Select(this, row.Partid);
+
+
+
             Actions.PressSave();
         }
 
@@ -171,7 +247,7 @@ namespace IceBreakerMiniProject
 
         public PXAction<IBMPSOParts> Deliver;
         [PXButton(CommitChanges = true)]
-        [PXUIField(DisplayName = "Deliver", Enabled = true)]
+        [PXUIField(DisplayName = "Deliver", Enabled = false)]
         protected virtual void deliver()
         {
             IBMPSOParts row = Parts.Current;
