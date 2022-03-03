@@ -80,6 +80,19 @@ namespace IceBreakerMiniProject
             public const string Cancelled = "CANCELLED";
         }
 
+        public static class InventoryReservedOrderType
+        {
+            public const string SalesOrder = "SALESORDER";
+            public const string ProductionOrder = "PRODORDER";
+        }
+        public class salesOrderType : PX.Data.BQL.BqlString.Constant<salesOrderType>
+        {
+            public salesOrderType()
+            : base(InventoryReservedOrderType.SalesOrder)
+            {
+            }
+        }
+
     }
 
 }

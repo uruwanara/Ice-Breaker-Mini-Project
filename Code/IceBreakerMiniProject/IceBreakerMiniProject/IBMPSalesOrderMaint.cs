@@ -1,6 +1,7 @@
 using PX.Data;
 using PX.Data.BQL;
 using PX.Data.BQL.Fluent;
+using System.Collections;
 
 namespace IceBreakerMiniProject
 {
@@ -16,6 +17,9 @@ namespace IceBreakerMiniProject
             .Where<IBMPSONoParts.salesOrderID.IsEqual<IBMPSalesOrder.salesOrderID.FromCurrent>.And<IBMPInventory.inventoryType.IsEqual<Constant.nonStockItem>>>
             .View NoParts;
         public SelectFrom<IBMPLocationInventory>.Where<IBMPLocationInventory.inventoryID.IsEqual<@P.AsInt>>.View LocationInventory;
+        public SelectFrom<IBMPLocationInventory>.Where<IBMPLocationInventory.inventoryID.IsEqual<@P.AsInt>.And<IBMPLocationInventory.locationID.IsEqual<@P.AsInt>>>.View LocationInventorySpecificLoc;
+        public SelectFrom<IBMPInventoryReserved>.View InventoryReserved;
+        public SelectFrom<IBMPInventoryReserved>.Where<IBMPInventoryReserved.orderNbr.IsEqual<@P.AsInt>.And<IBMPInventoryReserved.orderType.IsEqual<Constant.salesOrderType>>>.View InventoryReservedSalesOrders;
         #endregion
 
         #region Events
@@ -173,6 +177,7 @@ namespace IceBreakerMiniProject
             SalesOrders.Update(row);
 
             PXResultset<IBMPSONoParts> noParts = NoParts.Select();
+
             foreach (IBMPSONoParts noPart in noParts)
             {
                 noPart.Status = Constant.SOLineStatus.Delivered;
@@ -197,18 +202,33 @@ namespace IceBreakerMiniProject
                 {
                     if (qtyNeed == 0) break;
 
+                    IBMPInventoryReserved newInventoryReserved = new IBMPInventoryReserved();
+                    newInventoryReserved.OrderNbr = row.SalesOrderID;
+                    newInventoryReserved.LocationID = locationInventory.LocationID;
+                    newInventoryReserved.InventoryID = locationInventory.InventoryID;
+                    newInventoryReserved.OrderType = Constant.InventoryReservedOrderType.SalesOrder;
+
                     if (locationInventory.QtyHand >= qtyNeed)
                     {
+                        newInventoryReserved.QtyReserved = qtyNeed;
+
                         locationInventory.QtyHand -= qtyNeed;
                         locationInventory.QtyReserved += qtyNeed;
                         LocationInventory.Cache.Update(locationInventory);
+                        
+                        InventoryReserved.Cache.Insert(newInventoryReserved);
+
                         break;
                     }
+
+                    newInventoryReserved.QtyReserved = locationInventory.QtyHand;
 
                     qtyNeed -= locationInventory.QtyHand;
                     locationInventory.QtyReserved += locationInventory.QtyHand;
                     locationInventory.QtyHand = 0;
                     LocationInventory.Cache.Update(locationInventory);
+
+                    InventoryReserved.Cache.Insert(newInventoryReserved);
                 }
 
             }
@@ -253,6 +273,17 @@ namespace IceBreakerMiniProject
             {
                 SalesOrders.Current.Status = Constant.SOStatus.Closed;
             }
+
+            PXResultset<IBMPInventoryReserved> inventoryReservedItems = InventoryReservedSalesOrders.Select(row.SalesOrderID);
+
+            foreach(IBMPInventoryReserved item in inventoryReservedItems)
+            {
+                IBMPLocationInventory locationInventory = LocationInventorySpecificLoc.Select(row.Partid, item.LocationID);
+                locationInventory.QtyReserved -= item.QtyReserved;
+                LocationInventorySpecificLoc.Cache.Update(locationInventory);
+                InventoryReservedSalesOrders.Cache.Delete(item);
+            }
+
 
             Actions.PressSave();
         }
