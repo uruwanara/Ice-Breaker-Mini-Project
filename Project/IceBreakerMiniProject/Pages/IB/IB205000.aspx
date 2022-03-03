@@ -42,18 +42,12 @@
                     </px:PXGrid>
                 </Template>
             </px:PXTabItem>
-            <px:PXTabItem Text="Receive Shop Order">
-                <Template>
-                    <px:PXFormView Width="100%" runat="server" ID="CstFormView16" DataMember="ReceiveShopOrder">
-                        <Template>
-	<px:PXLayoutRule runat="server" ID="CstPXLayoutRule21" StartRow="True" ></px:PXLayoutRule>
-	<px:PXSelector Size="100%" CommitChanges="True" runat="server" ID="CstPXSelector22" DataField="LocationID" ></px:PXSelector>
-	<px:PXLayoutRule runat="server" ID="CstPXLayoutRule26" StartColumn="True" ></px:PXLayoutRule>
-	<px:PXTextEdit Size="100%" runat="server" ID="CstPXTextEdit23" DataField="LocationID_description" ></px:PXTextEdit></Template>
-                    
-	<AutoSize Container="Window" Enabled="True" ></AutoSize></px:PXFormView></Template>
-            </px:PXTabItem>
-        </Items>
+	<px:PXTabItem Text="Inventory">
+		<Template>
+			<px:PXFormView Width="100%" runat="server" ID="CstFormView32" DataMember="Inventory">
+				<Template>
+					<px:PXLayoutRule runat="server" ID="CstPXLayoutRule33" StartRow="True" ></px:PXLayoutRule>
+					<px:PXSelector CommitChanges="True" runat="server" ID="CstPXSelector34" DataField="LocationID" ></px:PXSelector></Template></px:PXFormView></Template></px:PXTabItem></Items>
     </px:PXTab>
     <%-- <px:PXSmartPanel runat="server" ID="CstSmartPanel14" Key="LocationSmartPanel" AutoCallBack-Target="CstPXGrid15" AutoCallBack-Command="Refresh">
         <px:PXGrid runat="server" ID="CstPXGrid15">

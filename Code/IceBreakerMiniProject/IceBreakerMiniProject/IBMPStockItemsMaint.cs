@@ -20,5 +20,10 @@ namespace IceBreakerMiniProject
            .View InventoryLocations;
 
         #endregion
+
+
+
+
+
     }
 }

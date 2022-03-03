@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IBMPSetup.cs" />
     <Compile Include="Helper\Constants.cs" />
     <Compile Include="DAC\IBMPManufacturedItems.cs" />
     <Compile Include="DAC\IBMPPOBOM.cs" />

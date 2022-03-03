@@ -1,12 +1,20 @@
 using System;
 using PX.Data;
 using PX.Data.BQL.Fluent;
+using PX.Data.ReferentialIntegrity.Attributes;
 
 namespace IceBreakerMiniProject
 {
+
     [PXCacheName("IBMPLocationInventory")]
     public class IBMPLocationInventory : IBqlTable
     {
+        #region Keys
+        public class PK : PrimaryKeyOf<IBMPLocationInventory>.By<locationID>
+        {
+            public static IBMPLocationInventory Find(PXGraph graph, int? locationID) => FindBy(graph, locationID);
+        }
+        #endregion
         #region LocationID
         [PXDBInt(IsKey = true)]
         [PXUIField(DisplayName = "Location")]
@@ -33,6 +41,7 @@ namespace IceBreakerMiniProject
         #region QtyHand
         [PXDBInt()]
         [PXUIField(DisplayName = "Qty Hand")]
+       // [PXFormula(null,typeof(SumCalc<IBMPStockItems.onHandTotalQty>))]
         public virtual int? QtyHand { get; set; }
         public abstract class qtyHand : PX.Data.BQL.BqlInt.Field<qtyHand> { }
         #endregion
@@ -40,6 +49,7 @@ namespace IceBreakerMiniProject
         #region QtyReserved
         [PXDBInt()]
         [PXUIField(DisplayName = "Qty Reserved")]
+       // [PXFormula(null, typeof(SumCalc<IBMPStockItems.reservedTotalQty>))]
         public virtual int? QtyReserved { get; set; }
         public abstract class qtyReserved : PX.Data.BQL.BqlInt.Field<qtyReserved> { }
         #endregion

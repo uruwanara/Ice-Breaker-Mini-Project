@@ -1,5 +1,8 @@
 using PX.Data;
+using PX.Data.BQL;
 using PX.Data.BQL.Fluent;
+using System;
+using System.Linq;
 
 namespace IceBreakerMiniProject
 {
@@ -120,7 +123,7 @@ namespace IceBreakerMiniProject
             #endregion
 
             #region Field Availability
-            PXUIFieldAttribute.SetEnabled<IBMPSOParts.qty>(Parts.Cache, null, SalesOrders.Current.Status == Constant.SOStatus.Planned);
+            //PXUIFieldAttribute.SetEnabled<IBMPSOParts.qty>(Parts.Cache, null, SalesOrders.Current.Status == Constant.SOStatus.Planned);
             #endregion
 
         }
@@ -144,6 +147,8 @@ namespace IceBreakerMiniProject
         [PXUIField(DisplayName = "Release", Enabled = true)]
         protected virtual void release()
         {
+
+            if (!CheckQtyAvailability()) return;
             IBMPSalesOrder row = SalesOrders.Current;
             row.Status = Constant.SOStatus.Released;
             SalesOrders.Update(row);
@@ -154,6 +159,8 @@ namespace IceBreakerMiniProject
                 noPart.Status = Constant.SOLineStatus.Delivered;
                 NoParts.Update(noPart);
             }
+
+            CheckQtyAvailability();
 
             Actions.PressSave();
         }
@@ -213,6 +220,30 @@ namespace IceBreakerMiniProject
 
         #endregion
 
+        public bool CheckQtyAvailability()
+        {
+            var inventoryIds = Parts.Select().ToList().Select(i => (i.GetItem<IBMPSOParts>())).Select(e => e.Partid).ToArray();
+
+
+            var result = new SelectFrom<IBMPLocationInventory>
+                            .Where<IBMPLocationInventory.inventoryID.IsIn<@P.AsInt>>
+                            .AggregateTo<GroupBy<IBMPLocationInventory.inventoryID>, Sum<IBMPLocationInventory.qtyHand>>
+                            .View.ReadOnly(this).Select(inventoryIds)
+                            .ToDictionary(item => item.GetItem<IBMPLocationInventory>().InventoryID, item => item.GetItem<IBMPLocationInventory>().QtyHand);
+
+            bool flag = true;
+            foreach (IBMPSOParts item in Parts.Select())
+            {
+                if (result.ContainsKey(item.Partid) && item.Qty > result[item.Partid])
+                {
+                    flag = false;
+                    this.Parts.Ask(Parts.Current, "Warning", $"Inventory are NOT Enough! Part ID : {item.Partid} {Environment.NewLine} Available Qty = {result[item.Partid]}", MessageButtons.OK);
+                    return flag;
+                }
+            }
+            return flag;
+          
+        }
 
     }
 }

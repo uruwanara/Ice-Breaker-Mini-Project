@@ -10,13 +10,16 @@ namespace IceBreakerMiniProject
     public class IBMPProductionOrderMaint : PXGraph<IBMPProductionOrderMaint, IBMPProductionOrder>
     {
         #region Views
+        //Master View
         public SelectFrom<IBMPProductionOrder>.View ProductionOrders;
+        //Detail View
         public SelectFrom<IBMPPOBOM>.Where<IBMPPOBOM.manufacPartID.IsEqual<IBMPProductionOrder.partid.FromCurrent>>.View ProductionBom;
+        // Get the Inventory Locations regarding a Inventory ID
         public SelectFrom<IBMPLocationInventory>.Where<IBMPLocationInventory.inventoryID.IsEqual<@P.AsInt>>.View Locations;
-
-        public SelectFrom<IBMPReceiveShopOrder>.Where<IBMPReceiveShopOrder.inventoryID.IsEqual<IBMPProductionOrder.partid.FromCurrent>>.View ReceiveShopOrder;
-
+        // Get the Inventory Locations regarding a Inventory ID and order by Qty on hand
         public SelectFrom<IBMPLocationInventory>.Where<IBMPLocationInventory.inventoryID.IsEqual<@P.AsInt>>.OrderBy<IBMPLocationInventory.qtyHand.Desc>.View MaxLocation;
+
+        public SelectFrom<IBMPLocationInventory>.InnerJoin<IBMPWarehouseLocation>.On<IBMPWarehouseLocation.locationID.IsEqual<IBMPLocationInventory.locationID>>.View Inventory;
 
         #region Unwanted Views
         // public SelectFrom<IBMPLocationInventorySmartPanel>.Where<IBMPLocationInventorySmartPanel.inventoryID.IsEqual<IBMPProductionOrder.partid.FromCurrent>>.View LocationSmartPanel;
@@ -57,37 +60,7 @@ namespace IceBreakerMiniProject
 
         #region Actions
 
-        #region Check Material Action - Learning Purpose
-        //public PXAction<IBMPProductionOrder> CheckMaterials;
-        //[PXButton(CommitChanges = true)]
-        //[PXUIField(DisplayName = "Check Material", Enabled = true)]
-        //protected virtual void checkMaterials()
-        //{
-        //    var bomParts = ProductionBom.Select();
-
-        //    foreach (IBMPPOBOM item in bomParts)
-        //    {
-        //        IBMPLocationInventory qty = SelectFrom<IBMPLocationInventory>
-        //            .Where<IBMPLocationInventory.inventoryID.IsEqual<@P.AsInt>>
-        //            .AggregateTo<GroupBy<IBMPLocationInventory.inventoryID>, Sum<IBMPLocationInventory.qtyHand>>.View.Select(this, item.ComponentID);
-
-        //        if (qty.QtyHand > item.TotalQty)
-        //        {
-        //            item.Available = true;
-        //        }
-
-        //        //select IBMPLocationInventory.InventoryID, sum(IBMPLocationInventory.QtyHand) from
-        //        //IBMPLocationInventory where IBMPLocationInventory.InventoryID=1 
-        //        //group by IBMPLocationInventory.InventoryID
-
-        //    }
-        //    ProductionBom.Update(bomParts);
-        //    Actions.PressSave();
-        //}
-
-        #endregion
-
-        #region Issue Material Event 
+        #region Issue Material Button and Action
         public PXAction<IBMPProductionOrder> IssueMaterial;
         [PXButton(CommitChanges = true)]
         [PXUIField(DisplayName = "Issue Material", Enabled = true)]
@@ -96,7 +69,7 @@ namespace IceBreakerMiniProject
             IBMPProductionOrder row = ProductionOrders.Current;
 
             var bomParts = ProductionBom.Select();
-            var flag = true;
+            var flag = true;  // This flag will be used to identyfy whether the all BOM parts are available  
 
             foreach (IBMPPOBOM item in bomParts)
             {
@@ -105,7 +78,6 @@ namespace IceBreakerMiniProject
                     flag = false;
                     break;
                 }
-
             }
 
             if (flag == true)
@@ -113,11 +85,6 @@ namespace IceBreakerMiniProject
                 foreach (IBMPPOBOM inventory in bomParts)
                 {
                     int? tq = inventory.TotalQty;
-
-
-                    //var abc = SelectFrom<IBMPLocationInventory>.Where<IBMPLocationInventory.inventoryID.IsEqual<@P.AsInt>
-                    //    >.OrderBy<IBMPLocationInventory.qtyHand.Desc>.View.Select(this, inventory.ComponentID);
-
 
                     PXResultset<IBMPLocationInventory> abc = MaxLocation.Select(inventory.ComponentID);
 
@@ -127,51 +94,30 @@ namespace IceBreakerMiniProject
                         {
                             i.QtyHand = i.QtyHand - tq;
                             i.QtyReserved = i.QtyReserved + tq;
+                            MaxLocation.Cache.Update(i);
                             break;
-
                         }
                         else
                         {
                             tq = tq - i.QtyHand;
-                            i.QtyReserved = i.QtyHand;
+                            i.QtyReserved = i.QtyReserved + i.QtyHand;
                             i.QtyHand = 0;
+                            MaxLocation.Cache.Update(i);
                         }
-
-                        MaxLocation.Update(i);
-
-                        // this.Caches<IBMPLocationInventory>().Update(i);  //<---- Save the iterating objects 
                     }
                 }
                 row.Status = Constant.POStatus.Reserved;
-
             }
             else
             {
                 this.ProductionOrders.Ask(row, "Warning", "Inventory are not Enough", MessageButtons.OK);
                 // if (this.ProductionOrders.Ask(row, "Warning", "Do you want to cancel", MessageButtons.YesNo) == WebDialogResult.No) return;  <-----  Dialog Box with YES NO Buttom
             }
-
             ProductionOrders.Update(row);
             Actions.PressSave();
         }
         #endregion
 
-        #region Recive Shop Order Not Working
-        //public PXAction<IBMPProductionOrder> ReceiveShopOrder;
-        //[PXButton(CommitChanges = true)]
-        //[PXUIField(DisplayName = "Receive Shop Order", Enabled = true, MapEnableRights = PXCacheRights.Delete, MapViewRights = PXCacheRights.Delete)]
-        //protected virtual IEnumerable receiveShopOrder(PXAdapter adapter)
-        //{
-        //    if (LocationSmartPanel.AskExt() != WebDialogResult.OK)
-        //    {
-
-        //    }
-
-        //    return adapter.Get();
-        //}
-
-
-        #endregion
 
         #region Receive Shop Order
         public PXAction<IBMPProductionOrder> ReceiveShopOrders;
@@ -179,18 +125,22 @@ namespace IceBreakerMiniProject
         [PXUIField(DisplayName = "Receive Shop Orders", Enabled = true)]
         protected virtual void receiveShopOrders()
         {
-
             IBMPProductionOrder row = ProductionOrders.Current;
 
-            var inventory = ReceiveShopOrder.Current;
+            IBMPLocationInventory inventory = Inventory.Current;
 
             inventory.QtyHand = inventory.QtyHand + row.Qty;
-            inventory.InventoryID = row.Partid;
 
-            ReceiveShopOrder.Update(inventory);
-            this.Caches<IBMPLocationInventory>().Update(inventory);
+          //  PXUpdate<Set<IBMPLocationInventory.qtyHand,5>Where<IBMPLocationInventory.locationID,Equal<5>>>.Update
+            this.ProductionOrders.Ask(row, "Warning", $"Inventory Updated! {row.Qty} items Updated", MessageButtons.OK);
 
-        }
+            this.ProductionOrders.SetValueExt<IBMPProductionOrder.status>(row, Constant.POStatus.Closed);
+            
+            ProductionOrders.Cache.Update(row);
+            Inventory.Update(inventory);
+
+            Actions.PressSave();
+           }
 
         #endregion
         #endregion
@@ -219,35 +169,6 @@ namespace IceBreakerMiniProject
         #endregion
 
 
-
-
-
-        #region POBOM Row Updated Event
-        protected void _(Events.RowUpdated<IBMPPOBOM> e)
-        {
-            if (e.Row == null) return;
-
-            #region Updated the Product Availability
-            using (new PXConnectionScope())
-            {
-                IBMPLocationInventory location = Locations.Select(e.Row.ComponentID);
-                if (location != null && location.QtyHand >= e.Row.TotalQty)
-                {
-                    e.Row.Available = true;
-                }
-            }
-
-            #endregion
-        }
-        #endregion
-
-        #region POBOM Field Defaulding Event
-        protected void _(Events.FieldDefaulting<IBMPPOBOM, IBMPPOBOM.totalqty> e)
-        {
-            //  e.Cache.SetValue<IBMPPOBOM.totalqty>(e.Row, e.Row.Qty * ProductionOrders.Current.Qty);
-            e.NewValue = e.Row.Qty * ProductionOrders.Current.Qty;
-        }
-
         protected void _(Events.RowUpdated<IBMPProductionOrder> e)
         {
             foreach (IBMPPOBOM item in ProductionBom.Select())
@@ -259,7 +180,6 @@ namespace IceBreakerMiniProject
             SetQtyAvailability();
 
         }
-        #endregion
 
         #region Production Order Row Selected Event
         protected virtual void _(Events.RowSelected<IBMPProductionOrder> e)
@@ -267,44 +187,31 @@ namespace IceBreakerMiniProject
             IBMPProductionOrder row = e.Row;
             if (row == null) return;
 
-            #region Update the Total Qty and check availability 
-            //PXResultset<IBMPPOBOM> boms = ProductionBom.Select();
-
-            //foreach (IBMPPOBOM part in boms)
-            //{
-            //    part.TotalQty = row.Qty * part.Qty;
-
-            //    using (new PXConnectionScope())
-            //    {
-            //        IBMPLocationInventory location = Locations.Select(part.ComponentID);
-            //        if (location != null && location.QtyHand >= part.TotalQty)
-            //        {
-            //            part.Available = true;
-            //        }
-            //        else
-            //        {
-            //            part.Available = false;
-            //        }
-
-            //    }
-            //}
-
-            #endregion
-
             #region Enable/ Disable Buttons
             IssueMaterial.SetEnabled(row.Status == Constant.POStatus.Released);
             ReceiveShopOrders.SetEnabled(row.Status == Constant.POStatus.Reserved);
             #endregion
 
+            #region Enable/ Disable Feilds
+            PXUIFieldAttribute.SetEnabled<IBMPProductionOrder.qty>(ProductionOrders.Cache, null, row.Status == Constant.POStatus.Released);
+            PXUIFieldAttribute.SetEnabled<IBMPProductionOrder.partid>(ProductionOrders.Cache, null, row.Status == Constant.POStatus.Released);
+            PXUIFieldAttribute.SetEnabled<IBMPProductionOrder.orderDate>(ProductionOrders.Cache, null, row.Status == Constant.POStatus.Released);
+            PXUIFieldAttribute.SetEnabled<IBMPProductionOrder.requiredDate>(ProductionOrders.Cache, null, row.Status == Constant.POStatus.Released);
+            #endregion
+
+            #region Enable/ Disable Tabs
+
+            #endregion
 
         }
         #endregion
 
+        #region Set Availablity of Qty
         public void SetQtyAvailability()
         {
             var componentIds = ProductionBom.Select().ToList().Select(i => (i.GetItem<IBMPPOBOM>())).Select(e => e.ComponentID).ToArray();
 
-            
+
             var result = new SelectFrom<IBMPLocationInventory>
                             .Where<IBMPLocationInventory.inventoryID.IsIn<@P.AsInt>>
                             .AggregateTo<GroupBy<IBMPLocationInventory.inventoryID>, Sum<IBMPLocationInventory.qtyHand>>
@@ -317,6 +224,7 @@ namespace IceBreakerMiniProject
             }
 
         }
+        #endregion
 
         #endregion
 
