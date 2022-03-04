@@ -20,6 +20,7 @@ namespace IceBreakerMiniProject
         public SelectFrom<IBMPLocationInventory>.Where<IBMPLocationInventory.inventoryID.IsEqual<@P.AsInt>.And<IBMPLocationInventory.locationID.IsEqual<@P.AsInt>>>.View LocationInventorySpecificLoc;
         public SelectFrom<IBMPInventoryReserved>.View InventoryReserved;
         public SelectFrom<IBMPInventoryReserved>.Where<IBMPInventoryReserved.orderNbr.IsEqual<@P.AsInt>.And<IBMPInventoryReserved.orderType.IsEqual<Constant.salesOrderType>>>.View InventoryReservedSalesOrders;
+        public int? totalAvailQty = 0;
         #endregion
 
         #region Events
@@ -151,11 +152,11 @@ namespace IceBreakerMiniProject
                  .AggregateTo<GroupBy<IBMPLocationInventory.inventoryID>, Sum<IBMPLocationInventory.qtyHand>>
                  .View.ReadOnly(this).Select(row.Partid);
 
+            totalAvailQty = currentInventoryWithQtyHandSum.QtyHand;
+
             if (row.Qty > currentInventoryWithQtyHandSum.QtyHand)
             {
                 this.Parts.Ask(Parts.Current, "Warning", "Not enough quantity on stocks. Maximum quantity is set", MessageButtons.OK);
-                //row.Qty = currentInventoryWithQtyHandSum.QtyHand;
-                //Parts.Update(row);
 
                 Parts.Cache.SetValueExt<IBMPSOParts.qty>(row, currentInventoryWithQtyHandSum.QtyHand);
 
@@ -202,11 +203,13 @@ namespace IceBreakerMiniProject
                 {
                     if (qtyNeed == 0) break;
 
-                    IBMPInventoryReserved newInventoryReserved = new IBMPInventoryReserved();
-                    newInventoryReserved.OrderNbr = row.SalesOrderID;
-                    newInventoryReserved.LocationID = locationInventory.LocationID;
-                    newInventoryReserved.InventoryID = locationInventory.InventoryID;
-                    newInventoryReserved.OrderType = Constant.InventoryReservedOrderType.SalesOrder;
+                    IBMPInventoryReserved newInventoryReserved = new IBMPInventoryReserved
+                    {
+                        OrderNbr = row.SalesOrderID,
+                        LocationID = locationInventory.LocationID,
+                        InventoryID = locationInventory.InventoryID,
+                        OrderType = Constant.InventoryReservedOrderType.SalesOrder
+                    };
 
                     if (locationInventory.QtyHand >= qtyNeed)
                     {
@@ -283,7 +286,6 @@ namespace IceBreakerMiniProject
                 LocationInventorySpecificLoc.Cache.Update(locationInventory);
                 InventoryReservedSalesOrders.Cache.Delete(item);
             }
-
 
             Actions.PressSave();
         }
