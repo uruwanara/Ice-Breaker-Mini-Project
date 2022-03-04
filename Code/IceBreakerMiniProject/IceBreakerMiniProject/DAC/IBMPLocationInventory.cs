@@ -41,7 +41,8 @@ namespace IceBreakerMiniProject
         #region QtyHand
         [PXDBInt()]
         [PXUIField(DisplayName = "Qty Hand")]
-       // [PXFormula(null,typeof(SumCalc<IBMPStockItems.onHandTotalQty>))]
+        [PXDefault(TypeCode.Decimal, "0.0", PersistingCheck = PXPersistingCheck.Nothing)]
+        [PXFormula(null,typeof(SumCalc<IBMPStockItems.onHandTotalQty>))]
         public virtual int? QtyHand { get; set; }
         public abstract class qtyHand : PX.Data.BQL.BqlInt.Field<qtyHand> { }
         #endregion
@@ -49,7 +50,8 @@ namespace IceBreakerMiniProject
         #region QtyReserved
         [PXDBInt()]
         [PXUIField(DisplayName = "Qty Reserved")]
-       // [PXFormula(null, typeof(SumCalc<IBMPStockItems.reservedTotalQty>))]
+        [PXDefault(TypeCode.Decimal, "0.0", PersistingCheck = PXPersistingCheck.Nothing)]
+        [PXFormula(null, typeof(SumCalc<IBMPStockItems.reservedTotalQty>))]
         public virtual int? QtyReserved { get; set; }
         public abstract class qtyReserved : PX.Data.BQL.BqlInt.Field<qtyReserved> { }
         #endregion

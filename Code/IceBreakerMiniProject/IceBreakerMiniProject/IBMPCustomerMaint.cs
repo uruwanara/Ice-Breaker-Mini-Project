@@ -12,13 +12,13 @@ namespace IceBreakerMiniProject
         public SelectFrom<IBMPCustomer>.View Customers;
         #endregion
 
-        //The view for the auto-numbering of records
-        public PXSetup<IBMPSetup> AutoNumSetup;
-        //The graph constructor
-        public IBMPCustomerMaint()
-        {
-            IBMPSetup setup = AutoNumSetup.Current;
-        }
+        ////The view for the auto-numbering of records
+        //public PXSetup<IBMPSetup> AutoNumSetup;
+        ////The graph constructor
+        //public IBMPCustomerMaint()
+        //{
+        //    IBMPSetup setup = AutoNumSetup.Current;
+        //}
 
     }
 }

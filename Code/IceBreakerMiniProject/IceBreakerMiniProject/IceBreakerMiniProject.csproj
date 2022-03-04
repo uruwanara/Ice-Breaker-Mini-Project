@@ -78,7 +78,6 @@
     <Compile Include="DAC\IBMPSalesOrder.cs" />
     <Compile Include="DAC\IBMPSalesOrderLine.cs" />
     <Compile Include="DAC\IBMPProductionOrder.cs" />
-    <Compile Include="IBMPCustomerInq.cs" />
     <Compile Include="IBMPSalesOrderMaint.cs" />
     <Compile Include="IBMPProductionOrderMaint.cs" />
     <Compile Include="Helper\Messages.cs" />
