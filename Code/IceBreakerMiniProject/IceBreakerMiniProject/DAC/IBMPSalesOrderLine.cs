@@ -15,17 +15,8 @@ namespace IceBreakerMiniProject
         public abstract class salesOrderID : PX.Data.BQL.BqlInt.Field<salesOrderID> { }
         #endregion
 
-        #region LineNbr
-        [PXDBInt(IsKey = true)]
-        [PXLineNbr(typeof(IBMPSalesOrder.lineCntr))]
-        [PXUIField(DisplayName = "Line Nbr.", Visible = false)]
-        public virtual int? LineNbr { get; set; }
-        public abstract class lineNbr : PX.Data.BQL.BqlInt.Field<lineNbr> { }
-        #endregion
-
         #region Partid
         [PXDBInt(IsKey = true)]
-        [PXLineNbr(typeof(IBMPSalesOrder.lineCntr))]
         [PXUIField(DisplayName = "Inventory")]
         public virtual int? Partid { get; set; }
         public abstract class partid : PX.Data.BQL.BqlInt.Field<partid> { }

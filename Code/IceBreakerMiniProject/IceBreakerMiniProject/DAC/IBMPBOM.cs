@@ -40,14 +40,6 @@ namespace IceBreakerMiniProject
         public abstract class qty : PX.Data.BQL.BqlInt.Field<qty> { }
         #endregion
 
-        #region LineNbr
-        [PXDBInt(IsKey = true)]
-        [PXLineNbr(typeof(IBMPInventory.lineCntr))]
-        [PXUIField(DisplayName = "Line Nbr", Visible = false)]
-        public virtual int? LineNbr { get; set; }
-        public abstract class lineNbr : PX.Data.BQL.BqlInt.Field<lineNbr> { }
-        #endregion
-
         #region CreatedDateTime
         [PXDBCreatedDateTime()]
         public virtual DateTime? CreatedDateTime { get; set; }

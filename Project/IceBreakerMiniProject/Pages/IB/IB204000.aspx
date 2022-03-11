@@ -9,6 +9,7 @@
         <CallbackCommands>
             <px:PXDSCallbackCommand Name="Last"></px:PXDSCallbackCommand>
             <px:PXDSCallbackCommand Visible="True" Name="Save"></px:PXDSCallbackCommand>
+            <px:PXDSCallbackCommand Visible="True" Name="Deliver" CommitChanges="true" DependOnGrid="CstPXGrid31"></px:PXDSCallbackCommand>
         </CallbackCommands>
     </px:PXDataSource>
 
@@ -24,8 +25,9 @@
             <px:PXLayoutRule runat="server" ID="CstPXLayoutRule23" StartColumn="True"></px:PXLayoutRule>
             <px:PXSelector CommitChanges="True" runat="server" ID="CstPXSelector25" DataField="CustomerID"></px:PXSelector>
             <px:PXTextEdit CommitChanges="True" runat="server" ID="CstPXTextEdit13" DataField="DeliveryAddress"></px:PXTextEdit>
-	<px:PXLayoutRule runat="server" ID="CstPXLayoutRule28" StartColumn="True" />
-	<px:PXNumberEdit runat="server" ID="CstPXNumberEdit29" DataField="SumPrice" /></Template>
+            <px:PXLayoutRule runat="server" ID="CstPXLayoutRule28" StartColumn="True" />
+            <px:PXNumberEdit runat="server" ID="CstPXNumberEdit29" DataField="SumPrice" />
+        </Template>
     </px:PXFormView>
 </asp:Content>
 <asp:Content ID="cont3" ContentPlaceHolderID="phG" runat="Server">
@@ -64,7 +66,7 @@
             <px:PXTabItem RepaintOnDemand="False" Text="NoParts" Visible="True">
                 <Template>
                     <px:PXGrid AutoAdjustColumns="True" Width="100%" SkinID="Details" runat="server" ID="CstPXGrid34">
-                        <AutoSize Enabled="True" MinHeight="200" ></AutoSize>
+                        <AutoSize Enabled="True" MinHeight="200"></AutoSize>
                         <Levels>
                             <px:PXGridLevel DataMember="NoParts">
                                 <Columns>

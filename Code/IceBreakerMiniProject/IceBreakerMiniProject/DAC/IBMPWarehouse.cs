@@ -31,14 +31,6 @@ namespace IceBreakerMiniProject
         public abstract class name : PX.Data.BQL.BqlString.Field<name> { }
         #endregion
 
-        #region LocationLineCntr
-        [PXDBInt()]
-        [PXDefault(0)]
-        [PXUIField(DisplayName = "Location Line Cntr")]
-        public virtual int? LocationLineCntr { get; set; }
-        public abstract class locationLineCntr : PX.Data.BQL.BqlInt.Field<locationLineCntr> { }
-        #endregion
-
         #region CreatedDateTime
         [PXDBCreatedDateTime()]
         public virtual DateTime? CreatedDateTime { get; set; }

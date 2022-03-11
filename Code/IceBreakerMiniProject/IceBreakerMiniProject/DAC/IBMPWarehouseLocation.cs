@@ -37,14 +37,6 @@ namespace IceBreakerMiniProject
         public abstract class description : PX.Data.BQL.BqlString.Field<description> { }
         #endregion
 
-        #region LineNbr
-        [PXDBInt(IsKey = true)]
-        [PXLineNbr(typeof(IBMPWarehouse.locationLineCntr))]
-        [PXUIField(DisplayName = "Line Nbr.", Visible = false)]
-        public virtual int? LineNbr { get; set; }
-        public abstract class lineNbr : PX.Data.BQL.BqlInt.Field<lineNbr> { }
-        #endregion
-
         #region Address
         [PXDBString(50, IsUnicode = true, InputMask = "")]
         [PXUIField(DisplayName = "Address")]

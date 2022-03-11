@@ -20,7 +20,6 @@ namespace IceBreakerMiniProject
         public SelectFrom<IBMPLocationInventory>.Where<IBMPLocationInventory.inventoryID.IsEqual<@P.AsInt>.And<IBMPLocationInventory.locationID.IsEqual<@P.AsInt>>>.View LocationInventorySpecificLoc;
         public SelectFrom<IBMPInventoryReserved>.View InventoryReserved;
         public SelectFrom<IBMPInventoryReserved>.Where<IBMPInventoryReserved.orderNbr.IsEqual<@P.AsInt>.And<IBMPInventoryReserved.orderType.IsEqual<Constant.salesOrderType>>>.View InventoryReservedSalesOrders;
-        public int? totalAvailQty = 0;
         #endregion
 
         #region Events
@@ -131,6 +130,24 @@ namespace IceBreakerMiniProject
 
         }
 
+        //protected virtual void _(Events.RowInserted<IBMPSOParts> e)
+        //{
+        //    IBMPSOParts row = e.Row;
+        //    if (row == null) return;
+
+        //    PXResultset<IBMPSOParts> allRows = Parts.Select();
+
+        //    foreach (IBMPSOParts item in allRows)
+        //    {
+        //        if (item.Partid == row.Partid)
+        //        {
+        //            //this.WarehouseLocations.Ask(WarehouseLocations.Current, "Warning", "Duplicated Warehouse Location added!", MessageButtons.OK);
+        //            e.Cache.Remove(row.Partid);
+        //            break;
+        //        }
+        //    }
+        //}
+
         protected virtual void _(Events.RowSelected<IBMPSONoParts> e)
         {
             IBMPSONoParts row = e.Row;
@@ -151,8 +168,6 @@ namespace IceBreakerMiniProject
                  .Where<IBMPLocationInventory.inventoryID.IsIn<@P.AsInt>>
                  .AggregateTo<GroupBy<IBMPLocationInventory.inventoryID>, Sum<IBMPLocationInventory.qtyHand>>
                  .View.ReadOnly(this).Select(row.Partid);
-
-            totalAvailQty = currentInventoryWithQtyHandSum.QtyHand;
 
             if (row.Qty > currentInventoryWithQtyHandSum.QtyHand)
             {

@@ -57,14 +57,6 @@ namespace IceBreakerMiniProject
         public abstract class inventoryType : PX.Data.BQL.BqlString.Field<inventoryType> { }
         #endregion
 
-        #region LineCntr
-        [PXDefault(0)]
-        [PXDBInt()]
-        [PXUIField(DisplayName = "Line Cntr")]
-        public virtual int? LineCntr { get; set; }
-        public abstract class lineCntr : PX.Data.BQL.BqlInt.Field<lineCntr> { }
-        #endregion
-
         #region CreatedDateTime
         [PXDBCreatedDateTime()]
         public virtual DateTime? CreatedDateTime { get; set; }

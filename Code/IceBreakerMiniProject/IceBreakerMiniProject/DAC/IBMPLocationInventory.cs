@@ -17,9 +17,10 @@ namespace IceBreakerMiniProject
         #endregion
         #region LocationID
         [PXDBInt(IsKey = true)]
+        [PXDefault(typeof(IBMPWarehouseLocation.locationID))]
         [PXUIField(DisplayName = "Location")]
-        [PXDBDefault(typeof(IBMPWarehouseLocation.locationID))]
-        [PXSelector(typeof(Search<IBMPWarehouseLocation.locationID>),
+        [PXSelector(
+            typeof(Search<IBMPWarehouseLocation.locationID>),
             typeof(IBMPWarehouseLocation.locationCD),
             typeof(IBMPWarehouseLocation.description),
             SubstituteKey = typeof(IBMPWarehouseLocation.locationCD),

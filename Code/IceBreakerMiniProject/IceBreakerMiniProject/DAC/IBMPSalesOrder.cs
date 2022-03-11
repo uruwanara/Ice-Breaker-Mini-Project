@@ -75,14 +75,6 @@ namespace IceBreakerMiniProject
         public abstract class sumprice : PX.Data.BQL.BqlDecimal.Field<sumprice> { }
         #endregion
 
-        #region LineCntr
-        [PXDBInt()]
-        [PXDefault(0)]
-        [PXUIField(DisplayName = "Line Cntr")]
-        public virtual int? LineCntr { get; set; }
-        public abstract class lineCntr : PX.Data.BQL.BqlInt.Field<lineCntr> { }
-        #endregion
-
         #region CreatedDateTime
         [PXDBCreatedDateTime()]
         public virtual DateTime? CreatedDateTime { get; set; }
