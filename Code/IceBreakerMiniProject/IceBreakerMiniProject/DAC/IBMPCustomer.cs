@@ -26,7 +26,7 @@ namespace IceBreakerMiniProject
         [PXDefault]
         [PXDBString(15, IsUnicode = true, IsKey = true, InputMask = ">aaaaaaaa")]
         [PXUIField(DisplayName = "Customer", Required = true)]
-        [AutoNumber(typeof(IBMPSetup.numberingID),typeof(IBMPCustomer.createdDateTime))]
+       // [AutoNumber(typeof(IBMPSetup.numberingID),typeof(IBMPCustomer.createdDateTime))]
         [PXSelector(typeof(Search<IBMPCustomer.customerCD>),
             typeof(IBMPCustomer.customerCD),
             typeof(IBMPCustomer.name))]

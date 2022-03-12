@@ -48,19 +48,19 @@ namespace IceBreakerMiniProject
         new public abstract class inventoryType : PX.Data.BQL.BqlString.Field<inventoryType> { }
         #endregion
 
-        //#region OnHand Total Qty
-        //[PXInt()]
-        //[PXUIField(DisplayName = "Total Qty Hand")]
-        //new public virtual string OnHandTotalQty { get; set; }
-        //new public abstract class onHandTotalQty : PX.Data.BQL.BqlString.Field<onHandTotalQty> { }
-        //#endregion
+        #region OnHand Total Qty
+        [PXInt()]
+        [PXUIField(DisplayName = "Total Qty Hand", Enabled =false)]
+        new public virtual int? OnHandTotalQty { get; set; }
+        new public abstract class onHandTotalQty : PX.Data.BQL.BqlString.Field<onHandTotalQty> { }
+        #endregion
 
-        //#region Reserved Total Qty
-        //[PXInt()]
-        //[PXUIField(DisplayName = "Total Qty Reserved")]
-        //new public virtual string ReservedTotalQty { get; set; }
-        //new public abstract class reservedTotalQty : PX.Data.BQL.BqlString.Field<reservedTotalQty> { }
-        //#endregion
+        #region Reserved Total Qty
+        [PXInt()]
+        [PXUIField(DisplayName = "Total Qty Reserved",Enabled = false)]
+        new public virtual int? ReservedTotalQty { get; set; }
+        new public abstract class reservedTotalQty : PX.Data.BQL.BqlString.Field<reservedTotalQty> { }
+        #endregion
 
     }
 }

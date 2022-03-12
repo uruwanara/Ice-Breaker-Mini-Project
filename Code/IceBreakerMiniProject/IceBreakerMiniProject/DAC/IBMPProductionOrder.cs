@@ -26,6 +26,7 @@ namespace IceBreakerMiniProject
 
         #region OrderDate
         [PXDBDate()]
+        [PXDefault(typeof(AccessInfo.businessDate))]
         [PXUIField(DisplayName = "Order Date")]
         public virtual DateTime? OrderDate { get; set; }
         public abstract class orderDate : PX.Data.BQL.BqlDateTime.Field<orderDate> { }
@@ -34,6 +35,7 @@ namespace IceBreakerMiniProject
         #region RequiredDate
         [PXDBDate()]
         [PXUIField(DisplayName = "Required Date")]
+        [PXDefault(typeof(AccessInfo.businessDate))]
         public virtual DateTime? RequiredDate { get; set; }
         public abstract class requiredDate : PX.Data.BQL.BqlDateTime.Field<requiredDate> { }
         #endregion
