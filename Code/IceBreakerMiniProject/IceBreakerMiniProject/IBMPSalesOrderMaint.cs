@@ -36,6 +36,7 @@ namespace IceBreakerMiniProject
 
         public SelectFrom<IBMPInventoryReserved>
             .Where<IBMPInventoryReserved.orderNbr.IsEqual<@P.AsInt>
+                .And<IBMPInventoryReserved.inventoryID.IsEqual<@P.AsInt>>
                 .And<IBMPInventoryReserved.orderType.IsEqual<Constant.salesOrderType>>>
             .View InventoryReservedSalesOrders;
         #endregion
@@ -274,7 +275,7 @@ namespace IceBreakerMiniProject
                 SalesOrders.Current.Status = Constant.SOStatus.Closed;
             }
 
-            PXResultset<IBMPInventoryReserved> inventoryReservedItems = InventoryReservedSalesOrders.Select(row.SalesOrderID);
+            PXResultset<IBMPInventoryReserved> inventoryReservedItems = InventoryReservedSalesOrders.Select(row.SalesOrderID, row.Partid);
 
             foreach (IBMPInventoryReserved item in inventoryReservedItems)
             {
