@@ -13,11 +13,13 @@ namespace IceBreakerMiniProject
     {
         #region LocationID
         [PXUIField(DisplayName = "Location")]
-        [PXSelector(typeof(Search<IBMPWarehouseLocation.locationID>),
+        [PXSelector(
+            typeof(Search<IBMPWarehouseLocation.locationID>),
             typeof(IBMPWarehouseLocation.locationCD),
             typeof(IBMPWarehouseLocation.description),
             SubstituteKey = typeof(IBMPWarehouseLocation.locationCD),
-            DescriptionField = typeof(IBMPWarehouseLocation.description))]
+            DescriptionField = typeof(IBMPWarehouseLocation.description)
+        )]
         public new virtual int? LocationID { get; set; }
         public new abstract class locationID : PX.Data.BQL.BqlInt.Field<locationID> { }
         #endregion
@@ -26,7 +28,11 @@ namespace IceBreakerMiniProject
         [PXDBInt(IsKey = true)]
         [PXDefault(typeof(IBMPInventory.inventoryID))]
         [PXUIField(DisplayName = "Inventory ID")]
-        [PXParent(typeof(SelectFrom<IBMPProductionOrder>.Where<IBMPProductionOrder.partid.IsEqual<IBMPLocationInventory.inventoryID.FromCurrent>>))]
+        [PXParent(typeof(
+            SelectFrom<IBMPProductionOrder>
+                .Where<IBMPProductionOrder.partid
+                    .IsEqual<IBMPLocationInventory.inventoryID.FromCurrent>>)
+        )]
 
         public new virtual int? InventoryID { get; set; }
         public new abstract class inventoryID : PX.Data.BQL.BqlInt.Field<inventoryID> { }
@@ -38,8 +44,6 @@ namespace IceBreakerMiniProject
         public virtual int? QtyHand { get; set; }
         public abstract class qtyHand : PX.Data.BQL.BqlInt.Field<qtyHand> { }
         #endregion
-
-
 
     }
 }

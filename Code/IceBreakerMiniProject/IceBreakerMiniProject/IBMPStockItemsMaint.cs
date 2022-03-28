@@ -1,4 +1,3 @@
-using System;
 using PX.Data;
 using PX.Data.BQL.Fluent;
 
@@ -16,10 +15,5 @@ namespace IceBreakerMiniProject
                    .Where<IBMPLocationInventory.inventoryID.IsEqual<IBMPStockItems.inventoryID.FromCurrent>>
                    .View InventoryLocations;
         #endregion
-
-
-
-
-
     }
 }

@@ -17,9 +17,11 @@ namespace IceBreakerMiniProject
         [PXDefault]
         [PXDBString(15, IsUnicode = true, IsKey = true, InputMask = ">aaaaaaaaaaaaaaa")]
         [PXUIField(DisplayName = "Warehouse")]
-        [PXSelector(typeof(Search<IBMPWarehouse.warehouseCD>),
-        typeof(IBMPWarehouse.warehouseCD),
-        typeof(IBMPWarehouse.name))]
+        [PXSelector(
+            typeof(Search<IBMPWarehouse.warehouseCD>),
+            typeof(IBMPWarehouse.warehouseCD),
+            typeof(IBMPWarehouse.name)
+        )]
         public virtual string WarehouseCD { get; set; }
         public abstract class warehouseCD : PX.Data.BQL.BqlString.Field<warehouseCD> { }
         #endregion
@@ -30,6 +32,8 @@ namespace IceBreakerMiniProject
         public virtual string Name { get; set; }
         public abstract class name : PX.Data.BQL.BqlString.Field<name> { }
         #endregion
+
+        #region Sytem Fields
 
         #region CreatedDateTime
         [PXDBCreatedDateTime()]
@@ -78,6 +82,8 @@ namespace IceBreakerMiniProject
         [PXNote()]
         public virtual Guid? Noteid { get; set; }
         public abstract class noteid : PX.Data.BQL.BqlGuid.Field<noteid> { }
+        #endregion
+
         #endregion
     }
 }

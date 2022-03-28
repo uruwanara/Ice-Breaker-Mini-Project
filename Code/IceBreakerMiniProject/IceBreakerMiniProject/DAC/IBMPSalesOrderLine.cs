@@ -10,7 +10,11 @@ namespace IceBreakerMiniProject
         #region SalesOrderID
         [PXDBInt(IsKey = true)]
         [PXDefault(typeof(IBMPSalesOrder.salesOrderID))]
-        [PXParent(typeof(SelectFrom<IBMPSalesOrder>.Where<IBMPSalesOrder.salesOrderID.IsEqual<IBMPSalesOrderLine.salesOrderID.FromCurrent>>))]
+        [PXParent(typeof(
+            SelectFrom<IBMPSalesOrder>
+                .Where<IBMPSalesOrder.salesOrderID
+                    .IsEqual<IBMPSalesOrderLine.salesOrderID.FromCurrent>>
+        ))]
         public virtual int? SalesOrderID { get; set; }
         public abstract class salesOrderID : PX.Data.BQL.BqlInt.Field<salesOrderID> { }
         #endregion
@@ -41,8 +45,10 @@ namespace IceBreakerMiniProject
         [PXDecimal]
         [PXDefault(TypeCode.Decimal, "0.0", PersistingCheck = PXPersistingCheck.Nothing)]
         [PXUIField(DisplayName = "Total Price", Enabled = false)]
-        [PXFormula(typeof(Mult<IBMPSalesOrderLine.price, IBMPSalesOrderLine.qty>),
-            typeof(SumCalc<IBMPSalesOrder.sumprice>))]
+        [PXFormula(
+            typeof(Mult<IBMPSalesOrderLine.price, IBMPSalesOrderLine.qty>),
+            typeof(SumCalc<IBMPSalesOrder.sumprice>)
+        )]
         public virtual Decimal? TotalPrice { get; set; }
         public abstract class totalprice : PX.Data.BQL.BqlDecimal.Field<totalprice> { }
         #endregion
@@ -54,6 +60,8 @@ namespace IceBreakerMiniProject
         public virtual string Status { get; set; }
         public abstract class status : PX.Data.BQL.BqlString.Field<status> { }
         #endregion
+
+        #region Sytem Fields
 
         #region CreatedDateTime
         [PXDBCreatedDateTime()]
@@ -102,6 +110,8 @@ namespace IceBreakerMiniProject
         [PXNote()]
         public virtual Guid? Noteid { get; set; }
         public abstract class noteid : PX.Data.BQL.BqlGuid.Field<noteid> { }
+        #endregion
+
         #endregion
     }
 }

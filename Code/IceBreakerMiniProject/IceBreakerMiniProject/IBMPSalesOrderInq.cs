@@ -6,9 +6,5 @@ namespace IceBreakerMiniProject
     public class IBMPSalesOrderInq : PXGraph<IBMPSalesOrderInq>
     {
         public SelectFrom<IBMPSalesOrder>.View.ReadOnly SalesOrderView;
-
-        //public PXFilter<MasterTable> MasterView;
-        //public PXFilter<DetailsTable> DetailsView;
-
     }
 }

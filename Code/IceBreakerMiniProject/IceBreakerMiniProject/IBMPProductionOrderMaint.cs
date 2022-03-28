@@ -10,23 +10,25 @@ namespace IceBreakerMiniProject
     public class IBMPProductionOrderMaint : PXGraph<IBMPProductionOrderMaint, IBMPProductionOrder>
     {
         #region Views
-        //Master View
         public SelectFrom<IBMPProductionOrder>.View ProductionOrders;
-        //Detail View
-        public SelectFrom<IBMPPOBOM>.Where<IBMPPOBOM.manufacPartID.IsEqual<IBMPProductionOrder.partid.FromCurrent>>.View ProductionBom;
-        // Get the Inventory Locations regarding a Inventory ID
-        public SelectFrom<IBMPLocationInventory>.Where<IBMPLocationInventory.inventoryID.IsEqual<@P.AsInt>>.View Locations;
-        // Get the Inventory Locations regarding a Inventory ID and order by Qty on hand
-        public SelectFrom<IBMPLocationInventory>.Where<IBMPLocationInventory.inventoryID.IsEqual<@P.AsInt>>.OrderBy<IBMPLocationInventory.qtyHand.Desc>.View MaxLocation;
+        
+        public SelectFrom<IBMPPOBOM>
+            .Where<IBMPPOBOM.manufacPartID.IsEqual<IBMPProductionOrder.partid.FromCurrent>>
+            .View ProductionBom;
+        
+        public SelectFrom<IBMPLocationInventory>
+            .Where<IBMPLocationInventory.inventoryID.IsEqual<@P.AsInt>>
+            .View Locations;
+        
+        public SelectFrom<IBMPLocationInventory>
+            .Where<IBMPLocationInventory.inventoryID.IsEqual<@P.AsInt>>
+            .OrderBy<IBMPLocationInventory.qtyHand.Desc>
+            .View MaxLocation;
 
-        public SelectFrom<IBMPLocationInventory>.InnerJoin<IBMPWarehouseLocation>.On<IBMPWarehouseLocation.locationID.IsEqual<IBMPLocationInventory.locationID>>.View Inventory;
-
-        #region Unwanted Views
-        // public SelectFrom<IBMPLocationInventorySmartPanel>.Where<IBMPLocationInventorySmartPanel.inventoryID.IsEqual<IBMPProductionOrder.partid.FromCurrent>>.View LocationSmartPanel;
-        //public PXSelect<IBMPLocationInventorySmartPanel,Where<IBMPLocationInventorySmartPanel.inventoryID,Equal<Current<IBMPProductionOrder.partid>>>> LocationSmartPanel;
-        //public PXFilter<IBMPLocationInventorySmartPanel> LocationSmartPanel1;
-        #endregion
-
+        public SelectFrom<IBMPLocationInventory>
+            .InnerJoin<IBMPWarehouseLocation>
+            .On<IBMPWarehouseLocation.locationID.IsEqual<IBMPLocationInventory.locationID>>
+            .View Inventory;
         #endregion
 
         [PX.Api.Export.PXOptimizationBehavior(IgnoreBqlDelegate = true)]
@@ -118,7 +120,6 @@ namespace IceBreakerMiniProject
         }
         #endregion
 
-
         #region Receive Shop Order
         public PXAction<IBMPProductionOrder> ReceiveShopOrders;
         [PXButton(CommitChanges = true)]
@@ -176,9 +177,7 @@ namespace IceBreakerMiniProject
                 item.TotalQty = e.Row.Qty * item.Qty;
             }
 
-
             SetQtyAvailability();
-
         }
 
         #region Production Order Row Selected Event
@@ -228,11 +227,6 @@ namespace IceBreakerMiniProject
 
         #endregion
 
-
-
-
     }
-
-
 
 }

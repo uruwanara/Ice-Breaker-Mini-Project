@@ -16,13 +16,13 @@ namespace IceBreakerMiniProject
 
         #region InventoryID
         [PXDBIdentity]
-        [PXUIField(DisplayName ="Inventory ID")]
+        [PXUIField(DisplayName = "Inventory ID")]
         public virtual int? InventoryID { get; set; }
         public abstract class inventoryID : PX.Data.BQL.BqlInt.Field<inventoryID> { }
         #endregion
 
         #region InventoryCD
-        [PXDBString(15, IsUnicode = true, InputMask = "", IsKey =true)]
+        [PXDBString(15, IsUnicode = true, InputMask = "", IsKey = true)]
         [PXDefault]
         [PXUIField(DisplayName = "Inventory CD")]
         public virtual string InventoryCD { get; set; }
@@ -56,6 +56,8 @@ namespace IceBreakerMiniProject
         public virtual string InventoryType { get; set; }
         public abstract class inventoryType : PX.Data.BQL.BqlString.Field<inventoryType> { }
         #endregion
+
+        #region Sytem Fields
 
         #region CreatedDateTime
         [PXDBCreatedDateTime()]
@@ -104,6 +106,8 @@ namespace IceBreakerMiniProject
         [PXNote()]
         public virtual Guid? Noteid { get; set; }
         public abstract class noteid : PX.Data.BQL.BqlGuid.Field<noteid> { }
+        #endregion
+
         #endregion
     }
 }

@@ -20,25 +20,12 @@ namespace IceBreakerMiniProject
                           .IsEqual<Constant.stockItem>>>
               ),
               typeof(IBMPInventory.inventoryCD),
-              typeof(IBMPInventory.price)
-            , SubstituteKey = typeof(IBMPInventory.inventoryCD),
-            DescriptionField = typeof(IBMPInventory.description)
-          )]
-//        [PXRestrictor(typeof(Where<IBMPInventory.inventoryID, NotEqual<IBMPSOParts.partid>>),
-//PX.Objects.IN.Messages.TransitSiteIsNotAvailable)]
+              typeof(IBMPInventory.price),
+              SubstituteKey = typeof(IBMPInventory.inventoryCD),
+              DescriptionField = typeof(IBMPInventory.description)
+        )]
         new public virtual int? Partid { get; set; }
         new public abstract class partid : PX.Data.BQL.BqlInt.Field<partid> { }
         #endregion
-
-        //#region Available Qty
-        //[PXInt]
-        //[PXDefault(typeof(SalesOrders.)]
-        //public virtual int? AvailableQty { get; set; }
-        //#endregion
-
-        //SelectFrom<IBMPLocationInventory>
-        //         .Where<IBMPLocationInventory.inventoryID.IsIn<@P.AsInt>>
-        //         .AggregateTo<GroupBy<IBMPLocationInventory.inventoryID>, Sum<IBMPLocationInventory.qtyHand>>
-        //         .View.ReadOnly(this).Select(row.Partid);
     }
 }

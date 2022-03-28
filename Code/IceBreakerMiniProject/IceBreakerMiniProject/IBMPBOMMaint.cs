@@ -16,24 +16,24 @@ namespace IceBreakerMiniProject
         /// Validate the components are not duplicated
         /// </summary>
         /// <param name="e"></param>
-        protected void _(Events.FieldUpdated<IBMPBOM, IBMPBOM.manufacPartID> e)
-        {
-            IBMPBOM row = e.Row;
+        //protected void _(Events.FieldUpdated<IBMPBOM, IBMPBOM.manufacPartID> e)
+        //{
+        //    IBMPBOM row = e.Row;
 
-            if (row == null) return;
+        //    if (row == null) return;
 
-            var allRows = Components.Select();
+        //    var allRows = Components.Select();
 
-            foreach (IBMPBOM item in allRows)
-            {
-                if (item.ManufacPartID == row.ManufacPartID)
-                {
-                    this.Components.Ask(Components.Current, "Warning", "Duplicated Components Location added!", MessageButtons.OK);
-                    e.Cache.Remove(row.ManufacPartID);
-                    break;
-                }
-            }
-        }
+        //    foreach (IBMPBOM item in allRows)
+        //    {
+        //        if (item.ManufacPartID == row.ManufacPartID)
+        //        {
+        //            this.Components.Ask(Components.Current, "Warning", "Duplicated Components added!", MessageButtons.OK);
+        //            e.Cache.Remove(row.ManufacPartID);
+        //            break;
+        //        }
+        //    }
+        //}
         #endregion
     }
 }

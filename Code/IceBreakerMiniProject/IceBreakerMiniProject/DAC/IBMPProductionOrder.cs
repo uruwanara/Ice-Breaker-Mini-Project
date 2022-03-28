@@ -17,9 +17,11 @@ namespace IceBreakerMiniProject
         [PXDefault]
         [PXDBString(15, IsUnicode = true, IsKey = true, InputMask = ">aaaaaaaa")]
         [PXUIField(DisplayName = "Production Order")]
-        [PXSelector(typeof(Search<IBMPProductionOrder.productionOrderCD>),
-        typeof(IBMPProductionOrder.productionOrderCD),
-        typeof(IBMPProductionOrder.status))]
+        [PXSelector(
+            typeof(Search<IBMPProductionOrder.productionOrderCD>),
+            typeof(IBMPProductionOrder.productionOrderCD),
+            typeof(IBMPProductionOrder.status)
+        )]
         public virtual string ProductionOrderCD { get; set; }
         public abstract class productionOrderCD : PX.Data.BQL.BqlString.Field<productionOrderCD> { }
         #endregion
@@ -43,7 +45,7 @@ namespace IceBreakerMiniProject
         #region Status
         [PXDefault(Constant.POStatus.Released)]
         [PXDBString(15, IsUnicode = true, InputMask = "")]
-        [PXUIField(DisplayName = "Status",Enabled =false)]
+        [PXUIField(DisplayName = "Status", Enabled = false)]
         public virtual string Status { get; set; }
         public abstract class status : PX.Data.BQL.BqlString.Field<status> { }
         #endregion
@@ -61,8 +63,7 @@ namespace IceBreakerMiniProject
               typeof(IBMPInventory.price)
           , SubstituteKey = typeof(IBMPInventory.inventoryCD),
           DescriptionField = typeof(IBMPInventory.description)
-
-          )]
+        )]
         public virtual int? Partid { get; set; }
         public abstract class partid : PX.Data.BQL.BqlInt.Field<partid> { }
         #endregion
@@ -74,6 +75,8 @@ namespace IceBreakerMiniProject
         public virtual int? Qty { get; set; }
         public abstract class qty : PX.Data.BQL.BqlInt.Field<qty> { }
         #endregion
+
+        #region Sytem Fields
 
         #region CreatedDateTime
         [PXDBCreatedDateTime()]
@@ -122,6 +125,8 @@ namespace IceBreakerMiniProject
         [PXNote()]
         public virtual Guid? Noteid { get; set; }
         public abstract class noteid : PX.Data.BQL.BqlGuid.Field<noteid> { }
+        #endregion
+
         #endregion
     }
 }

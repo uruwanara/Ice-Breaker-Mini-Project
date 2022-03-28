@@ -26,7 +26,6 @@ namespace IceBreakerMiniProject
         [PXDefault]
         [PXDBString(15, IsUnicode = true, IsKey = true, InputMask = ">aaaaaaaa")]
         [PXUIField(DisplayName = "Customer", Required = true)]
-       // [AutoNumber(typeof(IBMPSetup.numberingID),typeof(IBMPCustomer.createdDateTime))]
         [PXSelector(typeof(Search<IBMPCustomer.customerCD>),
             typeof(IBMPCustomer.customerCD),
             typeof(IBMPCustomer.name))]
@@ -54,6 +53,8 @@ namespace IceBreakerMiniProject
         public virtual string Contact { get; set; }
         public abstract class contact : PX.Data.BQL.BqlString.Field<contact> { }
         #endregion
+
+        #region Sytem Fields
 
         #region CreatedDateTime
         [PXDBCreatedDateTime()]
@@ -102,6 +103,8 @@ namespace IceBreakerMiniProject
         [PXNote()]
         public virtual Guid? Noteid { get; set; }
         public abstract class noteid : PX.Data.BQL.BqlGuid.Field<noteid> { }
+        #endregion
+
         #endregion
     }
 }

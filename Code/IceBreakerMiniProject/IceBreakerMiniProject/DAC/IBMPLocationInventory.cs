@@ -15,6 +15,7 @@ namespace IceBreakerMiniProject
             public static IBMPLocationInventory Find(PXGraph graph, int? locationID) => FindBy(graph, locationID);
         }
         #endregion
+
         #region LocationID
         [PXDBInt(IsKey = true)]
         [PXDefault(typeof(IBMPWarehouseLocation.locationID))]
@@ -33,7 +34,11 @@ namespace IceBreakerMiniProject
         [PXDBInt(IsKey = true)]
         [PXDefault(typeof(IBMPInventory.inventoryID))]
         [PXUIField(DisplayName = "Inventory ID")]
-        [PXParent(typeof(SelectFrom<IBMPStockItems>.Where<IBMPStockItems.inventoryID.IsEqual<IBMPLocationInventory.inventoryID.FromCurrent>>))]
+        [PXParent(typeof(
+            SelectFrom<IBMPStockItems>
+                .Where<IBMPStockItems.inventoryID
+                    .IsEqual<IBMPLocationInventory.inventoryID.FromCurrent>>
+        ))]
 
         public virtual int? InventoryID { get; set; }
         public abstract class inventoryID : PX.Data.BQL.BqlInt.Field<inventoryID> { }
@@ -42,8 +47,7 @@ namespace IceBreakerMiniProject
         #region QtyHand
         [PXDBInt()]
         [PXUIField(DisplayName = "Qty Hand")]
-        [PXDefault(TypeCode.Decimal, "0.0", PersistingCheck = PXPersistingCheck.Nothing)]
-        [PXFormula(null,typeof(SumCalc<IBMPStockItems.onHandTotalQty>))]
+        [PXDefault(TypeCode.Int32, "0", PersistingCheck = PXPersistingCheck.Nothing)]
         public virtual int? QtyHand { get; set; }
         public abstract class qtyHand : PX.Data.BQL.BqlInt.Field<qtyHand> { }
         #endregion
@@ -51,11 +55,12 @@ namespace IceBreakerMiniProject
         #region QtyReserved
         [PXDBInt()]
         [PXUIField(DisplayName = "Qty Reserved")]
-        [PXDefault(TypeCode.Decimal, "0.0", PersistingCheck = PXPersistingCheck.Nothing)]
-        [PXFormula(null, typeof(SumCalc<IBMPStockItems.reservedTotalQty>))]
+        [PXDefault(TypeCode.Int32, "0", PersistingCheck = PXPersistingCheck.Nothing)]
         public virtual int? QtyReserved { get; set; }
         public abstract class qtyReserved : PX.Data.BQL.BqlInt.Field<qtyReserved> { }
         #endregion
+
+        #region Sytem Fields
 
         #region CreatedDateTime
         [PXDBCreatedDateTime()]
@@ -104,6 +109,8 @@ namespace IceBreakerMiniProject
         [PXNote()]
         public virtual Guid? Noteid { get; set; }
         public abstract class noteid : PX.Data.BQL.BqlGuid.Field<noteid> { }
+        #endregion
+
         #endregion
 
     }

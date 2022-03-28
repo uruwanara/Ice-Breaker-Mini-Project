@@ -25,7 +25,11 @@ namespace IceBreakerMiniProject
         [PXDBInt(IsKey = true)]
         [PXDBDefault(typeof(IBMPWarehouse.warehouseID))]
         [PXUIField(DisplayName = "Warehouse")]
-        [PXParent(typeof(SelectFrom<IBMPWarehouse>.Where<IBMPWarehouse.warehouseID.IsEqual<IBMPWarehouseLocation.warehouseID.FromCurrent>>))]
+        [PXParent(typeof(
+            SelectFrom<IBMPWarehouse>
+                .Where<IBMPWarehouse.warehouseID
+                    .IsEqual<IBMPWarehouseLocation.warehouseID.FromCurrent>>)
+        )]
         public virtual int? WarehouseID { get; set; }
         public abstract class warehouseID : PX.Data.BQL.BqlInt.Field<warehouseID> { }
         #endregion
@@ -43,6 +47,8 @@ namespace IceBreakerMiniProject
         public virtual string Address { get; set; }
         public abstract class address : PX.Data.BQL.BqlString.Field<address> { }
         #endregion
+
+        #region Sytem Fields
 
         #region CreatedDateTime
         [PXDBCreatedDateTime()]
@@ -91,6 +97,8 @@ namespace IceBreakerMiniProject
         [PXNote()]
         public virtual Guid? Noteid { get; set; }
         public abstract class noteid : PX.Data.BQL.BqlGuid.Field<noteid> { }
+        #endregion
+
         #endregion
     }
 }

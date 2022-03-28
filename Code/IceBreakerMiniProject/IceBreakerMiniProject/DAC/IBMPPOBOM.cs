@@ -14,7 +14,11 @@ namespace IceBreakerMiniProject
         #region ManufacPartID
         [PXDBInt(IsKey = true)]
         [PXDefault(typeof(IBMPProductionOrder.partid))]
-        [PXParent(typeof(SelectFrom<IBMPPOBOM>.Where<IBMPProductionOrder.partid.IsEqual<IBMPBOM.manufacPartID.FromCurrent>>))]
+        [PXParent(typeof(
+            SelectFrom<IBMPPOBOM>
+                .Where<IBMPProductionOrder.partid
+                    .IsEqual<IBMPBOM.manufacPartID.FromCurrent>>
+        ))]
         public new virtual int? ManufacPartID { get; set; }
         public new abstract class manufacPartID : PX.Data.BQL.BqlInt.Field<manufacPartID> { }
         #endregion

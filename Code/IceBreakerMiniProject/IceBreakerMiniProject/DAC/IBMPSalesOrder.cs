@@ -17,9 +17,11 @@ namespace IceBreakerMiniProject
         [PXDefault]
         [PXDBString(15, IsUnicode = true, IsKey = true, InputMask = "aaaaaaa")]
         [PXUIField(DisplayName = "Sales Order")]
-        [PXSelector(typeof(Search<IBMPSalesOrder.salesOrderCD>),
+        [PXSelector(
+            typeof(Search<IBMPSalesOrder.salesOrderCD>),
             typeof(IBMPSalesOrder.salesOrderCD),
-            typeof(IBMPSalesOrder.status))]
+            typeof(IBMPSalesOrder.status)
+        )]
         public virtual string SalesOrderCD { get; set; }
         public abstract class salesOrderCD : PX.Data.BQL.BqlString.Field<salesOrderCD> { }
         #endregion
@@ -28,12 +30,13 @@ namespace IceBreakerMiniProject
         [PXDBInt]
         [PXDefault(typeof(IBMPCustomer.customerCD))]
         [PXUIField(DisplayName = "Customer")]
-        //  [PXParent(typeof(SelectFrom<IBMPCustomer>.Where<IBMPCustomer.customerID.IsEqual<IBMPSalesOrder.customerID.FromCurrent>>))]
-        [PXSelector(typeof(Search<IBMPCustomer.customerID>),
+        [PXSelector(
+            typeof(Search<IBMPCustomer.customerID>),
             typeof(IBMPCustomer.customerCD),
             typeof(IBMPCustomer.name),
             SubstituteKey = typeof(IBMPCustomer.customerCD),
-            DescriptionField = typeof(IBMPCustomer.name))]
+            DescriptionField = typeof(IBMPCustomer.name)
+        )]
         public virtual int? CustomerID { get; set; }
         public abstract class customerID : PX.Data.BQL.BqlInt.Field<customerID> { }
         #endregion
@@ -54,7 +57,6 @@ namespace IceBreakerMiniProject
 
         #region DeliveryAddress
         [PXDBString(255, IsUnicode = true, InputMask = "")]
-        //[PXDBDefault(typeof(IBMPCustomer.address))]
         [PXUIField(DisplayName = "Delivery Address")]
         public virtual string DeliveryAddress { get; set; }
         public abstract class deliveryAddress : PX.Data.BQL.BqlString.Field<deliveryAddress> { }
@@ -74,6 +76,8 @@ namespace IceBreakerMiniProject
         public virtual Decimal? SumPrice { get; set; }
         public abstract class sumprice : PX.Data.BQL.BqlDecimal.Field<sumprice> { }
         #endregion
+
+        #region Sytem Fields
 
         #region CreatedDateTime
         [PXDBCreatedDateTime()]
@@ -122,6 +126,8 @@ namespace IceBreakerMiniProject
         [PXNote()]
         public virtual Guid? Noteid { get; set; }
         public abstract class noteid : PX.Data.BQL.BqlGuid.Field<noteid> { }
+        #endregion
+
         #endregion
     }
 }

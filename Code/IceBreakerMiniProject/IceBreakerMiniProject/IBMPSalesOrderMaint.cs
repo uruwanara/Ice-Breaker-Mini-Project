@@ -1,7 +1,6 @@
 using PX.Data;
 using PX.Data.BQL;
 using PX.Data.BQL.Fluent;
-using System.Collections;
 
 namespace IceBreakerMiniProject
 {
@@ -10,23 +9,38 @@ namespace IceBreakerMiniProject
         #region View
         public SelectFrom<IBMPSalesOrder>.View SalesOrders;
 
-        public SelectFrom<IBMPSOParts>.InnerJoin<IBMPInventory>.On<IBMPInventory.inventoryID.IsEqual<IBMPSOParts.partid>>
-            .Where<IBMPSOParts.salesOrderID.IsEqual<IBMPSalesOrder.salesOrderID.FromCurrent>.And<IBMPInventory.inventoryType.IsEqual<Constant.stockItem>>>
+        public SelectFrom<IBMPSOParts>
+            .InnerJoin<IBMPInventory>
+            .On<IBMPInventory.inventoryID.IsEqual<IBMPSOParts.partid>>
+            .Where<IBMPSOParts.salesOrderID.IsEqual<IBMPSalesOrder.salesOrderID.FromCurrent>
+                .And<IBMPInventory.inventoryType.IsEqual<Constant.stockItem>>>
             .View Parts;
-        public SelectFrom<IBMPSONoParts>.InnerJoin<IBMPInventory>.On<IBMPInventory.inventoryID.IsEqual<IBMPSONoParts.partid>>
-            .Where<IBMPSONoParts.salesOrderID.IsEqual<IBMPSalesOrder.salesOrderID.FromCurrent>.And<IBMPInventory.inventoryType.IsEqual<Constant.nonStockItem>>>
+
+        public SelectFrom<IBMPSONoParts>
+            .InnerJoin<IBMPInventory>
+            .On<IBMPInventory.inventoryID.IsEqual<IBMPSONoParts.partid>>
+            .Where<IBMPSONoParts.salesOrderID.IsEqual<IBMPSalesOrder.salesOrderID.FromCurrent>
+                .And<IBMPInventory.inventoryType.IsEqual<Constant.nonStockItem>>>
             .View NoParts;
-        public SelectFrom<IBMPLocationInventory>.Where<IBMPLocationInventory.inventoryID.IsEqual<@P.AsInt>>.View LocationInventory;
-        public SelectFrom<IBMPLocationInventory>.Where<IBMPLocationInventory.inventoryID.IsEqual<@P.AsInt>.And<IBMPLocationInventory.locationID.IsEqual<@P.AsInt>>>.View LocationInventorySpecificLoc;
+
+        public SelectFrom<IBMPLocationInventory>
+            .Where<IBMPLocationInventory.inventoryID.IsEqual<@P.AsInt>>
+            .View LocationInventory;
+
+        public SelectFrom<IBMPLocationInventory>
+            .Where<IBMPLocationInventory.inventoryID.IsEqual<@P.AsInt>
+                .And<IBMPLocationInventory.locationID.IsEqual<@P.AsInt>>>
+            .View LocationInventorySpecificLoc;
+
         public SelectFrom<IBMPInventoryReserved>.View InventoryReserved;
-        public SelectFrom<IBMPInventoryReserved>.Where<IBMPInventoryReserved.orderNbr.IsEqual<@P.AsInt>.And<IBMPInventoryReserved.orderType.IsEqual<Constant.salesOrderType>>>.View InventoryReservedSalesOrders;
+
+        public SelectFrom<IBMPInventoryReserved>
+            .Where<IBMPInventoryReserved.orderNbr.IsEqual<@P.AsInt>
+                .And<IBMPInventoryReserved.orderType.IsEqual<Constant.salesOrderType>>>
+            .View InventoryReservedSalesOrders;
         #endregion
 
         #region Events
-        /// <summary>
-        /// This Event will be used to populate the Price column in the Part Tab from the inventory table
-        /// </summary>
-        /// <param name="e"></param>
         protected void _(Events.FieldUpdated<IBMPSOParts, IBMPSOParts.partid> e)
         {
             IBMPSOParts row = e.Row;
@@ -39,10 +53,6 @@ namespace IceBreakerMiniProject
             }
         }
 
-        /// <summary>
-        /// This Event will be used to populate the Price column in No-Part Tab from the inventory table
-        /// </summary>
-        /// <param name="e"></param>
         protected void _(Events.FieldUpdated<IBMPSONoParts, IBMPSONoParts.partid> e)
         {
             IBMPSONoParts row = e.Row;
@@ -55,10 +65,6 @@ namespace IceBreakerMiniProject
             }
         }
 
-        /// <summary>
-        /// This event will be used to update the Delivery address of the sales order by setting the customers Address as the default value
-        /// </summary>
-        /// <param name="e"></param>
         protected void _(Events.FieldUpdated<IBMPSalesOrder, IBMPSalesOrder.customerID> e)
         {
             IBMPSalesOrder row = e.Row;
@@ -130,24 +136,6 @@ namespace IceBreakerMiniProject
 
         }
 
-        //protected virtual void _(Events.RowInserted<IBMPSOParts> e)
-        //{
-        //    IBMPSOParts row = e.Row;
-        //    if (row == null) return;
-
-        //    PXResultset<IBMPSOParts> allRows = Parts.Select();
-
-        //    foreach (IBMPSOParts item in allRows)
-        //    {
-        //        if (item.Partid == row.Partid)
-        //        {
-        //            //this.WarehouseLocations.Ask(WarehouseLocations.Current, "Warning", "Duplicated Warehouse Location added!", MessageButtons.OK);
-        //            e.Cache.Remove(row.Partid);
-        //            break;
-        //        }
-        //    }
-        //}
-
         protected virtual void _(Events.RowSelected<IBMPSONoParts> e)
         {
             IBMPSONoParts row = e.Row;
@@ -172,11 +160,7 @@ namespace IceBreakerMiniProject
             if (row.Qty > currentInventoryWithQtyHandSum.QtyHand)
             {
                 this.Parts.Ask(Parts.Current, "Warning", "Not enough quantity on stocks. Maximum quantity is set", MessageButtons.OK);
-
                 Parts.Cache.SetValueExt<IBMPSOParts.qty>(row, currentInventoryWithQtyHandSum.QtyHand);
-
-                // update the inventory after RELEASE action
-
             }
         }
 
@@ -200,12 +184,10 @@ namespace IceBreakerMiniProject
                 NoParts.Update(noPart);
             }
 
-            /**
-             * update the invetory to qty reserved traversing all the sales order lines
-             */
-
+            //  update the invetory to qty reserved traversing all the sales order lines
+             
             // 1. traversing all the SO lines
-            PXResultset<IBMPSOParts> currentSOLines = Parts.Select();         
+            PXResultset<IBMPSOParts> currentSOLines = Parts.Select();
 
             foreach (IBMPSOParts SOLine in currentSOLines)
             {
@@ -233,7 +215,7 @@ namespace IceBreakerMiniProject
                         locationInventory.QtyHand -= qtyNeed;
                         locationInventory.QtyReserved += qtyNeed;
                         LocationInventory.Cache.Update(locationInventory);
-                        
+
                         InventoryReserved.Cache.Insert(newInventoryReserved);
 
                         break;
@@ -294,7 +276,7 @@ namespace IceBreakerMiniProject
 
             PXResultset<IBMPInventoryReserved> inventoryReservedItems = InventoryReservedSalesOrders.Select(row.SalesOrderID);
 
-            foreach(IBMPInventoryReserved item in inventoryReservedItems)
+            foreach (IBMPInventoryReserved item in inventoryReservedItems)
             {
                 IBMPLocationInventory locationInventory = LocationInventorySpecificLoc.Select(row.Partid, item.LocationID);
                 locationInventory.QtyReserved -= item.QtyReserved;
@@ -318,7 +300,6 @@ namespace IceBreakerMiniProject
         }
 
         #endregion
-
 
     }
 }

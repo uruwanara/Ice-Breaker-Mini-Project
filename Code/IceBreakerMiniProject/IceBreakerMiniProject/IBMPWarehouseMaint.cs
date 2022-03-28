@@ -9,15 +9,12 @@ namespace IceBreakerMiniProject
 
         #region Data Views
         public SelectFrom<IBMPWarehouse>.View Warehouses;
-        public SelectFrom<IBMPWarehouseLocation>.Where<IBMPWarehouseLocation.warehouseID.IsEqual<IBMPWarehouse.warehouseID.FromCurrent>>.View WarehouseLocations;
+        public SelectFrom<IBMPWarehouseLocation>
+            .Where<IBMPWarehouseLocation.warehouseID.IsEqual<IBMPWarehouse.warehouseID.FromCurrent>>
+            .View WarehouseLocations;
         #endregion
 
         #region Events
-
-        /// <summary>
-        /// Validate the Warehouse location's CDs by preventing having Same CD in purticular Warehouse
-        /// </summary>
-        /// <param name="e"></param> 
         protected void _(Events.FieldUpdated<IBMPWarehouseLocation, IBMPWarehouseLocation.locationCD> e)
         {
             IBMPWarehouseLocation row = e.Row;
