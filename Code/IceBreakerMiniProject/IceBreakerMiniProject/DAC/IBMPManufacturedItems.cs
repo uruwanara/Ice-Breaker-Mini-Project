@@ -22,5 +22,12 @@ namespace IceBreakerMiniProject
         public new virtual string InventoryCD { get; set; }
         public new abstract class inventoryCD : PX.Data.BQL.BqlString.Field<inventoryCD> { }
         #endregion
+
+        public new abstract class inventoryID : PX.Data.BQL.BqlInt.Field<inventoryID> { }
+
+        public new abstract class description : PX.Data.BQL.BqlString.Field<description> { }
+
+        public new abstract class partType : PX.Data.BQL.BqlString.Field<partType> { }
+
     }
 }

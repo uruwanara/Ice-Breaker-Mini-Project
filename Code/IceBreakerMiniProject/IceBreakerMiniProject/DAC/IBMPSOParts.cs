@@ -27,5 +27,9 @@ namespace IceBreakerMiniProject
         new public virtual int? Partid { get; set; }
         new public abstract class partid : PX.Data.BQL.BqlInt.Field<partid> { }
         #endregion
+
+        public new abstract class salesOrderID : PX.Data.BQL.BqlInt.Field<salesOrderID> { }
+
+        public new abstract class qty : PX.Data.BQL.BqlInt.Field<qty> { }
     }
 }

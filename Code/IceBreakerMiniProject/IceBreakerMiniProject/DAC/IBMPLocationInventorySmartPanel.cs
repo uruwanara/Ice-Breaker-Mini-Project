@@ -33,15 +33,5 @@ namespace IceBreakerMiniProject
         public virtual int? InventoryID { get; set; }
         public abstract class inventoryID : PX.Data.BQL.BqlInt.Field<inventoryID> { }
         #endregion
-
-        //#region QtyHand
-        //[PXDBInt()]
-        //[PXUIField(DisplayName = "Qty Hand")]
-        //public virtual int? QtyHand { get; set; }
-        //public abstract class qtyHand : PX.Data.BQL.BqlInt.Field<qtyHand> { }
-        //#endregion
-
-
-
     }
 }

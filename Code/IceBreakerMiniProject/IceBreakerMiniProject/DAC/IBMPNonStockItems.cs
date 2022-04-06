@@ -37,5 +37,7 @@ namespace IceBreakerMiniProject
         new public abstract class inventoryType : PX.Data.BQL.BqlString.Field<inventoryType> { }
         #endregion
 
+        public new abstract class price : PX.Data.BQL.BqlDecimal.Field<price> { }
+
     }
 }

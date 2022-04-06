@@ -31,33 +31,33 @@ namespace IceBreakerMiniProject
             .View Inventory;
         #endregion
 
-        [PX.Api.Export.PXOptimizationBehavior(IgnoreBqlDelegate = true)]
-        public virtual IEnumerable productionBom()
-        {
-            if (ProductionOrders.Current.Partid == null || ProductionOrders.Current.ProductionOrderID == null) return null;
+        //[PX.Api.Export.PXOptimizationBehavior(IgnoreBqlDelegate = true)]
+        //public virtual IEnumerable productionBom()
+        //{
+        //    if (ProductionOrders.Current.Partid == null || ProductionOrders.Current.ProductionOrderID == null) return null;
 
-            var query = new SelectFrom<IBMPBOM>
-                            .InnerJoin<IBMPLocationInventory>.On<IBMPLocationInventory.inventoryID.IsEqual<IBMPBOM.componentID>>
-                            .Where<IBMPBOM.manufacPartID.IsEqual<IBMPProductionOrder.partid.FromCurrent>>
-                            .AggregateTo<GroupBy<IBMPBOM.componentID>, GroupBy<IBMPLocationInventory.inventoryID>, Sum<IBMPLocationInventory.qtyHand>>.View.ReadOnly(this);
+        //    var query = new SelectFrom<IBMPBOM>
+        //                    .InnerJoin<IBMPLocationInventory>.On<IBMPLocationInventory.inventoryID.IsEqual<IBMPBOM.componentID>>
+        //                    .Where<IBMPBOM.manufacPartID.IsEqual<IBMPProductionOrder.partid.FromCurrent>>
+        //                    .AggregateTo<GroupBy<IBMPBOM.componentID>, GroupBy<IBMPLocationInventory.inventoryID>, Sum<IBMPLocationInventory.qtyHand>>.View.ReadOnly(this);
 
-            using (new PXFieldScope(query.View, typeof(IBMPLocationInventory.inventoryID), typeof(IBMPLocationInventory.qtyHand)))
-            {
+        //    using (new PXFieldScope(query.View, typeof(IBMPLocationInventory.inventoryID), typeof(IBMPLocationInventory.qtyHand)))
+        //    {
 
-                int startRow = PXView.StartRow;
-                int totalRows = 0;
+        //        int startRow = PXView.StartRow;
+        //        int totalRows = 0;
 
-                foreach (PXResult<IBMPBOM, IBMPLocationInventory> record in
-                    query.View.Select(PXView.Currents, PXView.Parameters, PXView.Searches, PXView.SortColumns,
-                PXView.Descendings, PXView.Filters, ref startRow, PXView.MaximumRows, ref totalRows))
-                {
-                    Locations.StoreResult((IBMPLocationInventory)record);
-                }
-            }
+        //        foreach (PXResult<IBMPBOM, IBMPLocationInventory> record in
+        //            query.View.Select(PXView.Currents, PXView.Parameters, PXView.Searches, PXView.SortColumns,
+        //        PXView.Descendings, PXView.Filters, ref startRow, PXView.MaximumRows, ref totalRows))
+        //        {
+        //            Locations.StoreResult((IBMPLocationInventory)record);
+        //        }
+        //    }
 
-            return null;
+        //    return null;
 
-        }
+        //}
 
 
         #region Actions
@@ -148,26 +148,27 @@ namespace IceBreakerMiniProject
 
         #region Events
 
-        #region POBOM RowSelecting Event 
-        protected void _(Events.RowSelecting<IBMPPOBOM> e)
-        {
-            if (e.Row == null) return;
+        //#region POBOM RowSelecting Event 
+        //protected void _(Events.RowSelecting<IBMPPOBOM> e)
+        //{
+        //    if (e.Row == null) return;
 
-            e.Row.TotalQty = e.Row.Qty * ProductionOrders.Current.Qty;
-            //e.Cache.SetValue<IBMPPOBOM.totalqty>(e.Row, e.Row.Qty * ProductionOrders.Current.Qty);
-            e.Row.Available = ProductionOrders.Current.Status != Constant.POStatus.Released;
+        //    e.Row.TotalQty = e.Row.Qty * ProductionOrders.Current.Qty;
+        //    //e.Cache.SetValue<IBMPPOBOM.totalqty>(e.Row, e.Row.Qty * ProductionOrders.Current.Qty);
 
-            using (new PXConnectionScope())
-            {
-                IBMPLocationInventory location = Locations.Select(e.Row.ComponentID);
-                if (location != null && location.QtyHand >= e.Row.TotalQty)
-                {
-                    e.Row.Available = true;
-                }
-            }
+        //    e.Row.Available = ProductionOrders.Current.Status != Constant.POStatus.Released;
+        //    if(ProductionOrders.Current.Status != Constant.POStatus.Released ){
+        //    using (new PXConnectionScope())
+        //    {
+        //        IBMPLocationInventory location = Locations.Select(e.Row.ComponentID);
+        //        if (location != null && location.QtyHand >= e.Row.TotalQty)
+        //        {
+        //            e.Row.Available = true;
+        //        }
+        //    } }
 
-        }
-        #endregion
+        //}
+        //#endregion
 
 
         protected void _(Events.RowUpdated<IBMPProductionOrder> e)

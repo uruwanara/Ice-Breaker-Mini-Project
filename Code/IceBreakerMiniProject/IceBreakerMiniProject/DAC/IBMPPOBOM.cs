@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 namespace IceBreakerMiniProject
 {
     [PXCacheName("POBOM")]
+
     public class IBMPPOBOM : IBMPBOM
     {
         #region ManufacPartID

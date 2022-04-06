@@ -76,7 +76,7 @@ namespace IceBreakerMiniProject
         public abstract class qty : PX.Data.BQL.BqlInt.Field<qty> { }
         #endregion
 
-        #region Sytem Fields
+        #region System Fields
 
         #region CreatedDateTime
         [PXDBCreatedDateTime()]

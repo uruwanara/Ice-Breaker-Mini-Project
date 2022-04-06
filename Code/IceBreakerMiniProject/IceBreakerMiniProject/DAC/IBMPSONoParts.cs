@@ -24,4 +24,7 @@ namespace IceBreakerMiniProject
         public new abstract class partid : PX.Data.BQL.BqlInt.Field<partid> { }
         #endregion
     }
+
+
+
 }

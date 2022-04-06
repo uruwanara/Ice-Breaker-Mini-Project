@@ -16,6 +16,7 @@ namespace IceBreakerMiniProject
 
         #region Events
         protected void _(Events.FieldUpdated<IBMPWarehouseLocation, IBMPWarehouseLocation.locationCD> e)
+
         {
             IBMPWarehouseLocation row = e.Row;
 
